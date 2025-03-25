@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {},
+    colors:{
+      seabasket_green: '#3D8D7A',
+    }
   },
   plugins: [],
 }
