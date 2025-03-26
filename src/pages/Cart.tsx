@@ -1,8 +1,58 @@
-const Cart: React.FC = () => {  
-    return (
-      <>
-        <h1>Cart page</h1>
-      </>
-    );
-  }
- export default Cart;
+import { useSelector } from "react-redux";
+import { stateProps, StoreProduct } from "../types";
+import { NavLink } from "react-router-dom";
+import CartProducts from "../components/CartProducts";
+import RestartCart from "../components/RestartCart";
+import { useState } from "react";
+
+const Cart: React.FC = () => {
+  const { productData } = useSelector((state: stateProps) => state.slice);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen p-6 bg-gray-100 flex flex-col items-center">
+      <h1 className="text-3xl font-bold mb-6">Cart Page</h1>
+
+      {productData.length > 0 ? (
+        <div
+          className={`w-full max-w-4xl bg-white p-6 rounded-lg shadow-md transition ${
+            isModalOpen ? "blur-sm" : ""
+          }`}
+        >
+          <div className="flex justify-between items-center border-b pb-4">
+            <p className="text-xl font-semibold">Shopping Cart</p>
+            <p className="text-lg font-medium">Subtotal</p>
+          </div>
+
+          <div className="mt-4">
+            {productData.map((item: StoreProduct) => (
+              <div
+                key={item.id}
+                className="flex justify-between items-center border-b py-4"
+              >
+                <CartProducts item={item} />
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex justify-end">
+            <RestartCart />
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center mt-10">
+          <h1 className="text-xl font-semibold text-gray-700 mb-4">
+            Your cart is empty. Add products!
+          </h1>
+          <NavLink to={"/"}>
+            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+              Go to Shopping
+            </button>
+          </NavLink>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Cart;

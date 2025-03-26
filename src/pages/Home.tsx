@@ -1,28 +1,34 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
 import Banner from "../components/Banner";
 import Products from "../components/Products";
-import { useEffect, useState } from "react";
-import { ProductProps } from "../types";
+import { fetchProducts } from "../store/slice";
 
 const Home: React.FC = () => {
-  const [productData, setProductData] = useState<ProductProps[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { allProducts, loading, error } = useSelector(
+    (state: RootState) => state.slice
+  );
+
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const respone = await fetch("https://fakestoreapi.com/products ");
-        const data: ProductProps[] = await respone.json();
-        setProductData(data);
-      } catch (e) {
-        console.error("failed to fetch products", e);
-      }
-    };
-    fetchProduct();
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col items-center">
       <Banner />
-      <Products productData={productData} />
-    </>
+      <div className="w-full max-w-7xl px-4 py-10">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Featured Products
+        </h1>
+        {loading && <p>Loading products...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+        <Products productData={allProducts} />
+      </div>
+    </div>
   );
 };
+
 export default Home;

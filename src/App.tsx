@@ -2,7 +2,8 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./components/RootLayout";
 import Home from "./pages/Home";
-import About from "./pages/About";
+
+import Cart from "./pages/Cart";
 
 const App: React.FC = () => {
   const router = createBrowserRouter([
@@ -11,7 +12,7 @@ const App: React.FC = () => {
       element: <RootLayout />,
       children: [
         { index: true, element: <Home /> },
-        { path: "about", element: <About /> },
+        { path: "cart", element: <Cart /> },
         //  {path: 'products', element: <Products />},
       ],
     },
