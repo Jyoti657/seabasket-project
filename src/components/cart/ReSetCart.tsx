@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { resetCart } from "../store/slice";
+import { resetCart } from "../../store/Slice/cartSlice";
 
 const RestartCart: React.FC = () => {
   const dispatch = useDispatch();

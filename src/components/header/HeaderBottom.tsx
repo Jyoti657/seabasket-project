@@ -1,7 +1,12 @@
 import React from "react";
-import { LuMenu } from "react-icons/lu";
+import { Menu } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+
+import { RootState } from "../../store/store";
 
 const HeadBottom: React.FC = () => {
+  // logic change this should be come from authn slice
+  const { userInfo } = useSelector((state: RootState) => state.cart);
   return (
     <div
       className="bg-gradient-to-t from-seabasket_green text-white p-2 w-full 
@@ -11,40 +16,41 @@ const HeadBottom: React.FC = () => {
         overflow-x-auto whitespace-nowrap mt-4"
     >
       <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
-        <LuMenu />
-        All
+        
+        Kilos
       </p>
 
-      <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
-        Amazon miniTV
-      </p>
-      <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
-        Sell
-      </p>
-      <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
-        Best Seller
-      </p>
       <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
         Mobiles
       </p>
       <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
-        Cutsomer Service
+        Fashion
       </p>
       <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
-        Electonics
+        Electronics
       </p>
       <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
-        New Realses
+        Home & Furturies
       </p>
       <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
-        Home & Kitchen{" "}
+        Appliance
+      </p>
+      <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
+        Beauty
+      </p>
+      <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
+        Toys
+      </p>
+      <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
+      Two Wheelers
       </p>
       <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
         SeaBasket Pay
       </p>
-      <p className="h-8 px-3 border border-transparent hover:border-red-600 hover:text-red-500 cursor-pointer duration-300">
+      {userInfo && <button>SignOut</button>}
+      {/* <p className="h-8 px-3 border border-transparent hover:border-red-600 hover:text-red-500 cursor-pointer duration-300">
         Sign Out
-      </p>
+      </p> */}
     </div>
   );
 };

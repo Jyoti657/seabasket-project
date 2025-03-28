@@ -1,24 +1,33 @@
-import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/HomePage";
+import Cart from "./pages/CartPage";
+import Checkout from "./pages/CheckoutPage";
+import Order from "./pages/OrderPage";
+import Products from "./pages/ProductsPage";
+// import ProductsDetails from "./pages/ProductDetailsPage"
+import Profile from "./pages/ProfilePage";
 import RootLayout from "./components/RootLayout";
-import Home from "./pages/Home";
+import CategoryPage from "./pages/categoryPage";
+import ProductDetails from "./pages/ProductDetailsPage";
 
-import Cart from "./pages/Cart";
 
 const App: React.FC = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <RootLayout />,
-      children: [
-        { index: true, element: <Home /> },
-        { path: "cart", element: <Cart /> },
-        //  {path: 'products', element: <Products />},
-      ],
-    },
-  ]);
-
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<RootLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/category/:categoryName" element={<CategoryPage />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order" element={<Order />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetails/>}/>
+          <Route path="/Profile" element={<Profile />} />
+        </Route>
+      </Routes>
+      
+    </>
+  );
 };
-
 export default App;

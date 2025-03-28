@@ -31,3 +31,6 @@ export interface stateProps {
   slice: any;
   userInfo: null | string;
 }
+ export interface Product{
+  product:ProductProps 
+ }

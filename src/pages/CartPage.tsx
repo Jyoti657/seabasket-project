@@ -1,12 +1,14 @@
 import { useSelector } from "react-redux";
-import { stateProps, StoreProduct } from "../types";
+
 import { NavLink } from "react-router-dom";
-import CartProducts from "../components/CartProducts";
-import RestartCart from "../components/RestartCart";
+import CartProducts from "../components/cart/CartProducts";
+import RestartCart from "../components/cart/ReSetCart";
 import { useState } from "react";
+import { RootState } from "../store/store";
+import { StoreProduct } from "../types";
 
 const Cart: React.FC = () => {
-  const { productData } = useSelector((state: stateProps) => state.slice);
+  const { productData } = useSelector((state: RootState) => state.cart);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -45,7 +47,7 @@ const Cart: React.FC = () => {
             Your cart is empty. Add products!
           </h1>
           <NavLink to={"/"}>
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+            <button className="bg-gradient-to-t from-seabasket_green text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
               Go to Shopping
             </button>
           </NavLink>
