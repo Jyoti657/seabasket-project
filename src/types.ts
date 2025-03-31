@@ -3,6 +3,7 @@ export interface ProductProps {
   title: string;
   price: number;
   category: string;
+  quantity:number;
   description: string;
   image: string;
   rating?: {
@@ -29,8 +30,7 @@ export interface stateProps {
   favoritData: [];
   allProducts: [];
   slice: any;
-  userInfo: null | string;
 }
- export interface Product{
-  product:ProductProps 
- }
+export interface Product {
+  product: ProductProps;
+}

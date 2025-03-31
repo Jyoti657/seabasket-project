@@ -1,4 +1,4 @@
-import { fetchProducts } from "../store/Slice/cartSlice";
+import { fetchProducts } from "../store/Slice/productSlice";
 import ProductList from "../components/products/ProductList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,14 +8,14 @@ const Product: React.FC = () => {
 
   // Selecting state from Redux store
   const { allProducts, loading, error } = useSelector(
-    (state: RootState) => state.cart
+    (state: RootState) => state.product
   );
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  console.log("Fetched products:", allProducts);
+  
 
   return (
     <>

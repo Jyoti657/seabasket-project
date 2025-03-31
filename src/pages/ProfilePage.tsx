@@ -1,6 +1,7 @@
 const Profile: React.FC =()=>{
     return(
         <>
+        <h1>This profile</h1>
         </>
     )
 }

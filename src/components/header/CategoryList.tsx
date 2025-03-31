@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 interface Category {
     id: number;
     name: string;
@@ -17,6 +19,14 @@ interface Category {
     { id: 10, name: "Furniture", image: "/images/categories/furniture.jpg" },
   ];
 const CategoryList:React.FC=()=>{
+const navigate=  useNavigate()
+const handleProductClick = (category: Category) => {
+  // navigate(`/products/${category.name}`);
+  navigate(`/category/${category.name}`);
+
+};
+
+
     return (
         <>
         <h1>ALl  category of the products</h1>
@@ -33,6 +43,7 @@ const CategoryList:React.FC=()=>{
             <div
               key={category.id}
               className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition"
+              onClick={()=>handleProductClick(category)}
             >
               <img
                 src={category.image}

@@ -1,30 +1,29 @@
 
 import { ProductProps } from "../../types";
-import { ShoppingCart, Favorite } from "@mui/icons-material";
+import { ShoppingCart } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { addToCart, addToFavorite } from "../../store/Slice/cartSlice";
+import { addToCart } from "../../store/Slice/cartSlice";
 import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
+import FavoriteButton from "../header/FavoriteButton";
 
 interface ProductsProps {
-  productData: ProductProps[]; // Ensure this matches Home.tsx
+  productData: ProductProps[];
 }
 
 const ProductList: React.FC<ProductsProps> = ({ productData }) => {
-   const navigate=useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAddToCart = (product: ProductProps) => {
     dispatch(addToCart(product));
   };
 
-  const handleAddToFavorite = (product: ProductProps) => {
-    dispatch(addToFavorite(product));
-  };
   const handleProductClick = (id: number) => {
     navigate(`/products/${id}`);
   };
 
+  
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-2xl font-bold text-center mb-6">Products List</h1>
@@ -33,6 +32,7 @@ const ProductList: React.FC<ProductsProps> = ({ productData }) => {
         {productData?.length > 0 ? (
           productData.map((product) => (
             <div
+              key={product.id}
               className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition flex flex-col justify-between h-full"
             >
               <div className="flex-grow">
@@ -40,10 +40,7 @@ const ProductList: React.FC<ProductsProps> = ({ productData }) => {
                   src={product.image}
                   alt={product.title}
                   className="w-full h-40 object-contain mb-4 cursor-pointer"
-            onClick={()=>handleProductClick(product.id)}
-            key={product.id}
-
-
+                  onClick={() => handleProductClick(product.id)}
                 />
                 <h2 className="text-lg font-semibold">{product.title}</h2>
                 <p className="text-gray-600">${product.price}</p>
@@ -58,12 +55,7 @@ const ProductList: React.FC<ProductsProps> = ({ productData }) => {
                   <ShoppingCart className="text-xl" /> Add to Cart
                 </button>
 
-                <button
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => handleAddToFavorite(product)}
-                >
-                  <Favorite className="text-2xl cursor-pointer" />
-                </button>
+                <FavoriteButton product={product} />
               </div>
             </div>
           ))

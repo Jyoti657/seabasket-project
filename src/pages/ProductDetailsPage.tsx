@@ -1,9 +1,64 @@
-const ProductDetails: React.FC=()=>{
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { ProductProps } from "../types";
+import { useParams } from "react-router-dom";
+
+const ProductDetails: React.FC = () => {
+  const { id } = useParams();
+  const allProducts = useSelector(
+    (state: RootState) => state.product.allProducts
+  );
+  const productId = Number(id);
+  const product: ProductProps | undefined = allProducts?.find(
+    (p) => p.id === productId
+  );
+
+  if (!product) {
     return (
-        <>
-        <h1> This ProductDetails page </h1>
-        
-        </>
-    )
-}
-export default ProductDetails
+      <p className="text-red-500 text-center">
+        Product not found. Please check the ID or refresh the page.
+      </p>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Left: Product Image */}
+        <div className="flex justify-center items-center">
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-80 h-80 object-contain border border-gray-300 p-4 rounded-lg shadow"
+          />
+        </div>
+
+        {/* Right: Product Details */}
+        <div className="flex flex-col justify-between">
+          <h1 className="text-2xl font-bold text-gray-900">{product.title}</h1>
+          <p className="text-lg text-green-600 font-semibold mt-2">
+            ₹{product.price}
+          </p>
+
+          <p className="text-gray-700 mt-4">{product.description}</p>
+
+          <p className="text-gray-500 text-sm mt-2">
+            Category: {product.category}
+          </p>
+
+          {/* Buttons Section */}
+          <div className="mt-6 flex gap-4">
+            <button className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition">
+              Buy Now
+            </button>
+            <button className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductDetails;

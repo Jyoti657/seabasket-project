@@ -6,7 +6,7 @@ import { RootState } from "../../store/store";
 
 const HeadBottom: React.FC = () => {
   // logic change this should be come from authn slice
-  const { userInfo } = useSelector((state: RootState) => state.cart);
+  // const { userInfo } = useSelector((state: RootState) => state.cart);
   return (
     <div
       className="bg-gradient-to-t from-seabasket_green text-white p-2 w-full 
@@ -47,7 +47,7 @@ const HeadBottom: React.FC = () => {
       <p className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300">
         SeaBasket Pay
       </p>
-      {userInfo && <button>SignOut</button>}
+      {/* {userInfo && <button>SignOut</button>} */}
       {/* <p className="h-8 px-3 border border-transparent hover:border-red-600 hover:text-red-500 cursor-pointer duration-300">
         Sign Out
       </p> */}
