@@ -5,13 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
-    colors:{
+    extend: { colors:{
       seabasket_green: '#3D8D7A',
-      customBeige: '#E3D2C3',
-      lightGray: '#EAEAEA',
+      
 
-    }
+    }},
+   
   },
   plugins: [],
 }

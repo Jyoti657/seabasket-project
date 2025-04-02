@@ -1,4 +1,3 @@
-
 import { Favorite } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorites } from "../../store/Slice/favoriteSlice";
@@ -12,23 +11,21 @@ interface FavoriteButtonProps {
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  // Get favorite products from Redux store
   const favoriteProducts = useSelector(
     (state: RootState) => state.favorites.favoriteProducts
   );
-
-  // Check if the product is a favorite
   const isFavorite = favoriteProducts.some((item) => item.id === product.id);
 
   const handleToggleFavorite = () => {
     dispatch(toggleFavorites(product)); // Corrected function argument
-    
   };
 
   return (
     <button
       className={`text-2xl cursor-pointer transition ${
-        isFavorite ? "text-red-500 hover:text-red-700" : "text-gray-400 hover:text-gray-600"
+        isFavorite
+          ? "text-red-500 hover:text-red-700"
+          : "text-gray-400 hover:text-gray-600"
       }`}
       onClick={handleToggleFavorite}
     >

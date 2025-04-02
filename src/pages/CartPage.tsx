@@ -6,6 +6,7 @@ import RestartCart from "../components/cart/ReSetCart";
 import { useState } from "react";
 import { RootState } from "../store/store";
 import { StoreProduct } from "../types";
+import Button from "../components/ui/Button";
 
 const Cart: React.FC = () => {
   const { productData } = useSelector((state: RootState) => state.cart);
@@ -47,9 +48,7 @@ const Cart: React.FC = () => {
             Your cart is empty. Add products!
           </h1>
           <NavLink to={"/"}>
-            <button className="bg-gradient-to-t from-seabasket_green text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
-              Go to Shopping
-            </button>
+            <Button label="Go to Shopping" />
           </NavLink>
         </div>
       )}

@@ -10,6 +10,8 @@ import RootLayout from "./components/RootLayout";
 import CategoryPage from "./pages/categoryPage";
 import ProductDetails from "./pages/ProductDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage"
+import SignUp from "./pages/SignUp";
+import Error from "./pages/Error";
 
 
 const App: React.FC = () => {
@@ -26,6 +28,8 @@ const App: React.FC = () => {
           <Route path="/products/:id" element={<ProductDetails/>}/>
           <Route path="/Profile" element={<Profile />} />
           <Route path="/favorites" element={<FavoritesPage/>}/>
+          <Route path="/signup" element={<SignUp/>}/>
+        <Route path="*" element={<Error/>}/>
         </Route>
       </Routes>
       

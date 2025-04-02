@@ -8,8 +8,12 @@
     return (
       <>
         <Header />
-        <HeadBottom />
+        <HeadBottom  />
+
+        
         <Outlet />
+        
+       
         <Footer />
       </>
     );

@@ -1,69 +1,150 @@
+
+import {  useSelector } from "react-redux";
+import { Category } from "../../types";
+import {  RootState } from "../../store/store";
+import { useEffect, useMemo, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+import electronics from "../../assets/electronic.png"
+import jewelly from "../../assets/jewelly.jpg"
+import men from "../../assets/men.jpg"
+import women from "../../assets/women.jpg"
 
-interface Category {
-    id: number;
-    name: string;
-    image: string;
-  }
+
+
+const CategoryList: React.FC = () => {
+  const navigate = useNavigate();
+  const [categories, setCategories] = useState<Category[]>([]);
+
   
-  const categories: Category[] = [
-    { id: 1, name: "Electronics", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl-g8Wh6XyXqoPb710U7j2vcyH-2RdtKgOeQ&s" },
-    { id: 2, name: "Fashion", image: "https://assets.vogue.com/photos/614a2441026b46054594809f/16:9/w_1280,c_limit/00_social.jpg" },
-    { id: 3, name: "Home & Kitchen", image: "https://c8.alamy.com/comp/2C6KDAH/home-appliances-e-commerce-or-online-shopping-concept-3d-render-sale-background-2C6KDAH.jpg" },
-    { id: 4, name: "Sports & Outdoors", image: "https://media.istockphoto.com/id/949190736/photo/various-sport-equipments-on-grass.jpg?s=612x612&w=0&k=20&c=e5XgszJQciKRrqQECO9RPqLh7w1kkhNBFetf4742BF0=" },
-    { id: 5, name: "Toys & Games", image: "https://t4.ftcdn.net/jpg/03/24/42/21/360_F_324422176_Lgn7NTeFyNaUKIDu0Ppls1u8zb8wsKS4.jpg" },
-    { id: 6, name: "Books & Stationery", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTktoNpsu4s9DMHTtXkuuItwSp2ArmLW4YjdA&s" },
-    { id: 7, name: "Health & Beauty", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7SkbBZhP2YF1kFCDd9RblSNEUFVy4RG8dzg&s" },
-    { id: 8, name: "Automobile", image: "" },
-    { id: 9, name: "Groceries", image: "/images/categories/groceries.jpg" },
-    { id: 10, name: "Furniture", image: "/images/categories/furniture.jpg" },
-  ];
-const CategoryList:React.FC=()=>{
-const navigate=  useNavigate()
-const handleProductClick = (category: Category) => {
-  // navigate(`/products/${category.name}`);
-  navigate(`/category/${category.name}`);
+  const { allProducts, error, loading } = useSelector(
+    (state: RootState) => state.product
+  );
 
-};
+  // // Function to extract categories from the product list
+  // const extraCategories = () => {
+  //   const categorySet = new Set<string>(); // Set to store unique categories
+  //   allProducts.forEach((product) => {
+  //     if (product.category) {
+  //       categorySet.add(product.category);
+  //     }
+  //   });
+
+  //   const categoryList: Category[] = Array.from(categorySet).map((category) => {
+  //     let CategoryImage= "";
+  //      switch(category){
+  //       case "electronics":
+  //         CategoryImage=electronics
+  //         break;
+  //         case "women's clothing":
+  //         CategoryImage=women
+  //         break;
+  //         case "jewelery":
+  //           CategoryImage= jewelly
+  //           break;
+  //           case "mens":
+  //            CategoryImage=men
+  //            break;
+  //            default:
+  //             CategoryImage=electronics
+
+  //      }
+  //      return{
+  //       name: category,
+  //       image: CategoryImage,
+  //      }
+     
+  //   });
+
+  //   setCategories(categoryList);
+  // };
 
 
-    return (
-        <>
-        <h1>ALl  category of the products</h1>
-        <div>
-            <div>
-            <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
-          Browse Categories
-        </h1>
+  
+  // useEffect(() => {
+  //   if (allProducts?.length > 0) {
+  //     extraCategories();
+  //   }
+  // }, [allProducts]);
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {categories.map((category: Category) => (
+  // const  categories=useMemo(()=>{
+  //   if (!allProducts?.length)  return [];
+
+  //   const categorySet = new Set<string>(); // Unique category storage
+  //   allProducts.forEach((product) => categorySet.add(product.category));
+
+  //   return Array.from(categorySet).map((category) => {
+  //     const categoryImageMap: Record<string, string> = {
+  //       "electronics": electronics,
+  //       "women's clothing": women,
+  //       "jewelery": jewelly,
+  //       "mens": men,
+  //     };
+
+  //     return {
+  //       name: category,
+  //       image: categoryImageMap[category] || electronics, // Default image
+  //     };
+  //   });
+  // }, [allProducts]);
+  useEffect(() => {
+    if (!allProducts?.length) return;
+  
+    const categorySet = new Set<string>();
+    allProducts.forEach((product) => categorySet.add(product.category));
+  
+    const categoryList = Array.from(categorySet).map((category) => {
+      const categoryImageMap: Record<string, string> = {
+        "electronics": electronics,
+        "women's clothing": women,
+        "jewelery": jewelly,
+        "mens": men,
+      };
+  
+      return {
+        name: category,
+        image: categoryImageMap[category] || electronics,
+      };
+    });
+  
+    setCategories(categoryList);
+  }, [allProducts]);
+  const handleCategoriesClick = (category: Category) => {
+    navigate(`/category/${category.name}`);
+  };
+
+  return (
+    <>
+      <h1 className="text-3xl font-bold text-center mb-6">All Categories</h1>
+      {loading ? (
+        <p className="text-center text-xl">Loading...</p>
+      ) : error ? (
+        <p className="text-center text-xl text-red-500">Error: {error}</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+          {categories.map((category) => (
             <div
-              key={category.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition"
-              onClick={()=>handleProductClick(category)}
+              key={category.name}
+              onClick={() => handleCategoriesClick(category)}
+              className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all transform hover:scale-105"
             >
               <img
                 src={category.image}
                 alt={category.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-48  object-contain mb-4 cursor-pointer"
               />
               <div className="p-4">
-                <h2 className="text-lg font-semibold text-gray-700">
+                <h2 className="text-lg font-semibold text-gray-700 text-center">
                   {category.name}
                 </h2>
               </div>
             </div>
           ))}
         </div>
-      </div>
-    </div>
-            </div>
-            
-        </div>
-        </>
-    )
-}
- export default CategoryList
+      )}
+    </>
+  );
+};
+
+export default CategoryList;
+

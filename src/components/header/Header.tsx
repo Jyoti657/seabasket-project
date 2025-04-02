@@ -1,7 +1,7 @@
 import { ShoppingCart, Favorite } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 import UserDropdown from "./UserDropdown";
 import { RootState } from "../../store/store";
@@ -10,15 +10,15 @@ const Header: React.FC = () => {
   const { productData,  } = useSelector(
     (state: RootState) => state.cart
   );
- const {favoriteProducts}=useSelector((state:RootState)=>state.favorites)
-  // const dispatch = useDispatch();
+//  const {favoriteProducts}=useSelector((state:RootState)=>state.favorites)
+  
 
 
 
   return (
-    <header className="bg-seabasket_green p-4 text-white">
+    <header className="bg-seabasket_green p-4 text-white sticky top-0 left-0 w-full z-50 shadow-md">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Logo Section */}
+        
         <div className="text-2xl flex items-center gap-2 font-bold cursor-pointer">
           <img src={logo} alt="Seabasket" className="w-10 h-10" />
           <span className="text-[#EAEAEA]">Seabasket</span>
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
           {/* User Dropdown */}
           <UserDropdown /> 
 
-         <NavLink to={"/favorites"}
+         {/* <NavLink to={"/favorites"}
          className="relative cursor-pointer flex items-center"
          >
           <Favorite className=" w-6 h-6 text-red-500"/>
@@ -42,7 +42,7 @@ const Header: React.FC = () => {
                 {favoriteProducts.length}
               </span>
             )}
-         </NavLink>
+         </NavLink> */}
 
           {/* Cart */}
           <NavLink

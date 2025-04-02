@@ -1,13 +1,22 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
 import { ProductProps } from "../types";
 import { useParams } from "react-router-dom";
+import { addToCart } from "../store/Slice/cartSlice";
+import { currencyFormatter } from "../util/formatting";
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams();
   const allProducts = useSelector(
     (state: RootState) => state.product.allProducts
   );
+
+ const dispatch= useDispatch<AppDispatch>() 
+    const handleAddToCart = (product: ProductProps) => {
+       dispatch(addToCart(product));
+     };
+
+  
   const productId = Number(id);
   const product: ProductProps | undefined = allProducts?.find(
     (p) => p.id === productId
@@ -37,7 +46,7 @@ const ProductDetails: React.FC = () => {
         <div className="flex flex-col justify-between">
           <h1 className="text-2xl font-bold text-gray-900">{product.title}</h1>
           <p className="text-lg text-green-600 font-semibold mt-2">
-            ₹{product.price}
+            {currencyFormatter.format(product.price)}
           </p>
 
           <p className="text-gray-700 mt-4">{product.description}</p>
@@ -45,13 +54,18 @@ const ProductDetails: React.FC = () => {
           <p className="text-gray-500 text-sm mt-2">
             Category: {product.category}
           </p>
+          <p className="text-gray-500 text-sm mt-2">
+  Rate: {product.rating?.rate} ({product.rating?.count} reviews)
+</p>
 
           {/* Buttons Section */}
           <div className="mt-6 flex gap-4">
             <button className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition">
               Buy Now
             </button>
-            <button className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition">
+            <button className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition"
+            onClick={() => handleAddToCart(product)}
+            >
               Add to Cart
             </button>
           </div>

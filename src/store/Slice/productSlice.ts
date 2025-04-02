@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ProductProps } from "../../types";
+import { ProductState, StoreProduct } from "../../types";
+// import { applyFilters,applySorting } from "../../util/productsUtils";
 
 // callin the api
 export const fetchProducts = createAsyncThunk(
@@ -8,46 +9,52 @@ export const fetchProducts = createAsyncThunk(
     try {
       const response = await fetch("https://fakestoreapi.com/products");
       if (!response.ok) throw new Error("Failed to fetch the products");
-      const data: ProductProps[] = await response.json();
+      const data: StoreProduct[] = await response.json();
       return data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
-interface ProductState {
-  allProducts: ProductProps[];
-  filteredProducts: ProductProps[];
-  selectedProducts: ProductProps | null;
-  searchQuery: string;
-  loading: boolean;
-  error: string | null;
-}
+
 const initialState: ProductState = {
   allProducts: [],
   filteredProducts: [],
-  searchQuery: "",
-  selectedProducts: null,
+  filters: {
+    minPrice: 0,
+    maxPrice: 1000,
+    discount: 0,
+    rating: 0,
+  },
+  sortBy: "",
   loading: false,
   error: null,
 };
 const ProductSlice = createSlice({
   name: "products",
   initialState,
-
-  // in this reducer we will create the reducer function for  1. soting and 2. filtering realted procuts
-
   reducers: {
-    setSearchQuery: (state, action) => {
-      state.searchQuery = action.payload;
+    // setPriceFilter:(state,action)=>{
+    //   state.filters.minPrice=action.payload.minPrice;
+    //   state.filters.maxPrice=action.payload.maxPrice;
+    //   applyFilters(state);
+    //   applySorting(state)
+    // },
+    // setRatingFilter:(state,action)=>{
+    //   state.filters.rating=action.payload;
+    //   applyFilters(state)
+    //   applySorting(state)
 
-      state.filteredProducts = state.allProducts.filter((products) =>
-        products.title.toLowerCase().includes(action.payload.toLowerCase())
-      );
-    },
-    setSelectedProduct:(state,action)=>{
-      state.selectedProducts=action.payload
-    }
+    // },
+    // setDiscountFilter:(state,action)=>{
+    //   state.filters.discount=action.payload;
+    //   applyFilters(state)
+    //   applySorting(state)
+    // },
+    // sortProducts:(state,action)=>{
+    //   state.sortBy=action.payload
+    //   applySorting(state);
+    // }
   },
   extraReducers: (builder) => {
     builder
@@ -58,6 +65,8 @@ const ProductSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.allProducts = action.payload;
+        // applyFilters(state)
+        // applySorting(state)
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
@@ -66,6 +75,6 @@ const ProductSlice = createSlice({
       });
   },
 });
-// exprt the action also  when we  will createing the reducer
-export const { setSearchQuery } = ProductSlice.actions;
+
+export const {} = ProductSlice.actions;
 export default ProductSlice.reducer;
