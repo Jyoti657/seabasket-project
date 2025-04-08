@@ -8,11 +8,10 @@ import { addToCart } from "../store/Slice/cartSlice";
 
 import { currencyFormatter } from "../util/formatting";
 
-
 const Category: React.FC = () => {
   const { categoryName } = useParams();
 
-  const disaptch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { allProducts } = useSelector((state: RootState) => state.product);
   const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
@@ -25,10 +24,10 @@ const Category: React.FC = () => {
   }, [categoryName, allProducts]);
 
   const handleAddToCart = (product: ProductProps) => {
-    disaptch(addToCart(product));
+    dispatch(addToCart(product));
   };
 
-  const handleProductClick = (id: number) => {
+  const handleProductClick = (id: number | string) => {
     navigate(`/products/${id}`);
   };
 
@@ -37,7 +36,7 @@ const Category: React.FC = () => {
       <h1 className="container mx-auto py-10 text-center font-extrabold">
         Products in {categoryName}
       </h1>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-8">
         {filteredProducts.map((product) => (
           <div
@@ -56,10 +55,21 @@ const Category: React.FC = () => {
               <h2 className="text-lg font-semibold text-gray-700 text-center mb-2">
                 {product.title}
               </h2>
-              <p className="text-center text-gray-600">{currencyFormatter.format(product.price)}</p>
+              <p className="text-center text-gray-600">
+                {currencyFormatter.format(product.price)}
+              </p>
             </div>
-            <div className="p-4">
-              <Button label="Add to Cart" onClick={() => handleAddToCart(product)} />
+            <div className="mt-6 flex gap-4">
+              <Button
+                label="Buy Now"
+                className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition"
+              />
+
+              <Button
+                label="Add to Cart"
+                className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition"
+                onClick={() => handleAddToCart(product)}
+              />
             </div>
           </div>
         ))}

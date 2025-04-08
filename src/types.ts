@@ -1,12 +1,7 @@
-import {
-  UseFormRegister,
-  Path,
-  FieldValue,
-  FieldValues,
-} from "react-hook-form";
+// import { UseFormRegister, Path, FieldValues } from "react-hook-form";
 
 export interface ProductProps {
-  id: number;
+  id: number ;
   title: string;
   price: number;
   category: string;
@@ -21,7 +16,7 @@ export interface ProductProps {
 }
 
 export interface StoreProduct {
-  id: number;
+  id: number ;
   title: string;
   price: number;
   category: string;
@@ -36,14 +31,13 @@ export interface StoreProduct {
 }
 
 export interface StateProps {
-  productData: ProductProps[]; // Array of ProductProps
-  favoritData: ProductProps[]; // Array of ProductProps
-  allProducts: ProductProps[]; // Array of ProductProps
-  slice: any; // You can specify the type of the slice if you know it
+  productData: ProductProps[];
+  favoritData: ProductProps[];
+  allProducts: ProductProps[];
 }
 
 export interface Product {
-  product: ProductProps; // Wrapper interface if needed for passing as a prop
+  product: ProductProps;
 }
 export interface Category {
   name: string;
@@ -52,6 +46,7 @@ export interface Category {
 export interface ButtonProps {
   label: string;
   onClick?: () => void;
+  className:string
 }
 
 export interface ProductState {
@@ -64,25 +59,57 @@ export interface ProductState {
     discount: number;
   };
   sortBy: string;
+  searchQuery:String,
   loading: boolean;
   error: string | null;
 }
 
-export interface InputProps<T extends FieldValues> {
-  label: string;
-  name: Path<T>;
-  type?: string;
-  placeholder?: string;
-  register: UseFormRegister<T>;
-  validation?: object;
-  error?: string;
-}
- export interface confirmModalProps{
-  isOpne:boolean;
-  onClose?:()=> void;
-  OnConfrim?:()=>void;
-  message:string;
-  ConfirmText?:string;
-  CanelText?:string;
 
+export interface confirmModalProps {
+  isOpne: boolean;
+  onClose?: () => void;
+  OnConfrim?: () => void;
+  message: string;
+  ConfirmText?: string;
+  CancelText?: string;
+}
+
+
+export interface Auth{
+  user:{
+    email?:string;  
+    phone?:string
+  }|null;
+  isAuthenticated:boolean;
+  otpVerified:boolean
+}
+ export interface addressForm{
+    id:string;
+    fullname: string;
+    phoneNumber: string;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+    
+}
+export interface addressFormProps{
+  onSubmitForm?: (data: addressForm) => void;
+  defaultValues?: Partial<addressForm>;
+}
+ export  interface userProfile{
+  id:string;
+  name:string;
+  gender:string;
+  email:string;
+  phone:string;
+  address:addressForm[]
  }
+  export interface order{
+    id:string;
+    item:string[];
+    totalPrice:number;
+    data:string;
+
+  }

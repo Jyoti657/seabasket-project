@@ -6,7 +6,7 @@ const Confirm: React.FC<confirmModalProps> = ({
   OnConfrim,
   message,
   ConfirmText = "Confrim",
-  CanelText = "Canel",
+  CancelText = "Cancel",
 }) => {
   if (!isOpne) return null;
 
@@ -16,9 +16,9 @@ const Confirm: React.FC<confirmModalProps> = ({
         <p className="text-lg font-semibold text-gray-800">{message}</p>
         <button
           onClick={onClose}
-          className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition cursor-pointer"
+          className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition cursor-pointer mr-3"
         >
-          {CanelText}
+          {CancelText}
         </button>
         <button 
         onClick={OnConfrim}

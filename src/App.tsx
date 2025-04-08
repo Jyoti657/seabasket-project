@@ -10,7 +10,9 @@ import RootLayout from "./components/RootLayout";
 import CategoryPage from "./pages/categoryPage";
 import ProductDetails from "./pages/ProductDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage"
-import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import Opt from "./pages/opt"
+import AddressPage from "./pages/Addresspage";
 import Error from "./pages/Error";
 
 
@@ -20,15 +22,20 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<RootLayout />}>
           <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login/>}/>
           <Route path="/cart" element={<Cart />} />
           <Route path="/category/:categoryName" element={<CategoryPage />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/order" element={<Order />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetails/>}/>
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/address" element={<AddressPage/>}/>
+          <Route path="/Profile" element={<Profile />} >
+          
+          </Route>
+          <Route path="/otp" element={<Opt/>}/>
           <Route path="/favorites" element={<FavoritesPage/>}/>
-          <Route path="/signup" element={<SignUp/>}/>
+          
         <Route path="*" element={<Error/>}/>
         </Route>
       </Routes>
