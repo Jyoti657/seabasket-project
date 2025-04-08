@@ -1,13 +1,10 @@
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StoreProduct } from "../../types";
 
-// ✅ Define the cart state interface
 interface CartState {
   productData: StoreProduct[];
 }
 
-// ✅ Initial state (empty, since redux-persist will load it)
 const initialState: CartState = {
   productData: [],
 };
@@ -16,9 +13,10 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // ✅ Add item to cart
     addToCart: (state, action: PayloadAction<StoreProduct>) => {
-      const existingProduct = state.productData.find((item) => item.id === action.payload.id);
+      const existingProduct = state.productData.find(
+        (item) => item.id === action.payload.id
+      );
       if (existingProduct) {
         existingProduct.quantity += 1;
       } else {
@@ -26,42 +24,67 @@ export const cartSlice = createSlice({
       }
     },
 
-    // ✅ Increase item quantity
     increaseQuantity: (state, action: PayloadAction<{ id: string }>) => {
-      const existingProduct = state.productData.find((item) => item.id === Number(action.payload.id));
+      const existingProduct = state.productData.find(
+        (item) => item.id === action.payload.id
+      );
       if (existingProduct) {
         existingProduct.quantity += 1;
       }
     },
 
-    // ✅ Decrease item quantity
     decreaseQuantity: (state, action: PayloadAction<{ id: string }>) => {
-      const existingProduct = state.productData.find((item) => item.id === Number(action.payload.id)
-    );
+      const existingProduct = state.productData.find(
+        (item) => item.id === action.payload.id
+      );
       if (existingProduct) {
         if (existingProduct.quantity > 1) {
           existingProduct.quantity -= 1;
         } else {
-          state.productData = state.productData.filter((item) => item.id !== Number(action.payload.id));
+          state.productData = state.productData.filter(
+            (item) => item.id !== action.payload.id
+          );
         }
       }
     },
-
-    // ✅ Remove item from cart
-    deleteProduct: (state, action: PayloadAction<string>) => {
-      state.productData = state.productData.filter((item) => item.id !== Number(action.payload));
+    updateQuantity: (
+      state,
+      action: PayloadAction<{ id: string; quantity: number }>
+    ) => {
+      const product = state.productData.find(
+        (p) => String(p.id) === action.payload.id
+      );
+      if (product) {
+        product.quantity = action.payload.quantity;
+      }
     },
 
-    // ✅ Reset cart (clear all items)
+    deleteProduct: (state, action: PayloadAction<string>) => {
+      state.productData = state.productData.filter(
+        (item) => item.id.toString() !== action.payload
+      );
+    },
+
     resetCart: (state) => {
       state.productData = [];
     },
   },
 });
 
-// Export actions
-export const { addToCart, increaseQuantity, decreaseQuantity, deleteProduct, resetCart } =
-  cartSlice.actions;
+export const selectCartTotal = (state: { cart: CartState }) => {
+  return state.cart.productData.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+};
 
-// Export reducer
+export const {
+  addToCart,
+  increaseQuantity,
+  decreaseQuantity,
+  deleteProduct,
+  resetCart,
+  updateQuantity,
+} = cartSlice.actions;
+
 export default cartSlice.reducer;

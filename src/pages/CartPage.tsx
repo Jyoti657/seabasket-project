@@ -7,14 +7,15 @@ import { useState } from "react";
 import { RootState } from "../store/store";
 import { StoreProduct } from "../types";
 import Button from "../components/ui/Button";
+import CartTotal from "../components/cart/CartToatl";
 
 const Cart: React.FC = () => {
-  const { productData } = useSelector((state: RootState) => state.cart);
+  const  productData = useSelector((state: RootState) => state.cart.productData);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen p-6 bg-gray-100 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-6">Cart Page</h1>
+      <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
 
       {productData.length > 0 ? (
         <div
@@ -23,11 +24,10 @@ const Cart: React.FC = () => {
           }`}
         >
           <div className="flex justify-between items-center border-b pb-4">
-            <p className="text-xl font-semibold">Shopping Cart</p>
-            <p className="text-lg font-medium">Subtotal</p>
+            <p className="text-xl font-semibold text-gray-800">Your Items</p>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4 space-y-4">
             {productData.map((item: StoreProduct) => (
               <div
                 key={item.id}
@@ -37,9 +37,14 @@ const Cart: React.FC = () => {
               </div>
             ))}
           </div>
-
-          <div className="mt-6 flex justify-end">
+          <CartTotal />
+          <div className="mt-6 flex justify-between items-center">
             <RestartCart />
+            <NavLink to="/checkout">
+              <Button label="Procced to checkout" 
+              className=""
+              />
+            </NavLink>
           </div>
         </div>
       ) : (
@@ -48,7 +53,7 @@ const Cart: React.FC = () => {
             Your cart is empty. Add products!
           </h1>
           <NavLink to={"/"}>
-            <Button label="Go to Shopping" />
+            <Button className="" label="Go to Shopping" />
           </NavLink>
         </div>
       )}

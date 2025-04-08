@@ -1,7 +1,7 @@
 // import { UseFormRegister, Path, FieldValues } from "react-hook-form";
 
 export interface ProductProps {
-  id: number ;
+  id: number|string ;
   title: string;
   price: number;
   category: string;
@@ -16,7 +16,7 @@ export interface ProductProps {
 }
 
 export interface StoreProduct {
-  id: number ;
+  id: number |string;
   title: string;
   price: number;
   category: string;
