@@ -1,21 +1,27 @@
-
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import cartReducer from "./Slice/cartSlice";
 import productReducer from "./Slice/productSlice";
-import favoriteReducer from "./Slice/favoriteSlice"
+import favoriteReducer from "./Slice/favoriteSlice";
+import addressReducer from "./Slice/addressSlice";
+import authReducer from "./Slice/authSlice";
+import userReducer from "./Slice/UserSlice";
+
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["product", "cart","favorites"], // Persist both slices
+  whitelist: ["product", "cart", "favorites", "address", "user"], 
 };
 
 const rootReducer = combineReducers({
   product: productReducer,
   cart: cartReducer,
-  favorites:favoriteReducer
+  favorites: favoriteReducer,
+  address: addressReducer,
+  auth: authReducer,
+  user: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -25,12 +31,11 @@ export const store = configureStore({
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Avoid warnings for non-serializable values
+      serializableCheck: false,
     }),
 });
 
 export const persistor = persistStore(store);
 
-// Type Definitions
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

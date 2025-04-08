@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ProductState, StoreProduct } from "../../types";
-// import { applyFilters,applySorting } from "../../util/productsUtils";
 
-// callin the api
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
   async (_, { rejectWithValue }) => {
@@ -27,6 +25,7 @@ const initialState: ProductState = {
     rating: 0,
   },
   sortBy: "",
+  searchQuery: "",
   loading: false,
   error: null,
 };
@@ -34,27 +33,13 @@ const ProductSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    // setPriceFilter:(state,action)=>{
-    //   state.filters.minPrice=action.payload.minPrice;
-    //   state.filters.maxPrice=action.payload.maxPrice;
-    //   applyFilters(state);
-    //   applySorting(state)
-    // },
-    // setRatingFilter:(state,action)=>{
-    //   state.filters.rating=action.payload;
-    //   applyFilters(state)
-    //   applySorting(state)
-
-    // },
-    // setDiscountFilter:(state,action)=>{
-    //   state.filters.discount=action.payload;
-    //   applyFilters(state)
-    //   applySorting(state)
-    // },
-    // sortProducts:(state,action)=>{
-    //   state.sortBy=action.payload
-    //   applySorting(state);
-    // }
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+      const query = action.payload.toLowerCase();
+      state.filteredProducts = state.allProducts.filter((product) =>
+        product.title.toLowerCase().includes(query)
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -65,8 +50,7 @@ const ProductSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.allProducts = action.payload;
-        // applyFilters(state)
-        // applySorting(state)
+        state.filteredProducts = action.payload;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
@@ -76,5 +60,5 @@ const ProductSlice = createSlice({
   },
 });
 
-export const {} = ProductSlice.actions;
+export const { setSearchQuery } = ProductSlice.actions;
 export default ProductSlice.reducer;
