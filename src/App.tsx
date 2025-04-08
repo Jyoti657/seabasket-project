@@ -10,8 +10,8 @@ import CategoryPage from "./pages/categoryPage";
 import ProductDetails from "./pages/ProductDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import Login from "./pages/Login";
-// import Opt from "./pages/opt"
-// import AddressPage from "./pages/Addresspage";
+ import Opt from "./pages/opt"
+ import AddressPage from "./pages/Addresspage";
 import Error from "./pages/Error";
 
 const App: React.FC = () => {
@@ -27,9 +27,9 @@ const App: React.FC = () => {
           <Route path="/order" element={<Order />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetails />} />
-          {/* <Route path="/address" element={<AddressPage />} /> */}
+           <Route path="/address" element={<AddressPage />} /> 
           <Route path="/Profile" element={<Profile />}></Route>
-          {/* <Route path="/otp" element={<Opt/>}/> */}
+          <Route path="/otp" element={<Opt/>}/> 
           <Route path="/favorites" element={<FavoritesPage />} />
 
           <Route path="*" element={<Error />} />

@@ -5,9 +5,9 @@ import { combineReducers } from "redux";
 import cartReducer from "./Slice/cartSlice";
 import productReducer from "./Slice/productSlice";
 import favoriteReducer from "./Slice/favoriteSlice";
-// import addressReducer from "./Slice/addressSlice";
-// import authReducer from "./Slice/authSlice";
-// import userReducer from "./Slice/UserSlice";
+import addressReducer from "./Slice/addressSlice";
+import authReducer from "./Slice/authSlice";
+import userReducer from "./Slice/UserSlice";
 
 const persistConfig = {
   key: "root",
@@ -19,9 +19,9 @@ const rootReducer = combineReducers({
   product: productReducer,
   cart: cartReducer,
   favorites: favoriteReducer,
-  // address: addressReducer,
-  // auth: authReducer,
-  // user: userReducer,
+  address: addressReducer,
+  auth: authReducer,
+  user: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
