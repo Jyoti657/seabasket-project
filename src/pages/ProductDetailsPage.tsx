@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { ProductProps } from "../types";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addToCart } from "../store/Slice/cartSlice";
 import { currencyFormatter } from "../util/formatting";
+import Button from "../components/ui/Button";
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams();
@@ -12,9 +13,14 @@ const ProductDetails: React.FC = () => {
   );
 
  const dispatch= useDispatch<AppDispatch>() 
+ const navigate= useNavigate();
     const handleAddToCart = (product: ProductProps) => {
        dispatch(addToCart(product));
      };
+      const handleProductClick = (id: number|string) => {
+        navigate(`/cart`);
+      };
+  
 
   
   const productId = Number(id);
@@ -33,7 +39,7 @@ const ProductDetails: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left: Product Image */}
+        
         <div className="flex justify-center items-center">
           <img
             src={product.image}
@@ -42,7 +48,7 @@ const ProductDetails: React.FC = () => {
           />
         </div>
 
-        {/* Right: Product Details */}
+  
         <div className="flex flex-col justify-between">
           <h1 className="text-2xl font-bold text-gray-900">{product.title}</h1>
           <p className="text-lg text-green-600 font-semibold mt-2">
@@ -60,14 +66,12 @@ const ProductDetails: React.FC = () => {
 
           {/* Buttons Section */}
           <div className="mt-6 flex gap-4">
-            <button className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition">
-              Buy Now
-            </button>
-            <button className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition"
-            onClick={() => handleAddToCart(product)}
-            >
-              Add to Cart
-            </button>
+            
+            <Button label="Buy Now" className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition" 
+            onClick={() => handleProductClick(product.id)}
+            />
+           
+            <Button label="Add to Cart" className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition" onClick={() => handleAddToCart(product)} />
           </div>
         </div>
       </div>
