@@ -33,7 +33,7 @@ const UserDropdown: React.FC = () => {
         className="cursor-pointer flex items-center gap-2 p-2 border border-gray-300 rounded-md hover:bg-gray-100 transition"
       >
         <AccountCircle className="w-6 h-6 text-blue-600" />
-        <p className="font-bold text-gray-800">Account</p>
+        <p className="font-bold text-white">Account</p>
       </button>
 
       {isOpen && (

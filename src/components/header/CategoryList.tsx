@@ -4,7 +4,7 @@ import { RootState } from "../../store/store";
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import electronics from "../../assets/electronic.png";
+import electronics from "../../assets/electronic.jpg";
 import jewelly from "../../assets/jewelly.jpg";
 import men from "../../assets/men.jpg";
 import women from "../../assets/women.jpg";
@@ -25,10 +25,10 @@ const CategoryList: React.FC = () => {
 
     const categoryList = Array.from(categorySet).map((category) => {
       const categoryImageMap: Record<string, string> = {
-        electronics: electronics,
+        "electronics": electronics,
         "women's clothing": women,
         jewelery: jewelly,
-        mens: men,
+        "men's clothing": men,
       };
 
       return {
@@ -56,7 +56,7 @@ const CategoryList: React.FC = () => {
             <div
               key={category.name}
               onClick={() => handleCategoriesClick(category)}
-              className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all transform hover:scale-105"
+              className="bg-white  shadow-md rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all transform hover:scale-105 hover:bg-gradient-to-t from-seabasket_green"
             >
               <img
                 src={category.image}

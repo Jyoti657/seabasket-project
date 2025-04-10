@@ -5,7 +5,7 @@ const Confirm: React.FC<confirmModalProps> = ({
   onClose,
   OnConfrim,
   message,
-  ConfirmText = "Confrim",
+  ConfirmText = "Confirm",
   CancelText = "Cancel",
 }) => {
   if (!isOpne) return null;

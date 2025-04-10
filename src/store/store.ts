@@ -7,7 +7,7 @@ import productReducer from "./Slice/productSlice";
 import favoriteReducer from "./Slice/favoriteSlice";
 import addressReducer from "./Slice/addressSlice";
 import authReducer from "./Slice/authSlice";
-import userReducer from "./Slice/UserSlice";
+import userReducer from "./Slice/userSlice";
 
 const persistConfig = {
   key: "root",

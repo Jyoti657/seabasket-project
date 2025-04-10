@@ -3,13 +3,11 @@ import ProductList from "../components/products/ProductList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-
-
+// import FilterAndSorting from "../components/products/FiltersAndSorting";
 
 const Product: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  // Selecting state from Redux store
   const { allProducts, loading, error } = useSelector(
     (state: RootState) => state.product
   );
@@ -25,7 +23,8 @@ const Product: React.FC = () => {
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
             Featured Products
           </h1>
-          {/* <ProductSorting products={allProducts}/>  */}
+
+          {/* <FilterAndSorting products={allProducts} /> */}
           {loading && <p>Loading products...</p>}
           {error && <p className="text-red-500">{error}</p>}
 
@@ -33,7 +32,9 @@ const Product: React.FC = () => {
             <ProductList productData={allProducts} />
           ) : (
             !loading &&
-            !error && <p className="text-gray-500 text-center">No products available</p>
+            !error && (
+              <p className="text-gray-500 text-center">No products available</p>
+            )
           )}
         </div>
       </div>

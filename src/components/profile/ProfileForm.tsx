@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "../../store/store"
-import { setUser } from "../../store/Slice/UserSlice"
+import { setUser } from "../../store/Slice/userSlice"
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()

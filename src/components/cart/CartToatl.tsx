@@ -1,16 +1,45 @@
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../../store/Slice/cartSlice";
 import { currencyFormatter } from "../../util/formatting";
+import Button from "../ui/Button";
+import { NavLink } from "react-router-dom";
+import { calculateTotalAmount } from "../../util/calculateTotal";
 
 const CartTotal: React.FC = () => {
-  const totalPrice = useSelector(selectCartTotal);
+  const subtotal = useSelector(selectCartTotal);
+  const{total,tax,shipping}=calculateTotalAmount(subtotal)
+
 
   return (
-    <div className=" w-full justify-between items-center bg-gray-50 p-4  shadow-md border border-gray-200 mt-6">
-      <h2 className="text-lg font-semibold text-slate-700">SubTotal:</h2>
-      <span className="text-xl font-bold text-green-600">
-        Total:{currencyFormatter.format(totalPrice)}
-      </span>
+    <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-md border border-gray-200 p-6 mt-8">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">Cart Summary</h2>
+
+      <div className="space-y-3 text-gray-700">
+        <div className="flex justify-between">
+          <span>Subtotal</span>
+          <span>{currencyFormatter.format(subtotal)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Shipping</span>
+          <span>{currencyFormatter.format(shipping)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Tax (10%)</span>
+          <span>{currencyFormatter.format(tax)}</span>
+        </div>
+        <hr className="my-3" />
+        <div className="flex justify-between font-bold text-lg text-gray-800">
+          <span>Total</span>
+          <span>{currencyFormatter.format(total)}</span>
+        </div>
+      </div>
+
+      <NavLink to="/order">
+        <Button
+          label="Proceed to order"
+          className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-xl"
+        />
+      </NavLink>
     </div>
   );
 };

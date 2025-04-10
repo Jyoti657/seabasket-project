@@ -45,6 +45,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-4 bg-white shadow-md rounded-lg border border-gray-200 w-full">
+
       <div className="w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
         <img
           src={item.image}
@@ -70,7 +71,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
         {item.rating && (
           <div className="flex items-center justify-center sm:justify-start space-x-2">
             <span className="text-yellow-500 text-xs sm:text-sm font-medium">
-              {item.rating.rate} ★
+              {item.rating.rate} 
             </span>
             <span className="text-gray-500 text-xs">
               ({item.rating.count} reviews)

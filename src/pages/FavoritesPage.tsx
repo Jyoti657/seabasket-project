@@ -51,6 +51,7 @@ const FavoritesPage: React.FC = () => {
 
                 <div className="flex flex-col gap-3 mt-4 pt-4 border-t">
                   <Button
+                  className="bg-red"
                     label="Remove"
                     onClick={() => handleRemoveFavorite(product.id)}
                   />
@@ -63,7 +64,9 @@ const FavoritesPage: React.FC = () => {
         )}
       </div>
       <div className="flex justify-center m-10">
-        <Button label="Reset Favorites" onClick={handleResetFavorite} />
+        <Button label="Reset Favorites" onClick={handleResetFavorite}
+         className="bg-red-500"
+         />
       </div>
     </>
   );

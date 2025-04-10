@@ -1,8 +1,11 @@
+import OrderHistory from "../components/profile/OrderHistory"
+
 const Order: React.FC=()=>{
     return (
         <>
         <h1>
-            This Order Page
+        
+            <OrderHistory/>
         </h1>
         
         </>

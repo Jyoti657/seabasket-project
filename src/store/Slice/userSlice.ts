@@ -20,10 +20,10 @@ const userSlice = createSlice({
       state.isLoggedIn = true;
     },
     updateUserProfile: (state, action) => {
-        if (state.user) {
-            state.user = { ...state.user, ...action.payload };
-        }
-        },
+      if (state.user) {
+        state.user = { ...state.user, ...action.payload };
+      }
+    },
     logoutUser: (state) => {
       state.user = null;
       state.order = null;
@@ -34,6 +34,7 @@ const userSlice = createSlice({
     },
   },
 });
- export const { setUser, logoutUser, setOrder,updateUserProfile } = userSlice.actions;
-export default userSlice.reducer;
+export const { setUser, logoutUser, setOrder, updateUserProfile } =
+  userSlice.actions;
 
+export default userSlice.reducer;

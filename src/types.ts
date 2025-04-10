@@ -1,7 +1,5 @@
-// import { UseFormRegister, Path, FieldValues } from "react-hook-form";
-
 export interface ProductProps {
-  id: number|string ;
+  id: number;
   title: string;
   price: number;
   category: string;
@@ -16,7 +14,7 @@ export interface ProductProps {
 }
 
 export interface StoreProduct {
-  id: number |string;
+  id: number;
   title: string;
   price: number;
   category: string;
@@ -46,7 +44,7 @@ export interface Category {
 export interface ButtonProps {
   label: string;
   onClick?: () => void;
-  className:string
+  className: string;
 }
 
 export interface ProductState {
@@ -59,11 +57,10 @@ export interface ProductState {
     discount: number;
   };
   sortBy: string;
-  searchQuery:String,
+  searchQuery: String;
   loading: boolean;
   error: string | null;
 }
-
 
 export interface confirmModalProps {
   isOpne: boolean;
@@ -74,42 +71,37 @@ export interface confirmModalProps {
   CancelText?: string;
 }
 
+export interface Auth {
+  user: {
+    email?: string;
+    phone?: string;
+  } | null;
+  isAuthenticated: boolean;
+  otpVerified: boolean;
+}
 
-export interface Auth{
-  user:{
-    email?:string;  
-    phone?:string
-  }|null;
-  isAuthenticated:boolean;
-  otpVerified:boolean
+export interface addressForm {
+  id: string;
+  fullname: string;
+  phoneNumber: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
 }
- export interface addressForm{
-    id:string;
-    fullname: string;
-    phoneNumber: string;
-    address: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-    
-}
-export interface addressFormProps{
-  onSubmitForm?: (data: addressForm) => void;
-  defaultValues?: Partial<addressForm>;
-}
- export  interface userProfile{
-  id:string;
-  name:string;
-  gender:string;
-  email:string;
-  phone:string;
-  address:addressForm[]
- }
-  export interface order{
-    id:string;
-    item:string[];
-    totalPrice:number;
-    data:string;
 
-  }
+export interface userProfile {
+  id: string;
+  name: string;
+  gender: string;
+  email: string;
+  phone: string;
+  address: addressForm[];
+}
+export interface order {
+  id: string;
+  item: string[];
+  totalPrice: number;
+  data: string;
+}

@@ -27,7 +27,7 @@ const Category: React.FC = () => {
     dispatch(addToCart(product));
   };
 
-  const handleProductClick = (id: number | string) => {
+  const handleProductClick = (id: number) => {
     navigate(`/products/${id}`);
   };
 

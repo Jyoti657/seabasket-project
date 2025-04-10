@@ -17,7 +17,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
   const isFavorite = favoriteProducts.some((item) => item.id === product.id);
 
   const handleToggleFavorite = () => {
-    dispatch(toggleFavorites(product)); // Corrected function argument
+    dispatch(toggleFavorites(product)); 
   };
 
   return (

@@ -16,7 +16,7 @@ const favoritSlice = createSlice({
       const existingProduct = state.favoriteProducts.find(
         (item) => item.id === action.payload.id
       );
-      //  remove if there then
+
       if (existingProduct) {
         state.favoriteProducts = state.favoriteProducts.filter(
           (item) => item.id !== action.payload.id

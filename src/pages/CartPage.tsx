@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-
 import { NavLink } from "react-router-dom";
 import CartProducts from "../components/cart/CartProducts";
 import RestartCart from "../components/cart/ReSetCart";
@@ -10,45 +9,44 @@ import Button from "../components/ui/Button";
 import CartTotal from "../components/cart/CartToatl";
 
 const Cart: React.FC = () => {
-  const  productData = useSelector((state: RootState) => state.cart.productData);
+  const productData = useSelector((state: RootState) => state.cart.productData);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-6">Shopping Cart</h1>
-
+    <div className="min-h-screen bg-gray-100 px-4 py-6 flex flex-col lg:flex-row gap-6 justify-center">
       {productData.length > 0 ? (
-        <div
-          className={`w-full max-w-4xl bg-white p-6 rounded-lg shadow-md transition ${
-            isModalOpen ? "blur-sm" : ""
-          }`}
-        >
-          <div className="flex justify-between items-center border-b pb-4">
-            <p className="text-xl font-semibold text-gray-800">Your Items</p>
+        <>
+          <div
+            className={`w-full lg:w-3/4 bg-white shadow-md rounded-lg p-6 space-y-6 ${
+              isModalOpen ? "blur-sm" : ""
+            }`}
+          >
+            <h2 className="text-2xl font-bold text-gray-800 border-b pb-4">
+              Your Items
+            </h2>
+
+            <div className="space-y-4">
+              {productData.map((item: StoreProduct) => (
+                <div key={item.id} className="border-b pb-4">
+                  <CartProducts item={item} />
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-4 border-t flex justify-end">
+              <RestartCart />
+            </div>
           </div>
 
-          <div className="mt-4 space-y-4">
-            {productData.map((item: StoreProduct) => (
-              <div
-                key={item.id}
-                className="flex justify-between items-center border-b py-4"
-              >
-                <CartProducts item={item} />
-              </div>
-            ))}
+          <div className="w-full lg:w-1/4 bg-white shadow-md rounded-lg p-6 h-fit">
+            <h3 className="text-xl font-semibold text-gray-800 border-b pb-4 mb-4">
+              Cart Summary
+            </h3>
+            <CartTotal />
           </div>
-          <CartTotal />
-          <div className="mt-6 flex justify-between items-center">
-            <RestartCart />
-            <NavLink to="/checkout">
-              <Button label="Procced to checkout" 
-              className=""
-              />
-            </NavLink>
-          </div>
-        </div>
+        </>
       ) : (
-        <div className="flex flex-col items-center justify-center mt-10">
+        <div className="flex flex-col items-center justify-center w-full py-10">
           <h1 className="text-xl font-semibold text-gray-700 mb-4">
             Your cart is empty. Add products!
           </h1>

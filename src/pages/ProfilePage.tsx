@@ -1,3 +1,4 @@
+
 import { useSelector } from "react-redux";
 import ProfileForm from "../components/profile/ProfileForm";
 import { RootState } from "../store/store";
@@ -11,7 +12,7 @@ import { FaAddressCard } from "react-icons/fa";
 const Profile: React.FC = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user.user);
+ const user = useSelector((state: RootState) => state.user.user);
 
   const handleOrderHistory = () => {
     navigate("/order");
@@ -22,19 +23,20 @@ const Profile: React.FC = () => {
     navigate("/"); 
   };
   const handleAddress=()=>{
-    navigate("/address")
+    navigate("address")
   }
 
   return (
     <>
       <div className="min-h-screen bg-gray-100 flex flex-col lg:flex-row px-4 py-6 gap-6">
         
-        <div className="w-full bg-gradient-to-t from-seabasket_green lg:w-1/4 shadow-lg rounded-lg p-6 space-y-6">
+        <div className="w-full bg-gradient-to-t from-seabasket_green 
+        lg:w-1/4 shadow-lg rounded-lg p-6 space-y-6">
         
           <div className="flex flex-col items-center text-center">
             <CgProfile className="w-16 h-16 text-gray-500 mb-2" />
             <h2 className="text-xl font-semibold text-gray-800">
-              Hello, {user?.name || "User"}
+              Hello, {user?.name || "User"} 
             </h2>
           </div>
 
@@ -111,4 +113,5 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
 
