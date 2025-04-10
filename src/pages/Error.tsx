@@ -10,7 +10,7 @@ const Error: React.FC = () => {
           Sorry, the page you're looking for doesn't exist.
         </p>
         <NavLink to={"/"}>
-          <Button label="Go To Home" />
+          <Button className="bg-soft_mint" label="Go To Home" />
         </NavLink>
       </div>
     </>

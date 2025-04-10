@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const HeadBottom: React.FC = () => {
   return (
     <div
-      className="bg-gradient-to-t from-seabasket_green text-black p-2  left-0  top-16 w-full 
+      className="bg-soft_mint text-black p-2  left-0  top-16 w-full 
         flex items-center gap-2 sm:justify-start 
         md:justify-center md:flex-wrap 
         lg:justify-center lg:gap-4 

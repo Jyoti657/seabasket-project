@@ -1,11 +1,20 @@
 import CategoryList from "../components/header/CategoryList";
-// import Trending from "../components/header/Trending";
+import TrendingProducts from "../components/header/TrendingProducts";
+
 
 const Home: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col items-center">
-      {/* <Trending /> */}
-      <CategoryList />
+       
+      <div>
+       <TrendingProducts/>
+
+        </div> 
+        <div>
+        <CategoryList />
+
+        </div>
+
     </div>
   );
 };

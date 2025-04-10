@@ -1,8 +1,8 @@
 
 import React, { useState } from "react";
-import CashForm from "../payment/CashForm";
-import CreditCardForm from "../payment/CreditCardForm";
-import UPIForm from "../payment/UPIForm";
+// import CashForm from "../payment/CashForm";
+// import CreditCardForm from "../payment/CreditCardForm";
+// import UPIForm from "../payment/UPIForm";
 
 const PaymentForm: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState("upi");
@@ -27,7 +27,7 @@ const PaymentForm: React.FC = () => {
             UPI
           </label>
         </div>
-        {paymentMethod === "upi" && <UPIForm />}
+        {/* {paymentMethod === "upi" && <UPIForm />} */}
 
    
        
@@ -47,7 +47,7 @@ const PaymentForm: React.FC = () => {
             Credit/Debit Card
           </label>
         </div>
-        {paymentMethod === "card" && <CreditCardForm />}
+        {/* {paymentMethod === "card" && <CreditCardForm />} */}
         <div className="flex items-center gap-3">
           <input
             type="radio"
@@ -62,7 +62,7 @@ const PaymentForm: React.FC = () => {
             Cash
           </label>
         </div>
-        {paymentMethod === "cash" && <CashForm />}
+        {/* {paymentMethod === "cash" && <CashForm />} */}
       </div>
     </div>
   );

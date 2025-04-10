@@ -14,15 +14,13 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
   const dispatch = useDispatch();
 
   const updatedItem = useSelector((state: RootState) =>
-    state.cart.productData.find(
-      (product) => String(product.id) === String(item.id)
-    )
+    state.cart.productData.find((product) => product.id === item.id)
   );
 
   const handleIncrease = () => {
     dispatch(
       updateQuantity({
-        id: String(item.id),
+        id: item.id,
         quantity: (updatedItem?.quantity ?? item.quantity) + 1,
       })
     );
@@ -32,7 +30,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
     if (updatedItem?.quantity && updatedItem.quantity > 1) {
       dispatch(
         updateQuantity({
-          id: String(item.id),
+          id: item.id,
           quantity: updatedItem.quantity - 1,
         })
       );
@@ -40,12 +38,11 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
   };
 
   const handleRemove = () => {
-    dispatch(deleteProduct(String(item.id)));
+    dispatch(deleteProduct(item.id));
   };
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-4 bg-white shadow-md rounded-lg border border-gray-200 w-full">
-
       <div className="w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
         <img
           src={item.image}
@@ -71,7 +68,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
         {item.rating && (
           <div className="flex items-center justify-center sm:justify-start space-x-2">
             <span className="text-yellow-500 text-xs sm:text-sm font-medium">
-              {item.rating.rate} 
+              {item.rating.rate} ★
             </span>
             <span className="text-gray-500 text-xs">
               ({item.rating.count} reviews)
@@ -79,7 +76,6 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
           </div>
         )}
 
-      
         <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
           <button
             onClick={handleDecrease}

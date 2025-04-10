@@ -24,16 +24,9 @@ const userSlice = createSlice({
             state.user = { ...state.user, ...action.payload };
         }
         },
-    logoutUser: (state) => {
-      state.user = null;
-      state.order = null;
-      state.isLoggedIn = false;
-    },
-    setOrder: (state, action) => {
-      state.order = action.payload;
-    },
+  
   },
 });
- export const { setUser, logoutUser, setOrder,updateUserProfile } = userSlice.actions;
+ export const { setUser, updateUserProfile } = userSlice.actions;
 export default userSlice.reducer;
 

@@ -4,7 +4,7 @@ import { RootState } from "../../store/store";
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import electronics from "../../assets/electronic.jpg";
+import electronics from "../../assets/electronic.png";
 import jewelly from "../../assets/jewelly.jpg";
 import men from "../../assets/men.jpg";
 import women from "../../assets/women.jpg";

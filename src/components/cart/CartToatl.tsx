@@ -3,7 +3,7 @@ import { selectCartTotal } from "../../store/Slice/cartSlice";
 import { currencyFormatter } from "../../util/formatting";
 import Button from "../ui/Button";
 import { NavLink } from "react-router-dom";
-import { calculateTotalAmount } from "../../util/calculateTotal";
+import { calculateTotalAmount } from "../../util/calculateTotalAmount";
 
 const CartTotal: React.FC = () => {
   const subtotal = useSelector(selectCartTotal);

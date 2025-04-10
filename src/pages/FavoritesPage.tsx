@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { removeFavorites, resetFavorites } from "../store/Slice/favoriteSlice";
-import { Favorite } from "@mui/icons-material";
+
 import { currencyFormatter } from "../util/formatting";
 import Button from "../components/ui/Button";
 
@@ -51,7 +51,7 @@ const FavoritesPage: React.FC = () => {
 
                 <div className="flex flex-col gap-3 mt-4 pt-4 border-t">
                   <Button
-                  className="bg-red"
+                    className="bg-red-500 hover:bg-red-800"
                     label="Remove"
                     onClick={() => handleRemoveFavorite(product.id)}
                   />
@@ -64,9 +64,11 @@ const FavoritesPage: React.FC = () => {
         )}
       </div>
       <div className="flex justify-center m-10">
-        <Button label="Reset Favorites" onClick={handleResetFavorite}
-         className="bg-red-500"
-         />
+        <Button
+          label="Reset Favorites"
+          onClick={handleResetFavorite}
+          className="bg-seabasket_green"
+        />
       </div>
     </>
   );
