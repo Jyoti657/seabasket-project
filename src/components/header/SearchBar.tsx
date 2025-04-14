@@ -5,7 +5,7 @@ import { setSearchQuery } from "../../store/Slice/productSlice";
 
 const SearchBar: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const query = useSelector((state: RootState) => state.product.searchQuery);
+  const query = useSelector((state: RootState) => state.product.searchQuery as string);
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchQuery(e.target.value));
   };
