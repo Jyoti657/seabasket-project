@@ -14,7 +14,7 @@ const TrendingProducts: React.FC = () => {
   };
   return (
     <>
-      <div className="relative mt-4 w-full max-w-screen-3xl mx-auto">
+      <div className="relative mt-4 w-full max-w-screen-2xl mx-auto">
         <Carousel
           autoPlay
           infiniteLoop

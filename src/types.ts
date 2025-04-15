@@ -73,11 +73,17 @@ export interface confirmModalProps {
 
 export interface Auth {
   user: {
-    email?: string;
+    name?: string;
+    email: string;
+    password: string;
     phone?: string;
   } | null;
   isAuthenticated: boolean;
   otpVerified: boolean;
+  token: null | string;
+  authError: null | string;
+  isLoading: boolean;
+  registerUser: null;
 }
 
 export interface addressForm {

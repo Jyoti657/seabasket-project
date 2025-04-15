@@ -3,13 +3,20 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { setUser } from "../../store/Slice/userSlice";
 
+type FormValues = {
+  name: string;
+  email: string;
+  phone: string;
+};
+
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormValues>({
     defaultValues: {
       name: "",
       email: "",
@@ -17,7 +24,7 @@ const ProfileForm: React.FC = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormValues) => {
     dispatch(setUser(data));
   };
 
@@ -28,6 +35,7 @@ const ProfileForm: React.FC = () => {
       </h2>
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+
         <div>
           <label
             htmlFor="name"
@@ -35,25 +43,25 @@ const ProfileForm: React.FC = () => {
           >
             Name
           </label>
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
+          <input
+            type="text"
+            id="name"
+            {...register("name", { required: "Name is required" })}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          )}
+        </div>
 
-            <input
-              type="text"
-              id="name"
-              {...register("name", { required: "Name is required" })}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-            )}
-          </div>
-
+        
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Email
+          </label>
           <input
             type="email"
             id="email"
@@ -64,6 +72,8 @@ const ProfileForm: React.FC = () => {
             <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
           )}
         </div>
+
+      
         <div>
           <label
             htmlFor="phone"
