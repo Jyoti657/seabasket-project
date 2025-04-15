@@ -24,14 +24,14 @@ export const cartSlice = createSlice({
       }
     },
 
-    increaseQuantity: (state, action: PayloadAction<{ id: number }>) => {
-      const existingProduct = state.productData.find(
-        (item) => item.id === action.payload.id
-      );
-      if (existingProduct) {
-        existingProduct.quantity += 1;
-      }
-    },
+    // increaseQuantity: (state, action: PayloadAction<{ id: number }>) => {
+    //   const existingProduct = state.productData.find(
+    //     (item) => item.id === action.payload.id
+    //   );
+    //   if (existingProduct) {
+    //     existingProduct.quantity += 1;
+    //   }
+    // },
 
     decreaseQuantity: (state, action: PayloadAction<{ id: number }>) => {
       const existingProduct = state.productData.find(
@@ -78,7 +78,7 @@ export const selectCartTotal = (state: { cart: CartState }) => {
 
 export const {
   addToCart,
-  increaseQuantity,
+  // increaseQuantity,
   decreaseQuantity,
   deleteProduct,
   resetCart,
