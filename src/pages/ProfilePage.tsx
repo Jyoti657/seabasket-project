@@ -12,20 +12,18 @@ import { logOut } from "../store/Slice/authSlice";
 const Profile: React.FC = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
- const dispatch= useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
 
-  const user = useSelector((state: RootState) => state.user.user);
-  const auth=useSelector((state:RootState)=>state.auth.user)
+  const auth = useSelector((state: RootState) => state.auth.user);
 
   const handleOrderHistory = () => {
     navigate("/order");
   };
 
-const handleLogOut=()=>{
-  dispatch(logOut());
-  navigate("/")
-  
-}
+  const handleLogOut = () => {
+    dispatch(logOut());
+    navigate("/");
+  };
   const handleAddress = () => {
     navigate("/address");
   };
@@ -66,20 +64,20 @@ const handleLogOut=()=>{
         </div>
 
         <div className="w-full lg:w-3/4 space-y-6">
-          {user && (
+          {auth && (
             <div className="bg-white shadow-md rounded-lg p-6">
               <h3 className="text-xl font-semibold text-gray-800 border-b pb-2 mb-4">
                 Profile Details
               </h3>
               <div className="grid sm:grid-cols-2 gap-4 text-gray-700">
                 <p>
-                  <span className="font-medium">Name:</span> {user.name}
+                  <span className="font-medium">Name:</span> {auth.name}
                 </p>
                 <p>
-                  <span className="font-medium">Email:</span> {user.email}
+                  <span className="font-medium">Email:</span> {auth.email}
                 </p>
                 <p>
-                  <span className="font-medium">Phone:</span> {user.phone}
+                  <span className="font-medium">Phone:</span> {auth.phone}
                 </p>
               </div>
             </div>
