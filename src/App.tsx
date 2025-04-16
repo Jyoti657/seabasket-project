@@ -12,6 +12,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import Login from "./pages/Login";
 import AddressPage from "./pages/AddressPage";
 import SignUpPage from "./pages/SignUpPage";
+
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
 
@@ -33,7 +34,8 @@ const App: React.FC = () => {
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/favorites" element={<FavoritesPage />} />
-          <Route path="/signUp" element={<SignUpPage />} />
+          <Route path="/signUp" element={<SignUpPage/>}/>
+
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>

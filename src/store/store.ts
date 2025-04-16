@@ -13,6 +13,7 @@ import orderReducer from "./Slice/orderSlice"
 const persistConfig = {
   key: "root",
   storage,
+
   whitelist: ["product", "cart", "favorites", "address", "user","auth","order"], 
 };
 
