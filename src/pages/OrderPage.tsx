@@ -1,14 +1,12 @@
-import OrderHistory from "../components/profile/OrderHistory"
+import OrderList from "../components/order.tsx/OrderList";
 
-const Order: React.FC=()=>{
-    return (
-        <>
-        <h1>
-        
-            <OrderHistory/>
-        </h1>
-        
-        </>
-    )
-}
-export default Order
+const Order: React.FC = () => {
+  return (
+    <>
+      <h1>
+        <OrderList />
+      </h1>
+    </>
+  );
+};
+export default Order;

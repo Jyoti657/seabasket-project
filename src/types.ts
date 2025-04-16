@@ -106,8 +106,10 @@ export interface userProfile {
   address: addressForm[];
 }
 export interface order {
-  id: string;
-  item: string[];
-  totalPrice: number;
-  data: string;
+  id:number;
+  date:string;
+  productName:string;
+  image:string;
+  price:number,
+  status:"Delivered"|"Shipped"|"Processing"|"Cancelled"|"Returned"|"orderConfirmed"|"out for Delivery";
 }

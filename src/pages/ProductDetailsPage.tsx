@@ -17,8 +17,8 @@ const ProductDetails: React.FC = () => {
   const handleAddToCart = (product: ProductProps) => {
     dispatch(addToCart(product));
   };
-  const handleProductClick = (id: number ) => {
-    navigate('/checkout/cart');
+  const handleProductClick = (id: number) => {
+    navigate("/checkout/cart");
   };
 
   const productId = Number(id);
