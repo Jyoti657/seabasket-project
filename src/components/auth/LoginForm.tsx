@@ -1,20 +1,41 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "../ui/Button";
+import logInSchema, { logInSchemaType } from "../../schema/logInSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { setCredinatials } from "../../store/Slice/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { MdMarkEmailUnread } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 const LoginForm: React.FC = () => {
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const authError = useSelector((state: RootState) => state.auth.authError);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const {
     register,
-    watch,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<logInSchemaType>({ resolver: zodResolver(logInSchema) });
 
-  
-  const email = watch("email");
-
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<logInSchemaType> = (data) => {
+    setHasSubmitted(true);
+    dispatch(setCredinatials(data));
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      reset();
+      navigate("/");
+    }
+  }, [navigate, isAuthenticated, reset]);
 
   return (
     <div className="w-full max-w-4xl mx-auto mt-20 shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row">
@@ -26,41 +47,50 @@ const LoginForm: React.FC = () => {
         </p>
       </div>
 
-      <div className="w-full md:w-1/2   p-8">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <input
-            {...register("tel")}
-            type="tel"
-            placeholder="Enter Phone Number"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-            pattern="^\d{10}$"
-          />
+      <div className="w-full md:w-1/2 p-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div className="relative">
+            <input
+              {...register("email")}
+              type="email"
+              placeholder="Enter Email"
+              className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+            <MdMarkEmailUnread className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
 
-          <input
-            {...register("email")}
-            type="email"
-            placeholder="Enter Email"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-          />
+          <div className="relative">
+            <input
+              {...register("password")}
+              type="password"
+              placeholder="Enter Password"
+              className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+            />
+            <RiLockPasswordFill className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
 
+          {hasSubmitted && authError && (
+            <p className="text-red-600 text-sm mt-2">{authError}</p>
+          )}
 
-          {email && (
-            <div>
-              <input
-                {...register("password", {
-                  required: "Password is required",
-                })}
-                type="password"
-                placeholder="Enter Password"
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-              />
-            </div>
+          {hasSubmitted && isAuthenticated && (
+            <p className="text-green-600 text-sm mt-2">Login Successful</p>
           )}
 
           <Button
             label="Submit"
-            className="w-full bg-yellow-400 text-black py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-200"
-          ></Button>
+            className="w-full bg-yellow-400 text-black py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-200 mt-4"
+          />
         </form>
       </div>
     </div>

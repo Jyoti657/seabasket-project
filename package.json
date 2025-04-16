@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@hookform/resolvers": "^5.0.1",
     "@mui/icons-material": "^6.4.8",
     "@mui/material": "^6.4.8",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
@@ -36,9 +37,11 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^7.4.0",
     "react-scroll": "^1.9.3",
+    "react-spinners": "^0.15.0",
     "react-toastify": "^11.0.5",
     "redux-persist": "^6.0.0",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

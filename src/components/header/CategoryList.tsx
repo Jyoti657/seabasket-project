@@ -25,7 +25,7 @@ const CategoryList: React.FC = () => {
 
     const categoryList = Array.from(categorySet).map((category) => {
       const categoryImageMap: Record<string, string> = {
-        "electronics": electronics,
+        electronics: electronics,
         "women's clothing": women,
         jewelery: jewelly,
         "men's clothing": men,

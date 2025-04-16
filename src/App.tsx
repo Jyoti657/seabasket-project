@@ -11,9 +11,9 @@ import ProductDetails from "./pages/ProductDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import Login from "./pages/Login";
 import AddressPage from "./pages/AddressPage";
-import Otp from "./pages/Otp";
+import SignUpPage from "./pages/SignUpPage";
+import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
-import Category from "./pages/CategoryPage";
 
 const App: React.FC = () => {
   return (
@@ -27,12 +27,13 @@ const App: React.FC = () => {
             <Route path="cart" element={<Cart />} />
           </Route>
           <Route path="/order" element={<Order />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
           <Route path="/address" element={<AddressPage />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/favorites" element={<FavoritesPage />} />
-          {/* <Route path="/otp" element={<Otp />} /> */}
+          <Route path="/signUp" element={<SignUpPage />} />
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>
