@@ -4,7 +4,7 @@ import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
 
 const fake_user = {
-  name: "abc",
+  name: "Max",
   email: "abc123@gmail.com",
   password: "123456",
 };
@@ -39,6 +39,7 @@ const authSlice = createSlice({
       const { email, password } = action.payload;
       if (email === fake_user.email && password === fake_user.password) {
         state.user = {
+          name: fake_user.name,
           email,
           password,
         };
