@@ -107,8 +107,9 @@ export interface userProfile {
 }
 export interface order {
   id:number;
+  date:string;
   productName:string;
   image:string;
   price:number,
-  status:"Delivered"|"Shipped"|"Processing"|"Cancelled"|"Returned"
+  status:"Delivered"|"Shipped"|"Processing"|"Cancelled"|"Returned"|"orderConfirmed"|"out for Delivery";
 }

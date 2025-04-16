@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import fakeOrders from "../../data/fakeOrders";
 import { order } from "../../types";
 
@@ -12,9 +12,7 @@ const initialState: OrderState = {
 const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {
-   
-  },
+  reducers: {},
 });
-export const { } = orderSlice.actions;
+export const {} = orderSlice.actions;
 export default orderSlice.reducer;

@@ -20,30 +20,29 @@ const OrderDetails: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-soft_mint flex justify-center items-start p-6">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div className="flex flex-col items-center md:items-start gap-6">
+    <div className="min-h-screen bg-soft_mint flex justify-center items-center p-6">
+      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center  ">
+        <div className="flex flex-col items-center lg:items-start gap-6">
           <img
             src={order.image}
             alt={order.productName}
-            className="w-64 h-64 object-contain border border-gray-300 p-4 rounded-lg shadow"
+            className="w-96 h-46 object-contain border border-gray-300 p-4 rounded-xl shadow"
           />
-
-          <div className="text-center md:text-left">
-            <h1 className="text-2xl font-bold text-gray-900">
+          <div className="text-center lg:text-left space-y-2">
+            <h1 className="text-3xl font-bold text-gray-900">
               {order.productName}
             </h1>
-            <p className="text-lg text-green-600 font-semibold mt-2">
+            <p className="text-xl text-green-600 font-semibold">
               {currencyFormatter.format(order.price)}
             </p>
+            <p className="text-sm  font-semibold text-gray-900">
+              Excepted date:{order.date}
+            </p>
           </div>
-
-          <button className="bg-seabasket_green text-soft_mint px-6 py-2 rounded-md hover:bg-green-700 transition">
-            See All Updates
-          </button>
         </div>
-        <div>
-            <OrderSteeper/>
+
+        <div className="flex flex-col justify-center">
+          <OrderSteeper status={order.status} />
         </div>
       </div>
     </div>
