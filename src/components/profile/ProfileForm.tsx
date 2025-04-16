@@ -20,7 +20,7 @@ const ProfileForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-[800px] bg-white p-6 shadow-lg rounded-md">
+    <div className="w-full max-w-[800px] bg-white p-6 shadow-lg rounded-md items-center">
       <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
         Personal Information
       </h2>

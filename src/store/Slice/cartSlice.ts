@@ -24,29 +24,6 @@ export const cartSlice = createSlice({
       }
     },
 
-    // increaseQuantity: (state, action: PayloadAction<{ id: number }>) => {
-    //   const existingProduct = state.productData.find(
-    //     (item) => item.id === action.payload.id
-    //   );
-    //   if (existingProduct) {
-    //     existingProduct.quantity += 1;
-    //   }
-    // },
-
-    decreaseQuantity: (state, action: PayloadAction<{ id: number }>) => {
-      const existingProduct = state.productData.find(
-        (item) => item.id === action.payload.id
-      );
-      if (existingProduct) {
-        if (existingProduct.quantity > 1) {
-          existingProduct.quantity -= 1;
-        } else {
-          state.productData = state.productData.filter(
-            (item) => item.id !== action.payload.id
-          );
-        }
-      }
-    },
     updateQuantity: (
       state,
       action: PayloadAction<{ id: number; quantity: number }>
@@ -76,13 +53,7 @@ export const selectCartTotal = (state: { cart: CartState }) => {
   );
 };
 
-export const {
-  addToCart,
-  // increaseQuantity,
-  decreaseQuantity,
-  deleteProduct,
-  resetCart,
-  updateQuantity,
-} = cartSlice.actions;
+export const { addToCart, deleteProduct, resetCart, updateQuantity } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

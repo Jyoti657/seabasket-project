@@ -41,7 +41,7 @@ const UserDropdown: React.FC = () => {
       >
         <AccountCircle className="w-6 h-6 text-blue-600" />
         <p className="font-bold text-white">Account</p>
-        <p className="text-sm font-semibold text-gray-700">
+        <p className="text-sm font-semibold text-soft_mint">
           Welcome{user ? `,${user.name}` : ""}!
         </p>
       </button>
@@ -49,7 +49,7 @@ const UserDropdown: React.FC = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-56 bg-seabasket_green text-black shadow-lg rounded-md border border-gray-200 z-10">
           <div className="p-3 border-b border-gray-200">
-            <p className="text-sm font-semibold text-gray-700">
+            <p className="text-sm font-semibold text-soft_mint">
               {user ? `welcome ,${user.name}` : `welcome`}
             </p>
           </div>
