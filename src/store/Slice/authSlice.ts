@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Auth } from "../../types";
 import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
+import { profileSchemaType } from "../../schema/ProfileSchema";
 
 const fake_user = {
-  name: "abc",
+  name: "Max",
   email: "abc123@gmail.com",
   password: "123456",
 };
@@ -39,6 +40,7 @@ const authSlice = createSlice({
       const { email, password } = action.payload;
       if (email === fake_user.email && password === fake_user.password) {
         state.user = {
+          name: fake_user.name,
           email,
           password,
         };
@@ -49,12 +51,18 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
       }
     },
+
     logOut: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
     },
+    addProfile: (state, action: PayloadAction<profileSchemaType>) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+    },
   },
 });
-export const { setCredinatials, logOut, registerUser } = authSlice.actions;
+export const { setCredinatials, logOut, registerUser, addProfile } =
+  authSlice.actions;
 export default authSlice.reducer;

@@ -1,5 +1,5 @@
 import { ShoppingCart, Favorite } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
@@ -7,14 +7,19 @@ import UserDropdown from "./UserDropdown";
 import { RootState } from "../../store/store";
 
 const Header: React.FC = () => {
+const navigate=  useNavigate()
   const { productData } = useSelector((state: RootState) => state.cart);
+   const handlelogo=()=>{
+    navigate("/")
+
+   }
 
   return (
     <header className="bg-seabasket_green p-4 text-white sticky top-0 left-0 w-full z-50 shadow-md">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="text-2xl flex items-center gap-2 font-bold cursor-pointer">
-          <img src={logo} alt="Seabasket" className="w-10 h-10" />
-          <span className="text-gray-300">Seabasket</span>
+          <img src={logo} alt="Seabasket" className="w-20 h-20 rounded-3xl"  onClick={handlelogo}/>
+          <span className="text-gray-300">SeaBasket</span>
         </div>
 
         <SearchBar />

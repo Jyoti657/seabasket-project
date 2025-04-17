@@ -1,12 +1,9 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addressForm } from "../../types";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface AddressState {
-  list: addressForm[];
-  isLoggedIn: boolean;
-}
 
-const initialState: AddressState = {
+
+
+const initialState = {
   list: [],
   isLoggedIn: false,
 };
@@ -14,7 +11,7 @@ const addressSlice = createSlice({
   name: "address",
   initialState,
   reducers: {
-    setAddress: (state, action: PayloadAction<addressForm[]>) => {
+    setAddress: (state, action) => {
       state.list = action.payload;
       state.isLoggedIn = true;
     },

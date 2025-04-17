@@ -1,13 +1,10 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
-import { setUser } from "../../store/Slice/userSlice";
-
-type FormValues = {
-  name: string;
-  email: string;
-  phone: string;
-};
+import { profileSchemaType } from "../../schema/ProfileSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import profileSchema from "../../schema/ProfileSchema";
+import { addProfile } from "../../store/Slice/authSlice";
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,26 +13,19 @@ const ProfileForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>({
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-    },
-  });
+  } = useForm<profileSchemaType>({ resolver: zodResolver(profileSchema) });
 
-  const onSubmit = (data: FormValues) => {
-    dispatch(setUser(data));
+  const onSubmit: SubmitHandler<profileSchemaType> = (data) => {
+    dispatch(addProfile(data));
   };
 
   return (
-    <div className="w-full max-w-[800px] bg-white p-6 shadow-lg rounded-md">
+    <div className="w-full max-w-[800px] bg-white p-6 shadow-lg rounded-md items-center">
       <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
         Personal Information
       </h2>
 
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-
         <div>
           <label
             htmlFor="name"
@@ -46,7 +36,7 @@ const ProfileForm: React.FC = () => {
           <input
             type="text"
             id="name"
-            {...register("name", { required: "Name is required" })}
+            {...register("name")}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
           {errors.name && (
@@ -54,7 +44,6 @@ const ProfileForm: React.FC = () => {
           )}
         </div>
 
-        
         <div>
           <label
             htmlFor="email"
@@ -65,7 +54,7 @@ const ProfileForm: React.FC = () => {
           <input
             type="email"
             id="email"
-            {...register("email", { required: "Email is required" })}
+            {...register("email")}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
           {errors.email && (
@@ -73,7 +62,6 @@ const ProfileForm: React.FC = () => {
           )}
         </div>
 
-      
         <div>
           <label
             htmlFor="phone"
@@ -82,10 +70,10 @@ const ProfileForm: React.FC = () => {
             Phone
           </label>
           <input
-            type="tel"
+            type="text"
             id="phone"
-            {...register("phone", { required: "Phone number is required" })}
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            {...register("phone")}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-seabasket_green focus:border-seabasket_green"
           />
           {errors.phone && (
             <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
@@ -94,9 +82,9 @@ const ProfileForm: React.FC = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
+          className="w-full bg-seabasket_green text-white py-2 rounded-md  transition duration-200"
         >
-          Save Changes
+          Edit
         </button>
       </form>
     </div>

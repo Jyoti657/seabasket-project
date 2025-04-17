@@ -46,8 +46,8 @@ const TrendingProducts: React.FC = () => {
                   </p>
                   <p className="text-seabasket_green font-bold text-lg">
                     ₹{products.price}
-                  </p>{" "}
-                  *
+                  </p>
+                  
                 </div>
               </div>
             </div>
