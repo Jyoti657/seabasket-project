@@ -5,7 +5,7 @@ export interface ProductProps {
   category: string;
   quantity: number;
   description: string;
-  image: string;
+  images: string;
   discount?: number;
   rating?: {
     rate: number;
@@ -19,7 +19,7 @@ export interface StoreProduct {
   price: number;
   category: string;
   description: string;
-  image: string;
+  images: string;
   quantity: number;
   discount?: number;
   rating?: {
@@ -48,17 +48,9 @@ export interface ButtonProps {
 }
 
 export interface ProductState {
-  allProducts: StoreProduct[];
-  productsDetails:null|any;
-  filteredProducts: StoreProduct[];
-  filters: {
-    minPrice: number;
-    maxPrice: number;
-    rating: number;
-    discount: number;
-  };
-  sortBy: string;
-  searchQuery: String;
+  allProducts: ProductProps[];
+  productsDetails: null | any;
+  filteredProducts: ProductProps[];
   loading: boolean;
   error: string | null;
 }

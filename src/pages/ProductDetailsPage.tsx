@@ -21,24 +21,26 @@ const ProductDetails: React.FC = () => {
   const handleAddToCart = (product: ProductProps) => {
     dispatch(addToCart(product));
   };
-  const handleProductClick = (id: string) => {
+  const handleProductClick = (id: number) => {
     navigate("/checkout/cart");
   };
+
   useEffect(() => {
     if (id) {
       dispatch(fetchproductsDetails(id));
     }
   }, [dispatch, id]);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  if (!ProductDetails) return <p>No product found</p>;
+  if (!productsDetails) return <p>No product found</p>;
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex justify-center items-center">
           <img
-            src={productsDetails.image}
+            src={productsDetails.images[0]}
             alt={productsDetails.title}
             className="w-80 h-80 object-contain border border-gray-300 p-4 rounded-lg shadow"
           />

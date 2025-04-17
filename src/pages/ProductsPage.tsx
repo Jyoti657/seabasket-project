@@ -3,7 +3,6 @@ import ProductList from "../components/products/ProductList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-// import FilterAndSorting from "../components/products/FiltersAndSorting";
 
 const Product: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,9 +23,12 @@ const Product: React.FC = () => {
             Featured Products
           </h1>
 
-          {/* <FilterAndSorting products={allProducts} /> */}
-          {loading && <p>Loading products...</p>}
-          {error && <p className="text-red-500">{error}</p>}
+          {/* {loading && (
+            <p className="w-20 h-20 border-8 border-gray-200 border-t-blue-500 rounded-full animate-spin">
+              Loading products...
+            </p>
+          )}
+          {error && <p className="text-red-500">{error}</p>} */}
 
           {!loading && !error && allProducts.length > 0 ? (
             <ProductList productData={allProducts} />

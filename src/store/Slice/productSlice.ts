@@ -1,23 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ProductState } from "../../types";
+import { ProductProps, ProductState } from "../../types";
 import axios from "axios";
 
-const basic_URL = "https://fakestoreapi.com/products";
+const basic_URL = "https://dummyjson.com/products";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${basic_URL}`);
-      return response.data;
+      return response.data.products;
     } catch (error: any) {
-      return error.message;
+      return rejectWithValue(error.message);
     }
   }
 );
+// for the ProductsDetails
 export const fetchproductsDetails = createAsyncThunk(
   "products/fetchproductsDetails",
-  async (id: string) => {
+  async (id: string): Promise<ProductProps> => {
     try {
       const response = await axios.get(`${basic_URL}/${id}`);
       return response.data;
@@ -31,29 +32,13 @@ const initialState: ProductState = {
   allProducts: [],
   productsDetails: null,
   filteredProducts: [],
-  filters: {
-    minPrice: 0,
-    maxPrice: 1000,
-    discount: 0,
-    rating: 0,
-  },
-  sortBy: "",
-  searchQuery: "",
   loading: false,
   error: null,
 };
 const ProductSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {
-    setSearchQuery: (state, action) => {
-      state.searchQuery = action.payload;
-      const query = action.payload.toLowerCase();
-      state.filteredProducts = state.allProducts.filter((product) =>
-        product.title.toLowerCase().includes(query)
-      );
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -73,20 +58,17 @@ const ProductSlice = createSlice({
       .addCase(fetchproductsDetails.pending, (state) => {
         state.loading = true;
         state.error = null;
-        console.log("pending");
       })
       .addCase(fetchproductsDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.productsDetails = action.payload;
-        console.log("loading");
       })
       .addCase(fetchproductsDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.log("Error");
       });
   },
 });
 
-export const { setSearchQuery } = ProductSlice.actions;
+export const {} = ProductSlice.actions;
 export default ProductSlice.reducer;

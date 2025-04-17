@@ -1,5 +1,5 @@
-import CategoryList from "../components/header/CategoryList";
-import TrendingProducts from "../components/header/TrendingProducts";
+// import CategoryList from "../components/header/CategoryList";
+// import TrendingProducts from "../components/header/TrendingProducts";
 
 
 const Home: React.FC = () => {
@@ -7,11 +7,11 @@ const Home: React.FC = () => {
     <div className="min-h-screen flex flex-col items-center">
        
       <div>
-       <TrendingProducts/>
+       {/* <TrendingProducts/> */}
 
         </div> 
         <div>
-        <CategoryList />
+        {/* <CategoryList /> */}
 
         </div>
 
