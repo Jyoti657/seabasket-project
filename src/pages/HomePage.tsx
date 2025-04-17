@@ -1,6 +1,8 @@
 // import CategoryList from "../components/header/CategoryList";
 // import TrendingProducts from "../components/header/TrendingProducts";
 
+import CategoryList from "../components/header/CategoryList";
+
 
 const Home: React.FC = () => {
   return (
@@ -12,7 +14,7 @@ const Home: React.FC = () => {
         </div> 
         <div>
         {/* <CategoryList /> */}
-
+<CategoryList/>
         </div>
 
     </div>

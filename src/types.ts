@@ -13,21 +13,6 @@ export interface ProductProps {
   };
 }
 
-// export interface StoreProduct {
-//   id: number;
-//   title: string;
-//   price: number;
-//   category: string;
-//   description: string;
-//   images: string;
-//   quantity: number;
-//   discount?: number;
-//   rating?: {
-//     rate: number;
-//     count: number;
-//   };
-// }
-
 export interface StateProps {
   productData: ProductProps[];
   favoritData: ProductProps[];
@@ -50,11 +35,12 @@ export interface ButtonProps {
 export interface ProductState {
   allProducts: ProductProps[];
   productsDetails: null | any;
-  productSearch:null;
+  productSearch: null;
+  productCategories: [];
   filteredProducts: ProductProps[];
   loading: boolean;
   error: string | null;
-  searchQuery:string
+  searchQuery: string;
 }
 
 export interface confirmModalProps {

@@ -23,13 +23,6 @@ const Product: React.FC = () => {
             Featured Products
           </h1>
 
-          {/* {loading && (
-            <p className="w-20 h-20 border-8 border-gray-200 border-t-blue-500 rounded-full animate-spin">
-              Loading products...
-            </p>
-          )}
-          {error && <p className="text-red-500">{error}</p>} */}
-
           {!loading && !error && allProducts.length > 0 ? (
             <ProductList productData={allProducts} />
           ) : (
