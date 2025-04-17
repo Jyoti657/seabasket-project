@@ -13,7 +13,6 @@ const SignUpForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm<signUpSchemaType>({ resolver: zodResolver(signUpSchema) });
 

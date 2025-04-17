@@ -8,20 +8,24 @@ const AddressPage: React.FC = () => {
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
      
-      {shipping.length > 0 && (
+      {shipping && (
         <div className="bg-white p-6 rounded-2xl shadow-md">
           <h3 className="text-xl font-semibold mb-4 text-gray-800">
-            Saved Shipping Addresses
+           Shipping Addresses
           </h3>
-          <div className="space-y-3">
-            {shipping.map((item, index) => (
+          <div className="grid sm:grid-cols-2 gap-4 text-gray-700">
+          <p>
+            <span className="font-medium">Name</span>
+          </p>
+            {/* {shipping.map((item, index) => (
               <div
                 key={index}
                 className="border p-4 rounded-xl bg-gray-50 shadow-sm"
               >
                 <p className="text-gray-700 font-medium">{item.fullname}</p>
               </div>
-            ))}
+            ))} */}
+
           </div>
         </div>
       )}

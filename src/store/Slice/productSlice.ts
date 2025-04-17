@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ProductState, StoreProduct } from "../../types";
+import { ProductState } from "../../types";
+import axios from "axios";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("https://fakestoreapi.com/products");
-      if (!response.ok) throw new Error("Failed to fetch the products");
-      const data: StoreProduct[] = await response.json();
-      return data;
+      const response = await axios.get("https://fakestoreapi.com/products");
+      return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }

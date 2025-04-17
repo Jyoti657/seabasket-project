@@ -75,7 +75,7 @@ export interface Auth {
   user: {
     name?: string;
     email: string;
-    password: string;
+    password?: string;
     phone?: string;
   } | null;
   isAuthenticated: boolean;
@@ -97,19 +97,18 @@ export interface addressForm {
   country: string;
 }
 
-export interface userProfile {
-  id: string;
-  name: string;
-  gender: string;
-  email: string;
-  phone: string;
-  address: addressForm[];
-}
 export interface order {
-  id:number;
-  date:string;
-  productName:string;
-  image:string;
-  price:number,
-  status:"Delivered"|"Shipped"|"Processing"|"Cancelled"|"Returned"|"orderConfirmed"|"out for Delivery";
+  id: number;
+  date: string;
+  productName: string;
+  image: string;
+  price: number;
+  status:
+    | "Delivered"
+    | "Shipped"
+    | "Processing"
+    | "Cancelled"
+    | "Returned"
+    | "orderConfirmed"
+    | "out for Delivery";
 }

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const HeadBottom: React.FC = () => {
   return (
     <div
-      className="bg-soft_mint text-black p-2  left-0  top-16 w-full 
+      className="bg-deep_teal text-soft_mint p-2  left-0  top-16 w-full 
         flex items-center gap-2 sm:justify-start 
         md:justify-center md:flex-wrap 
         lg:justify-center lg:gap-4 
@@ -13,7 +13,7 @@ const HeadBottom: React.FC = () => {
         to="/products"
         className="flex items-center gap-1 h-8 px-3 border border-transparent hover:border-white cursor-pointer duration-300"
       >
-        products
+        Products
       </NavLink>
 
       <p className="flex items-center gap-1 h-8 px-3 border  border-transparent hover:border-white cursor-pointer duration-300">
