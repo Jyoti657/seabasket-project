@@ -23,7 +23,19 @@ export const fetchproductsDetails = createAsyncThunk(
       const response = await axios.get(`${basic_URL}/${id}`);
       return response.data;
     } catch (e: any) {
-      return e.message;
+      return e;
+    }
+  }
+);
+// for search products
+export const productSearch = createAsyncThunk(
+  "products/productSearch",
+  async (query: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${basic_URL}/search?q= ${query}`);
+      return response.data;
+    } catch (e: any) {
+      return rejectWithValue(e.message);
     }
   }
 );
@@ -31,14 +43,20 @@ export const fetchproductsDetails = createAsyncThunk(
 const initialState: ProductState = {
   allProducts: [],
   productsDetails: null,
+  productSearch: null,
   filteredProducts: [],
   loading: false,
   error: null,
+  searchQuery: "",
 };
 const ProductSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -48,7 +66,6 @@ const ProductSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.allProducts = action.payload;
-        state.filteredProducts = action.payload;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
@@ -66,9 +83,22 @@ const ProductSlice = createSlice({
       .addCase(fetchproductsDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      // for the search products
+      .addCase(productSearch.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productSearch.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productSearch = action.payload.products;
+      })
+      .addCase(productSearch.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const {} = ProductSlice.actions;
+export const { setSearchQuery } = ProductSlice.actions;
 export default ProductSlice.reducer;

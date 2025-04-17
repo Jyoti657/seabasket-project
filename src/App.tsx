@@ -14,6 +14,7 @@ import AddressPage from "./pages/AddressPage";
 import SignUpPage from "./pages/SignUpPage";
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
+import SearchPage from "./pages/SearchPage";
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const App: React.FC = () => {
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
+          <Route path="/search" element={<SearchPage/>}/>
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>
