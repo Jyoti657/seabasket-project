@@ -49,6 +49,7 @@ export interface ButtonProps {
 
 export interface ProductState {
   allProducts: StoreProduct[];
+  productsDetails:null|any;
   filteredProducts: StoreProduct[];
   filters: {
     minPrice: number;

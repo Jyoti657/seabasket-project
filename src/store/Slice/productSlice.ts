@@ -2,20 +2,34 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ProductState } from "../../types";
 import axios from "axios";
 
+const basic_URL = "https://fakestoreapi.com/products";
+
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
-  async (_, { rejectWithValue }) => {
+  async () => {
     try {
-      const response = await axios.get("https://fakestoreapi.com/products");
+      const response = await axios.get(`${basic_URL}`);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return error.message;
+    }
+  }
+);
+export const fetchproductsDetails = createAsyncThunk(
+  "products/fetchproductsDetails",
+  async (id: string) => {
+    try {
+      const response = await axios.get(`${basic_URL}/${id}`);
+      return response.data;
+    } catch (e: any) {
+      return e.message;
     }
   }
 );
 
 const initialState: ProductState = {
   allProducts: [],
+  productsDetails: null,
   filteredProducts: [],
   filters: {
     minPrice: 0,
@@ -54,7 +68,22 @@ const ProductSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.log("fetch error ", action.payload);
+      })
+      //productsDetails
+      .addCase(fetchproductsDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        console.log("pending");
+      })
+      .addCase(fetchproductsDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productsDetails = action.payload;
+        console.log("loading");
+      })
+      .addCase(fetchproductsDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        console.log("Error");
       });
   },
 });
