@@ -1,7 +1,7 @@
 export interface ProductProps {
   id: number;
   title: string;
-  price: number | string;
+  price: number ;
   category: string;
   quantity: number;
   description: string;
@@ -40,6 +40,7 @@ export interface ProductState {
   productCategories: { name: string; images: any }[];
   productCategoriesList: [];
   getProductCategoriesList: ProductProps[];
+  sortProducts: ProductProps[];
   filteredProducts: ProductProps[];
   loading: boolean;
   error: string | null;

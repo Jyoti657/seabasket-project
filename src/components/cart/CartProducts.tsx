@@ -45,7 +45,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-4 bg-white shadow-md rounded-lg border border-gray-200 w-full">
       <div className="w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
         <img
-          src={item.image}
+          src={item.images[0]}
           alt={item.title}
           className="w-full h-full object-contain rounded-md"
         />

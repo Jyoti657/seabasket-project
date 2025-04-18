@@ -3,6 +3,7 @@ import ProductList from "../components/products/ProductList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
+import SortProducts from "../components/products/SortProducts";
 
 const Product: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +36,7 @@ const Product: React.FC = () => {
           )}
         </div>
       </div>
+      <SortProducts/> 
     </>
   );
 };

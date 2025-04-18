@@ -40,36 +40,6 @@ export const productSearch = createAsyncThunk(
   }
 );
 
-// for the products categories
-// export const productCategories = createAsyncThunk(
-//   "products/productsCategories",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.get(`${basic_URL}/categories`);
-//       const categories :string[]= response.data;
-
-//       const categoriesImg= await Promise.all(
-//         categories.map(async (category: string) => {
-//           const response = await axios.get(`${basic_URL}/category/${category}`);
-//           const firstImage = response.data.products?.[0]?.imges?.[0]|| "";
-//           return {
-//             name: category,
-//             images: firstImage,
-//           };
-//         }
-//         catch(error:any){
-//           console.log(error);
-//           return{
-//             name: category,
-//             images: "",
-//           };
-//         }
-//     })
-
-//       return
-//     } catch (e: any) {
-//       return rejectWithValue(e.message);
-//     }
 export const productCategories = createAsyncThunk(
   "products/productsCategories",
   async (_, { rejectWithValue }) => {
@@ -108,6 +78,19 @@ export const getproductCategoriesList = createAsyncThunk(
   }
 );
 
+// sort products 
+  export const sortProducts = createAsyncThunk(
+    "products/sortProducts",
+    async (sortBy: string,{rejectWithValue}) => {
+      try {
+        const response = await axios.get(`${basic_URL}?sort=${sortBy}`);
+        return response.data.products;
+      } catch (e: any) {
+        return rejectWithValue(e.message);
+      }
+    }
+    
+  )
 const initialState: ProductState = {
   allProducts: [],
   productsDetails: null,
@@ -119,6 +102,7 @@ const initialState: ProductState = {
   productCategories: [],
   productCategoriesList: [],
   getProductCategoriesList: [],
+  sortProducts: [],
 };
 const ProductSlice = createSlice({
   name: "products",
@@ -206,7 +190,24 @@ const ProductSlice = createSlice({
       .addCase(getproductCategoriesList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      });
+      })
+      // for the sort products
+      .addCase(sortProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(sortProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allProducts = action.payload.products;
+        
+      }
+      )
+      .addCase(sortProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      }
+      );
+
   },
 });
 

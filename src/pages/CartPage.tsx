@@ -4,7 +4,7 @@ import CartProducts from "../components/cart/CartProducts";
 import RestartCart from "../components/cart/ReSetCart";
 import { useState } from "react";
 import { RootState } from "../store/store";
-import { StoreProduct } from "../types";
+import { ProductProps } from "../types";
 import Button from "../components/ui/Button";
 import CartTotal from "../components/cart/CartToatl";
 
@@ -26,7 +26,7 @@ const Cart: React.FC = () => {
             </h2>
 
             <div className="space-y-4">
-              {productData.map((item: StoreProduct) => (
+              {productData.map((item: ProductProps) => (
                 <div key={item.id} className="border-b pb-4">
                   <CartProducts item={item} />
                 </div>
