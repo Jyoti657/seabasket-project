@@ -32,28 +32,26 @@ export const productSearch = createAsyncThunk(
   "products/productSearch",
   async (query: string, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${basic_URL}/search?q= ${query}`);
+      const response = await axios.get(`${basic_URL}/search?q=${query}`);
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.message);
     }
   }
 );
- 
-// for the products categories
-export const productCategories=createAsyncThunk(
-  "products/productsCategories",
-  async()=>{
-    try{
-      const response=await axios.get(`${basic_URL}/categories`);
-      return response.data
-    }
-    catch (e:any){
-      return (e.message)
 
+// for the products categories
+export const productCategories = createAsyncThunk(
+  "products/productsCategories",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${basic_URL}/categories`);
+      return response.data;
+    } catch (e: any) {
+      return rejectWithValue(e.message);
     }
   }
-)
+);
 
 const initialState: ProductState = {
   allProducts: [],
@@ -63,7 +61,7 @@ const initialState: ProductState = {
   loading: false,
   error: null,
   searchQuery: "",
-  productCategories:[]
+  productCategories: [],
 };
 const ProductSlice = createSlice({
   name: "products",
@@ -113,20 +111,19 @@ const ProductSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      // for the categories 
-      .addCase(productCategories.pending,(state)=>{
-        state.loading=true;
-        state.error=null
+      // for the categories
+      .addCase(productCategories.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(productCategories.fulfilled,(state,action)=>{
-        state.loading=false;
-        state.productCategories=action.payload
+      .addCase(productCategories.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productCategories = action.payload;
       })
-      .addCase(productCategories.rejected,(state,action)=>{
-        state.loading=false;
-        state.error=action.payload as string
-
-      })
+      .addCase(productCategories.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 
