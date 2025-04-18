@@ -41,6 +41,35 @@ export const productSearch = createAsyncThunk(
 );
 
 // for the products categories
+// export const productCategories = createAsyncThunk(
+//   "products/productsCategories",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const response = await axios.get(`${basic_URL}/categories`);
+//       const categories :string[]= response.data;
+
+//       const categoriesImg= await Promise.all(
+//         categories.map(async (category: string) => {
+//           const response = await axios.get(`${basic_URL}/category/${category}`);
+//           const firstImage = response.data.products?.[0]?.imges?.[0]|| "";
+//           return {
+//             name: category,
+//             images: firstImage,
+//           };
+//         }
+//         catch(error:any){
+//           console.log(error);
+//           return{
+//             name: category,
+//             images: "",
+//           };
+//         }
+//     })
+
+//       return
+//     } catch (e: any) {
+//       return rejectWithValue(e.message);
+//     }
 export const productCategories = createAsyncThunk(
   "products/productsCategories",
   async (_, { rejectWithValue }) => {
@@ -52,13 +81,13 @@ export const productCategories = createAsyncThunk(
     }
   }
 );
+
 // for the products categories-list
 export const productCategoriesList = createAsyncThunk(
   "products/productsCategoriesList",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${basic_URL}/category-list`);
-
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.message);
@@ -159,7 +188,7 @@ const ProductSlice = createSlice({
       })
       .addCase(productCategoriesList.fulfilled, (state, action) => {
         state.loading = false;
-        state.productCategoriesList = action.payload;
+        state.productCategoriesList = action.payload.products;
       })
       .addCase(productCategoriesList.rejected, (state, action) => {
         state.loading = false;

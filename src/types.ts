@@ -37,7 +37,7 @@ export interface ProductState {
   allProducts: ProductProps[];
   productsDetails: null | any;
   productSearch: null;
-  productCategories: string[];
+  productCategories: { name: string; images: any }[];
   productCategoriesList: [];
   getProductCategoriesList: ProductProps[];
   filteredProducts: ProductProps[];
