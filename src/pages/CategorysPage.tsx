@@ -16,44 +16,44 @@ const CategoryPage: React.FC = () => {
       dispatch(getproductCategoriesList(categoryName));
     }
   }, [dispatch, categoryName]);
+
   if (!getcategory || getcategory.length === 0) {
-    return <p className="text-gray-700 text-center">No Categories Found</p>;
+    return (
+      <div className="min-h-screen flex items-center justify-center text-gray-700 text-center px-4">
+        <p>No products found in this category.</p>
+      </div>
+    );
   }
-  return (
-    <div className="min-h-screen flex flex-col items-center">
-      <h2 className="text-lg font-semibold text-gray-700 text-center mb-2">
+
+ return (
+    <div className="min-h-screen px-4 sm:px-6 lg:px-12 py-6 bg-gray-50">
+      <h2 className="text-2xl md:text-3xl font-bold text-center text-seabasket_green mb-8 capitalize">
         {categoryName}
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-8">
-        {getcategory && getcategory.length > 0 ? (
-          getcategory.map((product, index) => (
-            <div
-              key={index}
-              className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition flex
-                flex-col justify-betwee n h-full
-                "
-            >
-              <img
-                src={product.images[0]}
-                alt={product.title}
-                className="w-full h-32 object-cover mb-4"
-              />
-              <h3 className="text-lg font-semibold">{product.brand}</h3>
-              <p className="text-gray-600">{product.price}</p>
-              <p className="text-gray-800 font-bold mt-2">{product.title}</p>
-              <p className="text-gray-500">{product.description}</p>
-              <div className="mt-auto">
-                <button className="bg-seabasket_green text-white py-2 px-4 rounded hover:bg-seabasket_green-dark transition">
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-600">No products found in this category.</p>
-        )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {getcategory.map((product, index) => (
+          <div
+            key={index}
+            className="bg-white border rounded-xl shadow hover:shadow-lg transition duration-300 flex flex-col p-4"
+          >
+            <img
+              src={product.images[0]}
+              alt={product.title}
+              className="w-full h-40 object-cover rounded-lg mb-4"
+            />
+            <h3 className="text-lg font-semibold truncate">{product.brand}</h3>
+            <p className="text-sm text-gray-600 mb-1">₹{product.price}</p>
+            <p className="text-gray-800 font-bold text-sm mb-2 truncate">{product.title}</p>
+            <p className="text-gray-500 text-sm mb-4 line-clamp-3">{product.description}</p>
+            <button className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full">
+              Add to Cart
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
+
 export default CategoryPage;

@@ -14,7 +14,6 @@ const CategoriesListProduct: React.FC = () => {
   useEffect(() => {
     dispatch(productCategoriesList());
   }, [dispatch]);
-  console.log("catelogories list prroepr", CategoryList);
   if (error) return <p>{error}</p>;
   if (loading) return <p className="text-gray-500 text-center">Loading...</p>;
 
@@ -23,7 +22,9 @@ const CategoriesListProduct: React.FC = () => {
       <div className="flex items-center gap-2">
         {CategoryList && CategoryList.length > 0 ? (
           CategoryList.map((item, index) => (
-            <div key={index} className="flex items-center gap-2">
+            <div key={index} 
+            className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full shadow hover:bg-blue-200 cursor-pointer transition-all duration-200"
+            >
               {item}
             </div>
           ))

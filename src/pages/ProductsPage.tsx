@@ -17,12 +17,14 @@ const Product: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center">
+      <div className="min-h-screen flex flex-col items-center bg-gray-50">
         <div className="w-full max-w-7xl px-4 py-10">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
             Featured Products
           </h1>
 
+          {loading && <p className="text-center text-blue-500">Loading...</p>}
+          {error && <p className="text-center text-red-500">{error}</p>}
           {!loading && !error && allProducts.length > 0 ? (
             <ProductList productData={allProducts} />
           ) : (

@@ -31,22 +31,21 @@ const CategoryList: React.FC = () => {
 
   return (
     <div className="p-5">
-      <h2 className="font-semibold mb-5 text-xl"> Categories</h2>
-      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      <h2 className="font-semibold mb-5 text-3xl text-center bg-charcoal text-soft_mint"> Categories</h2>
+      
+      <ul className="flex flex-wrap gap-4 justify-center">
         {categories.map((category, index) => (
           <li
             onClick={() => handleCategoryClick(category.name)}
             key={index}
-            className="p-3 border rounded hover:bg-seabasket_green hover:text-white cursor-pointer text-center transition"
+            className="p-3 border  hover:bg-seabasket_green hover:text-white cursor-pointer text-center transition rounded-l bg-soft_mint shadow-md"
           >
             {category.name}
-            {category.images && (
-              <img
-                src={category.images[0]}
-                alt={category.name}
-                className="w-16 h-16 object-cover mx-auto mt-2"
-              />
-            )}
+            {/* {category.images && (  */}
+             {/* <img
+              src={category.images||" "}
+              className="w-16 h-16 object-cover mx-auto mt-2 rounded-full border-2 border-seabasket_green"
+            /> */}
           </li>
         ))}
       </ul>
