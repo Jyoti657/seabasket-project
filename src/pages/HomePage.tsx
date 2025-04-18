@@ -1,3 +1,4 @@
+import CategoriesListProduct from "../components/header/CategoriesListProduct";
 import CategoryList from "../components/header/CategoryList";
 
 const Home: React.FC = () => {
@@ -7,6 +8,13 @@ const Home: React.FC = () => {
       <div>
         <CategoryList />
       </div>
+      {/* <div className="flex flex-col items-center">
+        <h2 className="font-semibold mb-5 text-xl">Categories</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+  <CategoriesListProduct />
+</div>
+
+      </div> */}
     </div>
   );
 };

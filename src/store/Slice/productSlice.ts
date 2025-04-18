@@ -52,6 +52,32 @@ export const productCategories = createAsyncThunk(
     }
   }
 );
+// for the products categories-list
+export const productCategoriesList = createAsyncThunk(
+  "products/productsCategoriesList",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${basic_URL}/category-list`);
+
+      return response.data;
+    } catch (e: any) {
+      return rejectWithValue(e.message);
+    }
+  }
+);
+
+// get products categories list
+export const getproductCategoriesList = createAsyncThunk(
+  "products/getproductCategoriesList",
+  async (category: string, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${basic_URL}/category/${category}`);
+      return response.data;
+    } catch (e: any) {
+      return rejectWithValue(e.message);
+    }
+  }
+);
 
 const initialState: ProductState = {
   allProducts: [],
@@ -62,6 +88,8 @@ const initialState: ProductState = {
   error: null,
   searchQuery: "",
   productCategories: [],
+  productCategoriesList: [],
+  getProductCategoriesList: [],
 };
 const ProductSlice = createSlice({
   name: "products",
@@ -121,6 +149,32 @@ const ProductSlice = createSlice({
         state.productCategories = action.payload;
       })
       .addCase(productCategories.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // for the categories-list
+      .addCase(productCategoriesList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productCategoriesList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.productCategoriesList = action.payload;
+      })
+      .addCase(productCategoriesList.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      // for the get product categories list
+      .addCase(getproductCategoriesList.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getproductCategoriesList.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getProductCategoriesList = action.payload.products;
+      })
+      .addCase(getproductCategoriesList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

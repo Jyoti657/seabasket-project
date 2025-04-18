@@ -1,80 +1,59 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../store/store";
-import { useEffect, useState } from "react";
-import { ProductProps } from "../types";
-import Button from "../components/ui/Button";
-import { addToCart } from "../store/Slice/cartSlice";
-import { currencyFormatter } from "../util/formatting";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getproductCategoriesList } from "../store/Slice/productSlice";
 
-const Category: React.FC = () => {
+const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
+  const getcategory = useSelector(
+    (state: RootState) => state.product.getProductCategoriesList
+  );
 
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
-  const { allProducts } = useSelector((state: RootState) => state.product);
-  const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
-
   useEffect(() => {
-    const categoryProducts = allProducts.filter(
-      (product) => product.category === categoryName
-    );
-    setFilteredProducts(categoryProducts);
-  }, [categoryName, allProducts]);
-
-  const handleAddToCart = (product: ProductProps) => {
-    dispatch(addToCart(product));
-  };
-
-  const handleProductClick = (id: number | string) => {
-    navigate(`/products/${id}`);
-  };
-
+    if (categoryName) {
+      dispatch(getproductCategoriesList(categoryName));
+    }
+  }, [dispatch, categoryName]);
+  if (!getcategory || getcategory.length === 0) {
+    return <p className="text-gray-700 text-center">No Categories Found</p>;
+  }
   return (
-    <>
-      <h1 className="container mx-auto py-10 text-center font-extrabold">
-        Products in {categoryName}
-      </h1>
-
+    <div className="min-h-screen flex flex-col items-center">
+      <h2 className="text-lg font-semibold text-gray-700 text-center mb-2">
+        {categoryName}
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-8">
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition flex
-              flex-col justify-between h-full
-              "
-          >
-            <img
-              src={product.images}
-              alt={product.title}
-              // className="w-full h-40 object-contain mb-4 cursor-pointer"
-              onClick={() => handleProductClick(product.id)}
-            />
-            <div className="flex-1 p-4">
-              <h2 className="text-lg font-semibold text-gray-700 text-center mb-2">
-                {product.title}
-              </h2>
-              <p className="text-center text-gray-600">
-                {currencyFormatter.format(product.price)}
-              </p>
-            </div>
-            <div className="mt-6 flex gap-4">
-              <Button
-                label="Buy Now"
-                className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition"
+        {getcategory && getcategory.length > 0 ? (
+          getcategory.map((product, index) => (
+            <div
+              key={index}
+              className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition flex
+                flex-col justify-betwee n h-full
+                "
+            >
+              <img
+                src={product.images[0]}
+                alt={product.title}
+                className="w-full h-32 object-cover mb-4"
               />
-
-              <Button
-                label="Add to Cart"
-                className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition"
-                onClick={() => handleAddToCart(product)}
-              />
+              <h3 className="text-lg font-semibold">{product.brand}</h3>
+              <p className="text-gray-600">{product.price}</p>
+              <p className="text-gray-800 font-bold mt-2">{product.title}</p>
+              <p className="text-gray-500">{product.description}</p>
+              <div className="mt-auto">
+                <button className="bg-seabasket_green text-white py-2 px-4 rounded hover:bg-seabasket_green-dark transition">
+                  Add to Cart
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-gray-600">No products found in this category.</p>
+        )}
       </div>
-    </>
+    </div>
   );
 };
-
-export default Category;
+export default CategoryPage;
