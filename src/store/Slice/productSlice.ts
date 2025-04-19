@@ -78,19 +78,29 @@ export const getproductCategoriesList = createAsyncThunk(
   }
 );
 
-// sort products 
-  export const sortProducts = createAsyncThunk(
-    "products/sortProducts",
-    async (sortBy: string,{rejectWithValue}) => {
-      try {
-        const response = await axios.get(`${basic_URL}?sort=${sortBy}`);
-        return response.data.products;
-      } catch (e: any) {
-        return rejectWithValue(e.message);
+// sort products
+export const sortProducts = createAsyncThunk(
+  "products/sortProducts",
+  async (sortBy: string, { getState, rejectWithValue }) => {
+    try {
+      const state: any = getState();
+      const products = state.product.allProducts;
+      const sorted = [...products];
+
+      if (sortBy === "title") {
+        sorted.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (sortBy === "price") {
+        sorted.sort((a, b) => a.price - b.price);
+      } else if (sortBy === "rating") {
+        sorted.sort((a, b) => b.rating - a.rating);
       }
+
+      return sorted;
+    } catch (e: any) {
+      return rejectWithValue(e.message);
     }
-    
-  )
+  }
+);
 const initialState: ProductState = {
   allProducts: [],
   productsDetails: null,
@@ -111,6 +121,30 @@ const ProductSlice = createSlice({
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
+    filterProducts:(state, action) => {
+     const {priceRange, rating, discount,category}=action.payload;
+     let filter=[...state.allProducts];
+     if(priceRange){
+      filter=filter.filter((product)=>product.price>=priceRange[0] && product.price<=priceRange[1])
+     }
+     if (rating) {
+      filter = filter.filter(
+        (product) => product.rating && product.rating.rate >= rating
+      );
+    }
+    if (discount) {
+      filter = filter.filter(
+        (product) => product.discount && product.discount >= discount
+      );
+    }
+    if (category) {
+      filter= filter.filter((product) =>
+        product.category.toLowerCase().includes(category.toLowerCase())
+      );
+    }
+    
+     state.filteredProducts=filter;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -198,18 +232,14 @@ const ProductSlice = createSlice({
       })
       .addCase(sortProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.allProducts = action.payload.products;
-        
-      }
-      )
+        state.allProducts = action.payload;
+      })
       .addCase(sortProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      }
-      );
-
+      });
   },
 });
 
-export const { setSearchQuery } = ProductSlice.actions;
+export const { setSearchQuery,filterProducts } = ProductSlice.actions;
 export default ProductSlice.reducer;

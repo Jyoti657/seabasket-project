@@ -19,7 +19,7 @@ const ProductCards: React.FC<ProductsProps> = ({
     <div className="border p-4 rounded shadow hover:shadow-lg transition flex flex-col justify-between h-full bg-soft_mint">
       <div className="flex-grow">
         <img
-          src={product.images}
+          src={product.images[0]}
           alt={product.title}
           className="w-full h-40 object-contain mb-4 cursor-pointer"
           onClick={() => handleProductClick(product.id)}

@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getproductCategoriesList } from "../store/Slice/productSlice";
+import { addToCart } from "../store/Slice/cartSlice";
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
+  const navigae = useNavigate();
   const getcategory = useSelector(
     (state: RootState) => state.product.getProductCategoriesList
   );
@@ -24,8 +26,14 @@ const CategoryPage: React.FC = () => {
       </div>
     );
   }
+  const handleProductClick = (id: number) => {
+    navigae(`/products/${id}`);
+  };
+  const handleAddToCart = (product: any) => {
+    dispatch(addToCart(product));
+  };
 
- return (
+  return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-12 py-6 bg-gray-50">
       <h2 className="text-2xl md:text-3xl font-bold text-center text-seabasket_green mb-8 capitalize">
         {categoryName}
@@ -40,13 +48,21 @@ const CategoryPage: React.FC = () => {
             <img
               src={product.images[0]}
               alt={product.title}
-              className="w-full h-40 object-cover rounded-lg mb-4"
+              className="w-full h-40 object-contain rounded-lg mb-4 cursor-pointer"
+              onClick={() => handleProductClick(product.id)}
             />
             <h3 className="text-lg font-semibold truncate">{product.brand}</h3>
             <p className="text-sm text-gray-600 mb-1">₹{product.price}</p>
-            <p className="text-gray-800 font-bold text-sm mb-2 truncate">{product.title}</p>
-            <p className="text-gray-500 text-sm mb-4 line-clamp-3">{product.description}</p>
-            <button className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full">
+            <p className="text-gray-800 font-bold text-sm mb-2 truncate">
+              {product.title}
+            </p>
+            <p className="text-gray-500 text-sm mb-4 line-clamp-3">
+              {product.description}
+            </p>
+            <button
+              onClick={handleAddToCart}
+              className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full"
+            >
               Add to Cart
             </button>
           </div>

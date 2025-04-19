@@ -4,66 +4,48 @@ import { useEffect, useState } from "react";
 import { sortProducts } from "../../store/Slice/productSlice";
 
 const SortProducts: React.FC = () => {
-  const [sortBy, setSortBy] = useState<string>("");
-  const sort = useSelector((state: RootState) => state.product.sortProducts);
-  const error = useSelector((state: RootState) => state.product.error);
-  const loading = useSelector((state: RootState) => state.product.loading);
+  const [sortBy, setSortBy] = useState<string>(""); // Default empty
   const dispatch = useDispatch<AppDispatch>();
+  const { loading, error, allProducts } = useSelector(
+    (state: RootState) => state.product
+  );
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortBy(e.target.value);
-    dispatch(sortProducts(e.target.value));
+    const selectedValue = e.target.value;
+    setSortBy(selectedValue);
+    if (selectedValue) {
+      dispatch(sortProducts(selectedValue));
+    }
   };
 
+  // Only run initial sort when products are available
   useEffect(() => {
-    if (sortBy) {
-      dispatch(sortProducts(sortBy));
+    if (allProducts.length > 0 && sortBy === "") {
+      dispatch(sortProducts("title"));
+      setSortBy("title");
     }
-  }, [sortBy, dispatch]);
+  }, [allProducts, dispatch, sortBy]);
 
   return (
-    <>
-      <div className="flex justify-between items-center bg-soft_mint p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold">Filters and Sorting</h2>
-        <div className="flex items-center">
-          <label htmlFor="sort" className="mr-2">
-            Sort by:
-          </label>
-          <select
-            id="sort"
-            className="border rounded p-1"
-            value={sortBy}
-            onChange={handleSortChange}
-          >
-            <option value="">Select Sorting Option</option>
-            <option value="price">Price</option>
-            <option value="popularity">Popularity</option>
-            <option value="rating">Rating</option>
-          </select>
-        </div>
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 mb-4">
+      <div className="flex items-center gap-2">
+        <label htmlFor="sort" className="text-sm font-medium">Sort by:</label>
+        <select
+          id="sort"
+          value={sortBy}
+          onChange={handleSortChange}
+          className="p-2 border rounded-md"
+        >
+          <option value="">Select</option>
+          <option value="title">Title (A-Z)</option>
+          <option value="price">Price (Low to High)</option>
+          <option value="rating">Rating (High to Low)</option>
+        </select>
       </div>
-      <div className="flex flex-col items-center mt-4">
-        {loading && <p className="text-blue-500">Loading...</p>}
-        {error && <p className="text-red-500">{error}</p>}
-        {!loading && !error && sort.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {sort.map((product, index) => (
-              <div key={index} className="bg-white p-4 rounded-lg shadow-md">
-                {/* <img
-                  src={product.images[0]}
-                  alt={product.title}
-                  className="w-full h-40 object-cover rounded-lg mb-4"
-                /> */}
-                <h3 className="text-lg font-semibold">{product.title}</h3>
-                <p className="text-gray-500">Price: ₹{product.price}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          !loading && !error && <p>No products available</p>
-        )}
-      </div>
-    </>
+
+      {loading && <p className="text-sm text-gray-500">Loading sorted products...</p>}
+      {error && <p className="text-sm text-red-500">Error: {error}</p>}
+    </div>
   );
 };
 
