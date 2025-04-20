@@ -1,20 +1,31 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import CartProducts from "../components/cart/CartProducts";
 import RestartCart from "../components/cart/ReSetCart";
-import { useState } from "react";
-import { RootState } from "../store/store";
+import { useEffect, useState } from "react";
+import { AppDispatch, RootState } from "../store/store";
 import { ProductProps } from "../types";
 import Button from "../components/ui/Button";
 import CartTotal from "../components/cart/CartToatl";
+import CartProducts from "../components/cart/CartProducts";
+import { fetchCart } from "../store/Slice/cartSlice";
 
 const Cart: React.FC = () => {
-  const productData = useSelector((state: RootState) => state.cart.productData);
+  const { productData, loading, error } = useSelector(
+    (state: RootState) => state.cart
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (error)
+    return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 flex flex-col lg:flex-row gap-6 justify-center">
-      {productData.length > 0 ? (
+      {productData && productData.length > 0 ? (
         <>
           <div
             className={`w-full lg:w-3/4 bg-white shadow-md rounded-lg p-6 space-y-6 ${
@@ -27,9 +38,7 @@ const Cart: React.FC = () => {
 
             <div className="space-y-4">
               {productData.map((item: ProductProps) => (
-                <div key={item.id} className="border-b pb-4">
-                  <CartProducts item={item} />
-                </div>
+                <CartProducts key={item.id} item={item} />
               ))}
             </div>
 

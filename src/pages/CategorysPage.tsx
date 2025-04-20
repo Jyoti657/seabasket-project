@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../store/store";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getproductCategoriesList } from "../store/Slice/productSlice";
-import { addToCart } from "../store/Slice/cartSlice";
+import {  fetchCartAdd } from "../store/Slice/cartSlice";
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
@@ -30,7 +30,7 @@ const CategoryPage: React.FC = () => {
     navigae(`/products/${id}`);
   };
   const handleAddToCart = (product: any) => {
-    dispatch(addToCart(product));
+    dispatch(fetchCartAdd(product));
   };
 
   return (
@@ -60,7 +60,7 @@ const CategoryPage: React.FC = () => {
               {product.description}
             </p>
             <button
-              onClick={handleAddToCart}
+              onClick={()=>handleAddToCart(product)}
               className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full"
             >
               Add to Cart

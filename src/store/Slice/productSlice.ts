@@ -129,7 +129,7 @@ const ProductSlice = createSlice({
      }
      if (rating) {
       filter = filter.filter(
-        (product) => product.rating && product.rating.rate >= rating
+        (product) => product.rating && product.rating >= rating
       );
     }
     if (discount) {

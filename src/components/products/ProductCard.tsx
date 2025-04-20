@@ -29,6 +29,7 @@ const ProductCards: React.FC<ProductsProps> = ({
         <p className="text-gray-600">
           {currencyFormatter.format(product.price)}
         </p>
+        <p className="text-gray-500">Rate:{product.rating}</p>
       </div>
 
       <div className="flex items-center justify-between mt-4 pt-4 border-t">

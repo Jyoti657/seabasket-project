@@ -8,10 +8,7 @@ export interface ProductProps {
   images: string[];
   brand: string;
   discount?: number;
-  rating?: {
-    rate: number;
-    count: number;
-  };
+  rating?: number
 }
 
 export interface StateProps {
