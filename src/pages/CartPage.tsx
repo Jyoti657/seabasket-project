@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import RestartCart from "../components/cart/ReSetCart";
 import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../store/store";
@@ -10,11 +10,17 @@ import CartProducts from "../components/cart/CartProducts";
 import { fetchCart } from "../store/Slice/cartSlice";
 
 const Cart: React.FC = () => {
+  const {id}= useParams();
   const { productData, loading, error } = useSelector(
     (state: RootState) => state.cart
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+  const handleProductClick = () => {
+    setIsModalOpen(true);
+
+    
+  };
 
   useEffect(() => {
     dispatch(fetchCart());

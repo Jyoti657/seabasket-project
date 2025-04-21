@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ProductProps } from "../../types";
 import axios from "axios";
 const basic_URL = "https://dummyjson.com/carts";
@@ -89,7 +89,6 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-  
     resetCart: (state) => {
       state.productData = [];
     },
@@ -127,11 +126,9 @@ export const cartSlice = createSlice({
       })
       // update cart
       .addCase(fetchCartUpdate.pending, (state) => {
-        state.loading = true;
         state.error = null;
       })
       .addCase(fetchCartUpdate.fulfilled, (state, action) => {
-        state.loading = false;
         const updatedProducts = action.payload.products;
 
         if (Array.isArray(updatedProducts)) {
@@ -142,7 +139,7 @@ export const cartSlice = createSlice({
             if (index !== -1) {
               state.productData[index] = {
                 ...state.productData[index],
-                quantity: updatedProduct.quantity,
+                quantity:Math.max (1,updatedProduct.quantity),
               };
             }
           });
@@ -154,7 +151,6 @@ export const cartSlice = createSlice({
           action.error.message || "Failed to update product to cart";
       })
       .addCase(fetchCartDelete.pending, (state) => {
-        state.loading = true;
         state.error = null;
       })
       .addCase(fetchCartDelete.fulfilled, (state, action) => {

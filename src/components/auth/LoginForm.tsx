@@ -16,9 +16,10 @@ const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const authError = useSelector((state: RootState) => state.auth.authError);
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  // const isAuthenticated = useSelector(
+  //   (state: RootState) => state.auth.isAuthenticated
+  // );
+  const [isAuthenticated,setIsAuthenticated] = useState(false);
   const {
     register,
     handleSubmit,
@@ -30,6 +31,7 @@ const LoginForm: React.FC = () => {
     dispatch(loginUser({ email: data.email, password: data.password })
   );
   setHasSubmitted(true);
+  setIsAuthenticated(true);
   };
 
   useEffect(() => {
@@ -86,7 +88,7 @@ const LoginForm: React.FC = () => {
           )}
 
           {hasSubmitted && isAuthenticated && (
-            <p className="text-green-600 text-sm mt-2">Login Successful</p>
+            <p className="text-teal-900 text-sm mt-2">Login Successful</p>
           )}
 
           <Button

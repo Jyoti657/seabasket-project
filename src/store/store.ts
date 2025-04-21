@@ -7,13 +7,13 @@
   import favoriteReducer from "./Slice/favoriteSlice";
   import addressReducer from "./Slice/addressSlice";
   import authReducer from "./Slice/authSlice";
-
+import  userReducer from "./Slice/userSlice"
   import orderReducer from "./Slice/orderSlice"
 
   const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["product", "cart", "favorites", "address","auth","order"], 
+    whitelist: ["product", "cart", "favorites", "address","auth","order","user"], 
   };
 
   const rootReducer = combineReducers({
@@ -22,7 +22,7 @@
     favorites: favoriteReducer,
     address: addressReducer,
     auth: authReducer,
-    
+    user:userReducer,
     order:orderReducer
   });
 

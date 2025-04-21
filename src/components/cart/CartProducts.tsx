@@ -76,7 +76,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
 
         {item.rating && (
           <div className="flex items-center justify-center sm:justify-start space-x-2">
-            <span className="text-yellow-500 text-xs sm:text-sm font-medium">
+            <span className="text-teal-500 text-xs sm:text-sm font-medium">
               {item.rating}
             </span>
           </div>
