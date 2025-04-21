@@ -3,7 +3,8 @@ import { AppDispatch, RootState } from "../store/store";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getproductCategoriesList } from "../store/Slice/productSlice";
-import {  fetchCartAdd } from "../store/Slice/cartSlice";
+import { fetchCartAdd } from "../store/Slice/cartSlice";
+import Button from "../components/ui/Button";
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
@@ -59,12 +60,21 @@ const CategoryPage: React.FC = () => {
             <p className="text-gray-500 text-sm mb-4 line-clamp-3">
               {product.description}
             </p>
-            <button
-              onClick={()=>handleAddToCart(product)}
-              className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full"
-            >
-              Add to Cart
-            </button>
+
+            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+            <Button
+              label="Add to Cart"
+              onClick={() => handleAddToCart(product)}
+              className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full hover:bg-teal-950"
+            />
+           <Button
+              label="Buy Now"
+              onClick={() => handleAddToCart(product)}
+              className="mt-2 bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full hover:bg-teal-950"
+            />
+          </div>
+           
+            
           </div>
         ))}
       </div>

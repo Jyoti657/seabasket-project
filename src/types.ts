@@ -65,7 +65,7 @@ export interface Auth {
   token: null | string;
   authError: null | string;
   isLoading: boolean;
-  registerUser: null;
+  
 }
 
 export interface addressForm {

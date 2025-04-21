@@ -2,7 +2,7 @@ import { LuMinus } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
 import { currencyFormatter } from "../../util/formatting";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, fetchCartUpdate } from "../../store/Slice/cartSlice";
+import { fetchCartDelete, fetchCartUpdate } from "../../store/Slice/cartSlice";
 import { ProductProps } from "../../types";
 import { AppDispatch, RootState } from "../../store/store";
 
@@ -31,8 +31,8 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
       );
     }
   };
-  
-  const handleDecrease   = () => {
+
+  const handleDecrease = () => {
     if (updatedItem) {
       dispatch(
         fetchCartUpdate({
@@ -45,10 +45,9 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
       );
     }
   };
-  
 
   const handleRemove = () => {
-    dispatch(deleteProduct(item.id));
+    dispatch(fetchCartDelete(item.id));
   };
 
   return (

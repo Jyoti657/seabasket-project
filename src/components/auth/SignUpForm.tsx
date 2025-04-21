@@ -4,8 +4,8 @@ import signUpSchema, { signUpSchemaType } from "../../schema/signUpSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
-import { registerUser } from "../../store/Slice/authSlice";
 import Button from "../ui/Button";
+import { registerUser } from "../../store/Slice/authSlice";
 
 const SignUpForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,8 +17,9 @@ const SignUpForm: React.FC = () => {
   } = useForm<signUpSchemaType>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit: SubmitHandler<signUpSchemaType> = (data) => {
-    dispatch(registerUser(data));
-    console.log("User Data:", data);
+     dispatch(registerUser(data));
+    console.log("User Data:");
+
     navigate("/");
   };
 
@@ -28,7 +29,7 @@ const SignUpForm: React.FC = () => {
       bg-gray-100 px-4"
     >
       <div
-        className="w-full bg-gradient-to-t from-seabasket_green
+        className="w-full bg-soft_mint
         max-w-md  p-6 rounded-lg shadow-md"
       >
         <h2
@@ -95,13 +96,14 @@ const SignUpForm: React.FC = () => {
 
           <Button
             label="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+            onClick={handleSubmit(onSubmit)}
+            className="w-full bg-seabasket_green text-white py-2 px-4 rounded-md hover:bg-teal-900 transition"
           />
         </form>
 
         <p className="text-center text-gray-600 mt-4">
           Already have an account?{" "}
-          <NavLink to="/login" className="text-blue-600 hover:underline">
+          <NavLink to="/login" className="text-teal-700 hover:underline">
             Log in
           </NavLink>
         </p>

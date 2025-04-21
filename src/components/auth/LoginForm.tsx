@@ -4,11 +4,12 @@ import logInSchema, { logInSchemaType } from "../../schema/logInSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { setCredinatials } from "../../store/Slice/authSlice";
+import { loginUser } from "../../store/Slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+
 
 const LoginForm: React.FC = () => {
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -26,8 +27,9 @@ const LoginForm: React.FC = () => {
   } = useForm<logInSchemaType>({ resolver: zodResolver(logInSchema) });
 
   const onSubmit: SubmitHandler<logInSchemaType> = (data) => {
-    setHasSubmitted(true);
-    dispatch(setCredinatials(data));
+    dispatch(loginUser({ email: data.email, password: data.password })
+  );
+  setHasSubmitted(true);
   };
 
   useEffect(() => {

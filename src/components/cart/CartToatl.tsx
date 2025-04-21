@@ -11,7 +11,7 @@ const CartTotal: React.FC = () => {
 
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-2xl shadow-md border border-gray-200 p-6 mt-8">
+    <div className="w-full max-w-md mx-auto bg-soft_mint rounded-2xl shadow-md border border-gray-200 p-6 mt-8">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Cart Summary</h2>
 
       <div className="space-y-3 text-gray-700">
@@ -37,7 +37,7 @@ const CartTotal: React.FC = () => {
       <NavLink to="/order">
         <Button
           label="Proceed to order"
-          className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-xl"
+          className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
         />
       </NavLink>
     </div>
