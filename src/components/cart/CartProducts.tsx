@@ -85,7 +85,8 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
         <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
           <button
             onClick={handleDecrease}
-            className="p-2 border rounded-md hover:bg-gray-100"
+            disabled={updatedItem?.quantity === 1}
+            className="p-2 border rounded-md hover:bg-soft_mint"
           >
             <LuMinus />
           </button>

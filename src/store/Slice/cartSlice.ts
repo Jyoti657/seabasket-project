@@ -139,7 +139,7 @@ export const cartSlice = createSlice({
             if (index !== -1) {
               state.productData[index] = {
                 ...state.productData[index],
-                quantity:Math.max (1,updatedProduct.quantity),
+                quantity: updatedProduct.quantity,
               };
             }
           });
