@@ -1,31 +1,14 @@
 export interface ProductProps {
   id: number;
   title: string;
-  price: number;
+  price: number ;
   category: string;
   quantity: number;
   description: string;
-  image: string;
+  images: string[];
+  brand: string;
   discount?: number;
-  rating?: {
-    rate: number;
-    count: number;
-  };
-}
-
-export interface StoreProduct {
-  id: number;
-  title: string;
-  price: number;
-  category: string;
-  description: string;
-  image: string;
-  quantity: number;
-  discount?: number;
-  rating?: {
-    rate: number;
-    count: number;
-  };
+  rating?: number
 }
 
 export interface StateProps {
@@ -48,18 +31,17 @@ export interface ButtonProps {
 }
 
 export interface ProductState {
-  allProducts: StoreProduct[];
-  filteredProducts: StoreProduct[];
-  filters: {
-    minPrice: number;
-    maxPrice: number;
-    rating: number;
-    discount: number;
-  };
-  sortBy: string;
-  searchQuery: String;
+  allProducts: ProductProps[];
+  productsDetails: null | any;
+  productSearch: null;
+  productCategories: { name: string; images: any }[];
+  productCategoriesList: [];
+  getProductCategoriesList: ProductProps[];
+  sortProducts: ProductProps[];
+  filteredProducts: ProductProps[];
   loading: boolean;
   error: string | null;
+  searchQuery: string;
 }
 
 export interface confirmModalProps {

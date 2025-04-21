@@ -29,29 +29,30 @@ const FavoritesPage: React.FC = () => {
         <h1 className="text-2xl font-bold text-center mb-6">MY WishList</h1>
 
         {favoriteProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
             {favoriteProducts.map((product) => (
               <div
                 key={product.id}
-                className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition flex flex-col justify-between h-full"
+                className="border p-4 bg-soft_mint rounded-lg shadow-lg hover:shadow-xl transition flex flex-col justify-between h-full"
               >
-                <div className="flex-grow">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-40 object-contain mb-4 cursor-pointer"
-                    onClick={() => handleProductClick(product.id)}
-                  />
-                  <h2 className="text-lg font-semibold">{product.title}</h2>
-                  <p className="text-gray-600">
-                    {currencyFormatter.format(product.price)}
-                  </p>
-                  <p className="text-gray-500">{product.category}</p>
-                </div>
+               <div className="flex-grow">
+        <img
+          src={product.images[0]}
+          alt={product.title}
+          className="w-full h-40 object-contain mb-4 cursor-pointer"
+          onClick={() => handleProductClick(product.id)}
+        />
+        <h2 className="text-lg font-semibold">{product.title}</h2>
+        <p className="text-gray-500">{product.category}</p>
+        <p className="text-gray-600">
+          {currencyFormatter.format(product.price)}
+        </p>
+      </div>
+
 
                 <div className="flex flex-col gap-3 mt-4 pt-4 border-t">
                   <Button
-                    className="bg-red-500 hover:bg-red-800"
+                    className="text-xl cursor-pointer bg-seabasket_green hover:bg-teal-950 text-white"
                     label="Remove"
                     onClick={() => handleRemoveFavorite(product.id)}
                   />

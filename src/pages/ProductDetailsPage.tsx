@@ -2,75 +2,82 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { ProductProps } from "../types";
 import { useNavigate, useParams } from "react-router-dom";
-import { addToCart } from "../store/Slice/cartSlice";
+import {  fetchCartAdd } from "../store/Slice/cartSlice";
 import { currencyFormatter } from "../util/formatting";
 import Button from "../components/ui/Button";
+import { useEffect } from "react";
+import { fetchproductsDetails } from "../store/Slice/productSlice";
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams();
-  const allProducts = useSelector(
-    (state: RootState) => state.product.allProducts
+  const productsDetails = useSelector(
+    (state: RootState) => state.product.productsDetails
   );
+  const loading = useSelector((state: RootState) => state.product.loading);
+  const error = useSelector((state: RootState) => state.product.error);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const handleAddToCart = (product: ProductProps) => {
-    dispatch(addToCart(product));
+    dispatch(fetchCartAdd(product));
   };
   const handleProductClick = (id: number) => {
     navigate("/checkout/cart");
   };
 
-  const productId = Number(id);
-  const product: ProductProps | undefined = allProducts?.find(
-    (p) => p.id === productId
-  );
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchproductsDetails(id));
+    }
+  }, [dispatch, id]);
 
-  if (!product) {
-    return (
-      <p className="text-red-500 text-center">
-        Product not found. Please check the ID or refresh the page.
-      </p>
-    );
-  }
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (error) return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
+  if (!productsDetails) return <p className="text-center mt-10">No product found</p>;
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center px-4 py-10">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        
         <div className="flex justify-center items-center">
           <img
-            src={product.image}
-            alt={product.title}
-            className="w-80 h-80 object-contain border border-gray-300 p-4 rounded-lg shadow"
+            src={productsDetails.images[0]}
+            alt={productsDetails.title}
+            className="w-full max-w-xs sm:max-w-sm md:max-w-md h-auto object-contain border border-gray-300 p-4 rounded-lg shadow"
           />
         </div>
 
-        <div className="flex flex-col justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">{product.title}</h1>
-          <p className="text-lg text-green-600 font-semibold mt-2">
-            {currencyFormatter.format(product.price)}
+        
+        <div className="flex flex-col justify-between space-y-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+            {productsDetails.title}
+          </h1>
+
+          <p className="text-lg sm:text-xl text-green-600 font-semibold">
+            {currencyFormatter.format(productsDetails.price)}
           </p>
 
-          <p className="text-gray-700 mt-4">{product.description}</p>
+          <p className="text-gray-700 text-sm sm:text-base">{productsDetails.description}</p>
 
-          <p className="text-gray-500 text-sm mt-2">
-            Category: {product.category}
-          </p>
-          <p className="text-gray-500 text-sm mt-2">
-            Rate: {product.rating?.rate} ({product.rating?.count} reviews)
+          <p className="text-gray-500 text-sm">
+            Category: <span className="capitalize">{productsDetails.category}</span>
           </p>
 
-          <div className="mt-6 flex gap-4">
+          <p className="text-gray-500 text-sm">
+            Rating: {productsDetails.rating?.rate} ({productsDetails.rating?.count} reviews)
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Button
               label="Buy Now"
-              className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition"
-              onClick={() => handleProductClick(product.id)}
+              className="w-full sm:w-auto bg-seabasket_green text-white px-6 py-2 rounded-md hover:bg-teal-950 transition"
+              onClick={() => handleProductClick(productsDetails.id)}
             />
-
             <Button
               label="Add to Cart"
-              className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition"
-              onClick={() => handleAddToCart(product)}
+              className="w-full sm:w-auto bg-seabasket_green text-white px-6 py-2 rounded-md hover:bg-teal-950 transition"
+              onClick={() => handleAddToCart(productsDetails)}
             />
           </div>
         </div>

@@ -2,40 +2,50 @@ import { LuMinus } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
 import { currencyFormatter } from "../../util/formatting";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, updateQuantity } from "../../store/Slice/cartSlice";
+import { deleteProduct, fetchCartUpdate } from "../../store/Slice/cartSlice";
 import { ProductProps } from "../../types";
-import { RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 
 interface CartProductProps {
   item: ProductProps;
+  images?: string[];
 }
 
 const CartProducts: React.FC<CartProductProps> = ({ item }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const updatedItem = useSelector((state: RootState) =>
     state.cart.productData.find((product) => product.id === item.id)
   );
 
   const handleIncrease = () => {
-    dispatch(
-      updateQuantity({
-        id: item.id,
-        quantity: (updatedItem?.quantity ?? item.quantity) + 1,
-      })
-    );
-  };
-
-  const handleDecrease = () => {
-    if (updatedItem?.quantity && updatedItem.quantity > 1) {
+    if (updatedItem) {
       dispatch(
-        updateQuantity({
-          id: item.id,
-          quantity: updatedItem.quantity - 1,
+        fetchCartUpdate({
+          cartId: 1,
+          updatedProduct: {
+            ...updatedItem,
+            quantity: updatedItem.quantity + 1,
+          },
         })
       );
     }
   };
+  
+  const handleDecrease   = () => {
+    if (updatedItem) {
+      dispatch(
+        fetchCartUpdate({
+          cartId: 1,
+          updatedProduct: {
+            ...updatedItem,
+            quantity: updatedItem.quantity - 1,
+          },
+        })
+      );
+    }
+  };
+  
 
   const handleRemove = () => {
     dispatch(deleteProduct(item.id));
@@ -45,7 +55,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-4 bg-white shadow-md rounded-lg border border-gray-200 w-full">
       <div className="w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
         <img
-          src={item.image}
+          src={item.images?.[0]}
           alt={item.title}
           className="w-full h-full object-contain rounded-md"
         />
@@ -68,10 +78,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
         {item.rating && (
           <div className="flex items-center justify-center sm:justify-start space-x-2">
             <span className="text-yellow-500 text-xs sm:text-sm font-medium">
-              {item.rating.rate} ★
-            </span>
-            <span className="text-gray-500 text-xs">
-              ({item.rating.count} reviews)
+              {item.rating}
             </span>
           </div>
         )}

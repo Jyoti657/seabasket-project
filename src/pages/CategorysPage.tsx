@@ -1,81 +1,75 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../store/store";
-import { useEffect, useState } from "react";
-import { ProductProps } from "../types";
-import Button from "../components/ui/Button";
-import { addToCart } from "../store/Slice/cartSlice";
-import { currencyFormatter } from "../util/formatting";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getproductCategoriesList } from "../store/Slice/productSlice";
+import {  fetchCartAdd } from "../store/Slice/cartSlice";
 
-const Category: React.FC = () => {
-    const { categoryName } = useParams();
-  
-    const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate();
-    const { allProducts } = useSelector((state: RootState) => state.product);
-    const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
-  
-    useEffect(() => {
-      const categoryProducts = allProducts.filter(
-        (product) => product.category === categoryName
-      );
-      setFilteredProducts(categoryProducts);
-    }, [categoryName, allProducts]);
-  
-    const handleAddToCart = (product: ProductProps) => {
-      dispatch(addToCart(product));
-    };
-  
-    const handleProductClick = (id: number | string) => {
-      navigate(`/products/${id}`);
-    };
-  
+const CategoryPage: React.FC = () => {
+  const { categoryName } = useParams();
+  const navigae = useNavigate();
+  const getcategory = useSelector(
+    (state: RootState) => state.product.getProductCategoriesList
+  );
+
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    if (categoryName) {
+      dispatch(getproductCategoriesList(categoryName));
+    }
+  }, [dispatch, categoryName]);
+
+  if (!getcategory || getcategory.length === 0) {
     return (
-      <>
-        <h1 className="container mx-auto py-10 text-center font-extrabold">
-          Products in {categoryName}
-        </h1>
-  
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-8">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="border p-4 rounded-lg shadow-lg hover:shadow-xl transition flex
-              flex-col justify-between h-full
-              "
-            >
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-40 object-contain mb-4 cursor-pointer"
-                onClick={() => handleProductClick(product.id)}
-              />
-              <div className="flex-1 p-4">
-                <h2 className="text-lg font-semibold text-gray-700 text-center mb-2">
-                  {product.title}
-                </h2>
-                <p className="text-center text-gray-600">
-                  {currencyFormatter.format(product.price)}
-                </p>
-              </div>
-              <div className="mt-6 flex gap-4">
-                <Button
-                  label="Buy Now"
-                  className="bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition"
-                />
-  
-                <Button
-                  label="Add to Cart"
-                  className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition"
-                  onClick={() => handleAddToCart(product)}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </>
+      <div className="min-h-screen flex items-center justify-center text-gray-700 text-center px-4">
+        <p>No products found in this category.</p>
+      </div>
     );
+  }
+  const handleProductClick = (id: number) => {
+    navigae(`/products/${id}`);
   };
-  
-  export default Category;
-  
+  const handleAddToCart = (product: any) => {
+    dispatch(fetchCartAdd(product));
+  };
+
+  return (
+    <div className="min-h-screen px-4 sm:px-6 lg:px-12 py-6 bg-gray-50">
+      <h2 className="text-2xl md:text-3xl font-bold text-center text-seabasket_green mb-8 capitalize">
+        {categoryName}
+      </h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {getcategory.map((product, index) => (
+          <div
+            key={index}
+            className="bg-white border rounded-xl shadow hover:shadow-lg transition duration-300 flex flex-col p-4"
+          >
+            <img
+              src={product.images[0]}
+              alt={product.title}
+              className="w-full h-40 object-contain rounded-lg mb-4 cursor-pointer"
+              onClick={() => handleProductClick(product.id)}
+            />
+            <h3 className="text-lg font-semibold truncate">{product.brand}</h3>
+            <p className="text-sm text-gray-600 mb-1">₹{product.price}</p>
+            <p className="text-gray-800 font-bold text-sm mb-2 truncate">
+              {product.title}
+            </p>
+            <p className="text-gray-500 text-sm mb-4 line-clamp-3">
+              {product.description}
+            </p>
+            <button
+              onClick={()=>handleAddToCart(product)}
+              className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full"
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CategoryPage;

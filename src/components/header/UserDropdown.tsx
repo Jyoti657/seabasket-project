@@ -30,42 +30,44 @@ const UserDropdown: React.FC = () => {
 
   return (
     <div
-      className="relative"
+      className="relative z-50"
       ref={dropdownRef}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={handleMouseLeave}
     >
       <button
         onClick={toggleDropdown}
-        className="cursor-pointer flex items-center gap-2 p-2 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+        className="flex items-center gap-2 p-2 border border-gray-300 rounded-md hover:bg-gray-100 transition bg-white"
       >
-        <AccountCircle className="w-6 h-6 text-blue-600" />
-        <p className="font-bold text-white">Account</p>
-        <p className="text-sm font-semibold text-soft_mint">
-          Welcome{user ? `,${user.name}` : ""}!
-        </p>
+        <AccountCircle className="w-6 h-6 text-seabasket_green" />
+        <div className="flex flex-col items-start text-left">
+          <span className="text-xs text-gray-500">
+            {user ? `Welcome, ${user.name}` : "Welcome!"}
+          </span>
+          <span className="font-semibold text-sm text-gray-700">Account</span>
+        </div>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-seabasket_green text-black shadow-lg rounded-md border border-gray-200 z-10">
-          <div className="p-3 border-b border-gray-200">
-            <p className="text-sm font-semibold text-soft_mint">
-              {user ? `welcome ,${user.name}` : `welcome`}
+        <div className="absolute right-0 mt-2 w-52 sm:w-56 bg-white text-black shadow-lg rounded-md border border-gray-200 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-200 bg-seabasket_green/10">
+            <p className="text-sm font-semibold text-seabasket_green capitalize">
+              {user ? `Hello, ${user.name}` : "Hello, Guest"}
             </p>
           </div>
 
-          <div className="flex flex-col p-2">
+          <div className="flex flex-col py-2">
             {!isAuthenicated ? (
               <>
                 <NavLink
                   to="/signUp"
-                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
                 >
                   Sign Up
                 </NavLink>
                 <NavLink
                   to="/login"
-                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
                 >
                   Login
                 </NavLink>
@@ -74,29 +76,28 @@ const UserDropdown: React.FC = () => {
               <>
                 <NavLink
                   to="/profile"
-                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
                 >
                   My Profile
                 </NavLink>
                 <NavLink
                   to="/order"
-                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
                 >
                   Orders
                 </NavLink>
                 <NavLink
                   to="/favorites"
-                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
                 >
                   Favorites
                 </NavLink>
-                <NavLink
-                  to="/"
+                <button
                   onClick={handleLogOut}
-                  className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                  className="text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
                 >
-                  LogOut
-                </NavLink>
+                  Log Out
+                </button>
               </>
             )}
           </div>
