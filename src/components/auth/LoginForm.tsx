@@ -88,6 +88,27 @@ const LoginForm: React.FC = () => {
             type="submit"
             className="w-full bg-teal-700 text-white py-3 rounded-lg font-semibold hover:bg-teal-950 transition duration-200"
           />
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <span
+                className="text-teal-700 cursor-pointer hover:underline"
+                onClick={() => navigate("/signUp")}
+              >
+                Sign Up
+              </span>
+            </p>
+            <p className="text-sm text-gray-600">
+              <span
+                className="text-teal-700 cursor-pointer hover:underline"
+                onClick={() => navigate("/forgotPassword")}
+              >
+                Forgot Password?
+              </span>
+          
+
+            </p>
+          </div>
         </form>
       </div>
     </div>
