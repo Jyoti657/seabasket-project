@@ -151,7 +151,7 @@ export const cartSlice = createSlice({
           action.error.message || "Failed to update product to cart";
       })
       .addCase(fetchCartDelete.pending, (state) => {
-        state.error = null;
+        state.error = null; 
       })
       .addCase(fetchCartDelete.fulfilled, (state, action) => {
         state.loading = false;
