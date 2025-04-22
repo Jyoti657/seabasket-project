@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { loginUser } from "../../store/Slice/authSlice";
 import { useNavigate } from "react-router-dom";
-
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import login from "../../assets/login .png";
@@ -32,7 +31,6 @@ const LoginForm: React.FC = () => {
     } catch (err) {}
   };
 
- 
   return (
     <div className="w-full max-w-5xl mx-auto mt-20 shadow-2xl rounded-2xl overflow-hidden flex flex-col md:flex-row bg-white">
       <div className="w-full md:w-1/2 bg-soft_mint text-teal-800 flex flex-col justify-center items-center p-10 space-y-4">
@@ -105,8 +103,6 @@ const LoginForm: React.FC = () => {
               >
                 Forgot Password?
               </span>
-          
-
             </p>
           </div>
         </form>

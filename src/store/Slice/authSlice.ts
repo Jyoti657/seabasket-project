@@ -43,17 +43,17 @@ export const verifyOtp = createAsyncThunk(
     }
   }
 );
-//   export const forgotPassword = createAsyncThunk(
-//     "auth/forgotPassword",
-//     async (data: { email: string }, { rejectWithValue }) => {
-//       try {
-//         const response = await API.post("/forgot-password", data);
-//         return response.data;
-//       } catch (error: any) {
-//         return rejectWithValue(error.response?.data?.message || error.message);
-//       }
-//     }
-//   );
+  export const forgotPassword = createAsyncThunk(
+    "auth/forgotPassword",
+    async (data: { email: string }, { rejectWithValue }) => {
+      try {
+        const response = await API.post("/forgot-password", data);
+        return response.data;
+      } catch (error: any) {
+        return rejectWithValue(error.response?.data?.message || error.message);
+      }
+    }
+  );
 
 const initialState: Auth = {
   user: null,
@@ -128,7 +128,24 @@ const authSlice = createSlice({
         state.authError = action.payload as string;
       }
       )
-      
+      //forgotPassword
+      .addCase(forgotPassword.pending, (state) => {
+        state.isLoading = true;
+        state.authError = null;
+      }
+      )
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.otpVerified = true;
+      }
+      )
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.authError = action.payload as string;
+      }
+      );
   },
 });
 export const { logOut, addProfile } = authSlice.actions;
