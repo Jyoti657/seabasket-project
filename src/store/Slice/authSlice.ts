@@ -1,43 +1,58 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Auth } from "../../types";
+import { profileSchemaType } from "../../schema/ProfileSchema";
 import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
-import { profileSchemaType } from "../../schema/ProfileSchema";
 import axios from "axios";
 
-//signup
+const API = axios.create({
+  baseURL: "http://localhost:3100/auth",
+});
+
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (user: signUpSchemaType, { rejectWithValue }) => {
     try {
-      const response = await axios.post("https://dummyjson.com/auth/signup", {
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        phone: user.phone,
-      });
+      const response = await API.post("/sign-up", user);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
-
-// login
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (user: logInSchemaType, { rejectWithValue }) => {
     try {
-      const response = await axios.post("https://dummyjson.com/auth/login", {
-        username: user.email,
-        password: user.password,
-      });
+      const response = await API.post("/sign-in", user);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
+// export const verifyOtp = createAsyncThunk(
+//   "auth/verifyOtp",
+//   async (otpData: { otp: string; email: string }, { rejectWithValue }) => {
+//     try {
+//       const response = await API.post("/verify-otp", otpData);
+//       return response.data;
+//     } catch (error: any) {
+//       return rejectWithValue(error.response?.data?.message || error.message);
+//     }
+//   }
+// );
+//   export const forgotPassword = createAsyncThunk(
+//     "auth/forgotPassword",
+//     async (data: { email: string }, { rejectWithValue }) => {
+//       try {
+//         const response = await API.post("/forgot-password", data);
+//         return response.data;
+//       } catch (error: any) {
+//         return rejectWithValue(error.response?.data?.message || error.message);
+//       }
+//     }
+//   );
 
 const initialState: Auth = {
   user: null,

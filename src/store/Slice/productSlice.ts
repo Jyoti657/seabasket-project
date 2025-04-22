@@ -2,7 +2,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ProductProps, ProductState } from "../../types";
 import axios from "axios";
 
+
 const basic_URL = "https://dummyjson.com/products";
+
+//  const baseURL="http//localhost:3100/product/get-products"
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
@@ -112,7 +115,7 @@ const initialState: ProductState = {
   productCategories: [],
   productCategoriesList: [],
   getProductCategoriesList: [],
-  sortProducts: [],
+  // sortProducts: [],
 };
 const ProductSlice = createSlice({
   name: "products",

@@ -37,7 +37,7 @@ export interface ProductState {
   productCategories: { name: string; images: any }[];
   productCategoriesList: [];
   getProductCategoriesList: ProductProps[];
-  sortProducts: ProductProps[];
+
   filteredProducts: ProductProps[];
   loading: boolean;
   error: string | null;
