@@ -2,7 +2,11 @@ import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
 import forgetPasswordSchema from "../../schema/forgetPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { forgotPassword } from "../../store/Slice/authSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
 const ForgotPassword: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
@@ -11,8 +15,18 @@ const ForgotPassword: React.FC = () => {
     resolver: zodResolver(forgetPasswordSchema),
   });
   const onSubmit = async (data: ForgetPasswordSchemaType) => {
-    console.log("Form submitted:", data);
-    // Handle the form submission logic here
+    try {
+      const resultAction = await dispatch(forgotPassword(data));
+      if (forgotPassword.fulfilled.match(resultAction)) {
+        console.log("Password reset link sent successfully");
+      } else {
+        console.error("Failed to send password reset link");
+      }
+
+      console.log("Form submitted:", data);
+    } catch (error) {
+      console.error("Error during password reset:", error);
+    }
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">

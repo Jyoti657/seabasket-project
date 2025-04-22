@@ -4,6 +4,7 @@ import { profileSchemaType } from "../../schema/ProfileSchema";
 import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
 import { OtpSchemaType } from "../../schema/optSchema";
+import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
 import axios from "axios";
 
 const API = axios.create({
@@ -45,7 +46,7 @@ export const verifyOtp = createAsyncThunk(
 );
   export const forgotPassword = createAsyncThunk(
     "auth/forgotPassword",
-    async (data: { email: string }, { rejectWithValue }) => {
+    async (data: ForgetPasswordSchemaType, { rejectWithValue }) => {
       try {
         const response = await API.post("/forgot-password", data);
         return response.data;
