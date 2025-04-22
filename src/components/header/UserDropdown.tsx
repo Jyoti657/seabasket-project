@@ -11,12 +11,13 @@ const UserDropdown: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthenicated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const registerUser = useSelector((state: RootState) => state.auth.registerUser);
+
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
+
   const handleMouseLeave = () => {
     setTimeout(() => {
       setIsOpen(false);
@@ -57,7 +58,7 @@ const UserDropdown: React.FC = () => {
           </div>
 
           <div className="flex flex-col py-2">
-            {!isAuthenicated ? (
+            {!registerUser ? (
               <>
                 <NavLink
                   to="/signUp"
@@ -65,6 +66,16 @@ const UserDropdown: React.FC = () => {
                 >
                   Sign Up
                 </NavLink>
+
+                <NavLink
+                  to="/login"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                >
+                  Login
+                </NavLink>
+              </>
+            ) : !isAuthenticated ? (
+              <>
                 <NavLink
                   to="/login"
                   className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"

@@ -23,14 +23,10 @@ const SignUpForm: React.FC = () => {
     try {
       const resultAction = await dispatch(registerUser(data));
       if (registerUser.fulfilled.match(resultAction)) {
-        console.log("User registered successfully:", resultAction.payload);
         navigate("/");
       } else {
-        console.error("Registration failed:", resultAction.payload);
       }
-    } catch (err) {
-      console.error("Unexpected error:", err);
-    }
+    } catch (err) {}
   };
 
   return (

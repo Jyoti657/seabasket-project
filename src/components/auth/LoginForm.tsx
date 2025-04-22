@@ -6,39 +6,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { loginUser } from "../../store/Slice/authSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import login from "../../assets/login .png";
 
 const LoginForm: React.FC = () => {
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const authError = useSelector((state: RootState) => state.auth.authError);
-  // const isAuthenticated = useSelector(
-  //   (state: RootState) => state.auth.isAuthenticated
-  // );
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<logInSchemaType>({ resolver: zodResolver(logInSchema) });
 
   const onSubmit: SubmitHandler<logInSchemaType> = (data) => {
-    dispatch(loginUser({ email: data.email, password: data.password }));
-    setHasSubmitted(true);
-    setIsAuthenticated(true);
-  };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      reset();
-      navigate("/");
+    try {
+      const resultAction = dispatch(loginUser(data));
+      if (loginUser.fulfilled.match(resultAction)) {
+        navigate("/");
+      }
+    } catch (err) {
+      
     }
-  }, [navigate, isAuthenticated, reset]);
+  };
 
   return (
     <div className="w-full max-w-5xl mx-auto mt-20 shadow-2xl rounded-2xl overflow-hidden flex flex-col md:flex-row bg-white">
@@ -83,11 +80,11 @@ const LoginForm: React.FC = () => {
             )}
           </div>
 
-          {hasSubmitted && authError && (
+          {authError && (
             <p className="text-red-600 text-sm mt-2">{authError}</p>
           )}
 
-          {hasSubmitted && isAuthenticated && (
+          {isAuthenticated && (
             <p className="text-green-600 text-sm mt-2">Login Successful!</p>
           )}
 

@@ -61,6 +61,8 @@ const initialState: Auth = {
   otpVerified: false,
   authError: null,
   isLoading: false,
+  registerUser: false,
+
 };
 const authSlice = createSlice({
   name: "auth",
@@ -86,7 +88,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isAuthenticated = true;
+        state.registerUser = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
