@@ -15,6 +15,7 @@ import SignUpPage from "./pages/SignUpPage";
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage";
+import Opt from "./pages/Opt";
 import PrivateRoute from "./pages/PrivateRoute";
 
 const App: React.FC = () => {
@@ -30,9 +31,11 @@ const App: React.FC = () => {
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
+          
           <Route path="/search" element={<SearchPage />} />
 
           <Route element={<PrivateRoute />}>
+          <Route path="/otp" element={<Opt />} />
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/address" element={<AddressPage />} />
             <Route path="/checkout" element={<Checkout />} />

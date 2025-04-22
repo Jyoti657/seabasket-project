@@ -3,6 +3,7 @@ import { Auth } from "../../types";
 import { profileSchemaType } from "../../schema/ProfileSchema";
 import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
+import { OtpSchemaType } from "../../schema/optSchema";
 import axios from "axios";
 
 const API = axios.create({
@@ -31,17 +32,17 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-// export const verifyOtp = createAsyncThunk(
-//   "auth/verifyOtp",
-//   async (otpData: { otp: string; email: string }, { rejectWithValue }) => {
-//     try {
-//       const response = await API.post("/verify-otp", otpData);
-//       return response.data;
-//     } catch (error: any) {
-//       return rejectWithValue(error.response?.data?.message || error.message);
-//     }
-//   }
-// );
+export const verifyOtp = createAsyncThunk(
+  "auth/verifyOtp",
+  async (otpData: OtpSchemaType, { rejectWithValue }) => {
+    try {
+      const response = await API.post("/verify-otp", otpData);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
 //   export const forgotPassword = createAsyncThunk(
 //     "auth/forgotPassword",
 //     async (data: { email: string }, { rejectWithValue }) => {
@@ -108,7 +109,26 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.authError = action.payload as string;
-      });
+      })
+      //verifyOtp
+      .addCase(verifyOtp.pending, (state) => {
+        state.isLoading = true;
+        state.authError = null;
+      }
+      )
+      .addCase(verifyOtp.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.otpVerified = true;
+      }
+      )
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.authError = action.payload as string;
+      }
+      )
+      
   },
 });
 export const { logOut, addProfile } = authSlice.actions;

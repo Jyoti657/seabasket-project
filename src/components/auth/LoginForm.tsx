@@ -12,13 +12,10 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import login from "../../assets/login .png";
 
 const LoginForm: React.FC = () => {
-  
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const authError = useSelector((state: RootState) => state.auth.authError);
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const otp = useSelector((state: RootState) => state.auth.otpVerified);
 
   const {
     register,
@@ -26,17 +23,16 @@ const LoginForm: React.FC = () => {
     formState: { errors },
   } = useForm<logInSchemaType>({ resolver: zodResolver(logInSchema) });
 
-  const onSubmit: SubmitHandler<logInSchemaType> = (data) => {
+  const onSubmit: SubmitHandler<logInSchemaType> = async (data) => {
     try {
-      const resultAction = dispatch(loginUser(data));
+      const resultAction = await dispatch(loginUser(data));
       if (loginUser.fulfilled.match(resultAction)) {
-        navigate("/");
+        navigate("/otp");
       }
-    } catch (err) {
-      
-    }
+    } catch (err) {}
   };
 
+ 
   return (
     <div className="w-full max-w-5xl mx-auto mt-20 shadow-2xl rounded-2xl overflow-hidden flex flex-col md:flex-row bg-white">
       <div className="w-full md:w-1/2 bg-soft_mint text-teal-800 flex flex-col justify-center items-center p-10 space-y-4">
@@ -83,13 +79,13 @@ const LoginForm: React.FC = () => {
           {authError && (
             <p className="text-red-600 text-sm mt-2">{authError}</p>
           )}
-
-          {isAuthenticated && (
-            <p className="text-green-600 text-sm mt-2">Login Successful!</p>
+          {otp && (
+            <p className="text-green-600 text-sm mt-2">OTP Send Successful!</p>
           )}
 
           <Button
-            label="Login"
+            label="login"
+            type="submit"
             className="w-full bg-teal-700 text-white py-3 rounded-lg font-semibold hover:bg-teal-950 transition duration-200"
           />
         </form>

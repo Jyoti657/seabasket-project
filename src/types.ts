@@ -28,6 +28,7 @@ export interface ButtonProps {
   label: string;
   onClick?: () => void;
   className: string;
+  type?: "button" | "submit" | "reset";
 }
 
 export interface ProductState {
@@ -55,7 +56,8 @@ export interface confirmModalProps {
 
 export interface Auth {
   user: {
-    name?: string;
+    firstName?: string;
+    lastName?: string;
     email: string;
     password?: string;
     phone?: string;
