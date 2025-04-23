@@ -78,8 +78,8 @@ const LoginForm: React.FC = () => {
             <p className="text-red-600 text-sm mt-2">{authError}</p>
           )}
           {otp && (
-            <p className="text-green-600 text-sm mt-2">OTP Send Successful!</p>
-          )}
+            <p className="text-green-600 text-sm mt-2">{otp}</p>
+          )} 
 
           <Button
             label="login"

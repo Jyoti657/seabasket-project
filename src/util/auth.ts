@@ -24,6 +24,6 @@ export const tokenLoader = () => {
 export const checkAuthLoader = () => {
   const token = getToken();
   if (!token) {
-    return redirect("/otp");
+    return redirect("/login");
   }
 };
