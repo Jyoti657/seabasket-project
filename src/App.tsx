@@ -1,8 +1,8 @@
 import {
   createBrowserRouter,
-  Route,
+  
   RouterProvider,
-  Routes,
+  
 } from "react-router-dom";
 import Home from "./pages/HomePage";
 import Cart from "./pages/CartPage";
@@ -20,7 +20,7 @@ import SignUpPage from "./pages/SignUpPage";
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage";
-import Opt from "./pages/Opt";
+import Opt ,{action as otpAction}from "./pages/Opt";
 import ForgotPasswordPage from "./pages/ForgetPasswordsPage";
 import { checkAuthLoader, tokenLoader } from "./util/auth";
 
@@ -34,10 +34,7 @@ const App: React.FC = () => {
       loader: tokenLoader,
       children: [
         { index: true, element: <Home /> },
-        { path: "login", element: <Login />,
-        
-
-         },
+        { path: "login", element: <Login />, },
         { path: "category/:categoryName", element: <CategoryPage /> },
         { path: "cart", element: <Cart /> },
         { path: "products", element: <Products /> },
@@ -46,7 +43,9 @@ const App: React.FC = () => {
         { path: "signUp", element: <SignUpPage /> },
         { path: "forgotPassword", element: <ForgotPasswordPage /> },
         { path: "search", element: <SearchPage /> },
-        { path: "otp", element: <Opt /> },
+        { path: "otp", element: <Opt />, 
+          action:otpAction,
+        },
         { path: "profile", element: <Profile />, 
           loader:checkAuthLoader,
         },
