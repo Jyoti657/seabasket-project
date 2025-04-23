@@ -3,20 +3,19 @@ import ProfileForm from "../components/profile/ProfileForm";
 import { AppDispatch, RootState } from "../store/store";
 import { CgProfile } from "react-icons/cg";
 import { RiFileHistoryFill, RiLogoutCircleRFill } from "react-icons/ri";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Confirm from "../components/ui/ConfrimModal"
+import Confirm from "../components/ui/ConfrimModal";
 import { FaAddressCard } from "react-icons/fa";
-import { logOut } from "../store/Slice/authSlice";
-import { userProfile } from "../store/Slice/userSlice";
+import { logOut, updateProfile } from "../store/Slice/authSlice";
 
 const Profile: React.FC = () => {
   const [showConfirm, setShowConfirm] = useState(false);
- const userId=  useParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const user = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.auth);
 
   const handleOrderHistory = () => {
     navigate("/order");
@@ -30,12 +29,12 @@ const Profile: React.FC = () => {
   const handleAddress = () => {
     navigate("/address");
   };
-  useEffect(() => {
-    if(userId){
-      dispatch(userProfile(Number(userId)))
-    }
-    
-  })
+  // useEffect(() => {
+  //   if (userId) {
+  //     dispatch(updateProfile({ userId }));
+  //   }
+
+  // },[dispatch,userId]);
 
   return (
     <>
@@ -44,7 +43,7 @@ const Profile: React.FC = () => {
           <div className="flex flex-col items-center text-center">
             <CgProfile className="w-16 h-16 text-gray-500 mb-2" />
             <h2 className="text-xl font-semibold text-gray-800">
-              Hello, {user?.firstName || "User"}
+              Hello, {user?.user?.firstName || "User"}
             </h2>
           </div>
 
@@ -80,19 +79,34 @@ const Profile: React.FC = () => {
               </h3>
               <div className="grid sm:grid-cols-2 gap-4 text-gray-700">
                 <p>
-                  <span className="font-medium">First Name:</span> {user.firstName}
+                  <span className="font-medium">First Name:</span>{" "}
+                  {user.user?.firstName}
                 </p>
                 <p>
-                  <span className="font-medium">Last Name:</span> {user.lastName}
+                  <span className="font-medium">Last Name:</span>{" "}
+                  {user.user?.lastName}
                 </p>
                 <p>
-                  <span className="font-medium">Email:</span> {user.email}
+                  <span className="font-medium">Mobile Number</span>{" "}
+                  {user.user?.mobile}
                 </p>
                 <p>
-                  <span className="font-medium">Phone:</span> {user.phone}
+                  <span className="font-medium">AddressLine1</span>{" "}
+                  {user.user?.addressLine1}
                 </p>
                 <p>
-                  <span className="font-medium">Gender:</span> {user.gender}
+                  <span className="font-medium">AddressLine2:</span>{" "}
+                  {user.user?.addressLine2}
+                </p>
+                <p>
+                  <span className="font-medium">City:</span> {user.user?.city}
+                </p>
+                <p>
+                  <span className="font-medium">Postal Code:</span>{" "}
+                  {user.user?.postalCode}
+                </p>
+                <p>
+                  <span className="font-medium">State:</span> {user.user?.state}
                 </p>
               </div>
             </div>
@@ -108,9 +122,9 @@ const Profile: React.FC = () => {
       </div>
 
       <Confirm
-        isOpne={showConfirm}
+        isOpen={showConfirm}
         onClose={() => setShowConfirm(false)}
-        OnConfrim={handleLogOut}
+        OnConfirm={handleLogOut}
         message="Are you sure you want to logout?"
         ConfirmText="Yes, Logout"
         CancelText="Cancel"

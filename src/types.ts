@@ -46,9 +46,9 @@ export interface ProductState {
 }
 
 export interface confirmModalProps {
-  isOpne: boolean;
+  isOpen: boolean;
   onClose?: () => void;
-  OnConfrim?: () => void;
+  OnConfirm?: () => void;
   message: string;
   ConfirmText?: string;
   CancelText?: string;
@@ -58,9 +58,13 @@ export interface Auth {
   user: {
     firstName?: string;
     lastName?: string;
-    email: string;
-    password?: string;
-    phone?: string;
+    mobile?: string;
+    addressLine1?: string;
+    addressLine2?: string;
+    city?: string;
+    postalCode?: string;
+    state?: string;
+
   } | null;
   isAuthenticated: boolean;
   otpVerified: boolean;

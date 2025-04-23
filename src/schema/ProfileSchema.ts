@@ -6,33 +6,29 @@ const profileSchema = z.object({
     .min(1, "First name is required")
     .max(50, "First name must not be more than 50 characters")
     .trim(),
+
   lastName: z
     .string()
     .min(1, "Last name is required")
     .max(50, "Last name must not be more than 50 characters")
     .trim(),
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Invalid email address")
-    .trim(),
-  phone: z
-    .string()
-    .min(10, "Phone number must be valid")
-    .max(10, "Phone number must be valid")
-    .trim(),
-  gender: z.enum(["male", "female", "other"]).optional(),
-  birthDate: z.string().min(1, "Birthdate is required").optional(),
-  address: z.object({
-    address: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
-    postalCode: z.string().optional(),
-    country: z.string().optional(),
-  }).optional(),
-  image: z.string().optional(),
-});
 
-export type profileSchemaType = z.infer<typeof profileSchema>;
+  mobile: z
+    .string()
+    .min(10, "Mobile number must be 10 digits")
+    .max(10, "Mobile number must be 10 digits")
+    .regex(/^\d+$/, "Mobile must be numeric")
+    .trim(),
+
+  addressLine1: z.string().trim().optional(),
+  addressLine2: z.string().trim().optional(),
+  city: z.string().trim().optional(),
+  postalCode: z.string().trim().optional(),
+  state: z.string().trim().optional(),
+
+})
+
+
+export type ProfileSchemaType = z.infer<typeof profileSchema>;
 
 export default profileSchema;
