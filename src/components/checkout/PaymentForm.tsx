@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 // import CashForm from "../payment/CashForm";
 // import CreditCardForm from "../payment/CreditCardForm";
@@ -9,10 +8,11 @@ const PaymentForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-md p-6 border border-gray-200 mt-8 space-y-6">
-      <h2 className="text-xl font-semibold text-gray-800">Select Payment Method</h2>
+      <h2 className="text-xl font-semibold text-gray-800">
+        Select Payment Method
+      </h2>
 
       <div className="space-y-4">
-     
         <div className="flex items-center gap-3">
           <input
             type="radio"
@@ -29,10 +29,6 @@ const PaymentForm: React.FC = () => {
         </div>
         {/* {paymentMethod === "upi" && <UPIForm />} */}
 
-   
-       
-
-      
         <div className="flex items-center gap-3">
           <input
             type="radio"

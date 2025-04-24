@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch} from "react-redux";
-import { AppDispatch} from "../../store/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
 import { ProfileSchemaType } from "../../schema/ProfileSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import profileSchema from "../../schema/ProfileSchema";
@@ -20,16 +20,12 @@ const ProfileForm: React.FC = () => {
 
       if (updateProfile.fulfilled.match(resultAction)) {
         console.log("Profile updated successfully");
-        console.log(data)
+        console.log(data);
       }
     } catch (err) {
       console.error("Error updating profile:", err);
     }
   };
-  // const onSubmit: SubmitHandler<ProfileSchemaType> = async (data) => {
-  //   dispatch(updateProfile(data));
-  // }
-
 
   return (
     <div className="w-full max-w-[800px] bg-white p-6 shadow-lg rounded-md items-center">

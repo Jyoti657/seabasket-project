@@ -25,9 +25,7 @@ const profileSchema = z.object({
   city: z.string().trim().optional(),
   postalCode: z.string().trim().optional(),
   state: z.string().trim().optional(),
-
-})
-
+});
 
 export type ProfileSchemaType = z.infer<typeof profileSchema>;
 

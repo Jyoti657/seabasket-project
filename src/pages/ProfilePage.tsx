@@ -67,7 +67,7 @@ const Profile: React.FC = () => {
         <div className="flex-1 space-y-6">
           <ProfileCard />
 
-          <div className="bg-soft_mint shadow-md rounded-lg p-6">
+          <div className="bg-soft_mint shadow-md rounded-lg p-6 items-center">
             <h3 className="text-xl font-semibold text-gray-800 border-b pb-2 mb-4">
               Update Profile
             </h3>

@@ -14,10 +14,7 @@ const signUpSchema = z
       .min(2, { message: "Last name must be at least 2 characters" })
       .max(50, { message: "Last name must not be more than 50 characters" }),
 
-    email: z
-      .string()
-      .trim()
-      .email({ message: "Invalid email address" }),
+    email: z.string().trim().email({ message: "Invalid email address" }),
 
     password: z
       .string()

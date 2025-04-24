@@ -6,14 +6,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { calculateTotalAmount } from "../../util/calculateTotalAmount";
 
 const CartTotal: React.FC = () => {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const subtotal = useSelector(selectCartTotal);
-  const{total,tax,shipping}=calculateTotalAmount(subtotal)
+  const { total, tax, shipping } = calculateTotalAmount(subtotal);
 
-   const handleCheckout = () => {   
-    navigate("/checkout")
-
-   }
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
 
   return (
     <div className="w-full max-w-md mx-auto bg-soft_mint rounded-2xl shadow-md border border-gray-200 p-6 mt-8">
@@ -42,7 +41,6 @@ const CartTotal: React.FC = () => {
       <NavLink to="/checkout">
         <Button
           label="Checkout"
-
           className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
         />
       </NavLink>

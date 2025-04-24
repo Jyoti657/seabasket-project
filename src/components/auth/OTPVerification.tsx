@@ -20,7 +20,6 @@ const OTPVerification: React.FC = () => {
   } = useForm<OtpSchemaType>({
     resolver: zodResolver(otpSchema),
   });
-  
 
   const onSubmit: SubmitHandler<OtpSchemaType> = async (data) => {
     try {

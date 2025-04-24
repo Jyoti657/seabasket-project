@@ -10,9 +10,10 @@ const UserDropdown: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-   const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const registerUser = useSelector((state: RootState) => state.auth.registerUser);
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -43,7 +44,7 @@ const UserDropdown: React.FC = () => {
         <AccountCircle className="w-6 h-6 text-seabasket_green" />
         <div className="flex flex-col items-start text-left">
           <span className="text-xs text-gray-500">
-            {user ? `Welcome, ${user.firstName}` : "Welcome!"}
+            {user?.firstName ? `Welcome, ${user.firstName}` : "Welcome!"}
           </span>
           <span className="font-semibold text-sm text-gray-700">Account</span>
         </div>
@@ -53,7 +54,7 @@ const UserDropdown: React.FC = () => {
         <div className="absolute right-0 mt-2 w-52 sm:w-56 bg-white text-black shadow-lg rounded-md border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-200 bg-seabasket_green/10">
             <p className="text-sm font-semibold text-seabasket_green capitalize">
-              {user ? `Hello, ${user.firstName}` : "Hello, Guest"}
+              {user?.firstName ? `Hello, ${user.firstName}` : "Hello, Guest"}
             </p>
           </div>
 
@@ -66,7 +67,6 @@ const UserDropdown: React.FC = () => {
                 >
                   Sign Up
                 </NavLink>
-
                 <NavLink
                   to="/login"
                   className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
@@ -74,18 +74,7 @@ const UserDropdown: React.FC = () => {
                   Login
                 </NavLink>
               </>
-            ) 
-            // : !isAuthenticated ? (
-            //   <>
-            //     <NavLink
-            //       to="/login"
-            //       className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
-            //     >
-            //       Login
-            //     </NavLink>
-            //   </>
-            // )
-             : (
+            ) : (
               <>
                 <NavLink
                   to="/profile"
