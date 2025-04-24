@@ -7,28 +7,35 @@ import { ProductProps } from "../types";
 import Button from "../components/ui/Button";
 import CartTotal from "../components/cart/CartToatl";
 import CartProducts from "../components/cart/CartProducts";
-import { fetchCart } from "../store/Slice/cartSlice";
+import { fetchCart, resetCart } from "../store/Slice/cartSlice";
 
 const Cart: React.FC = () => {
-  const {id}= useParams();
   const { productData, loading, error } = useSelector(
     (state: RootState) => state.cart
   );
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const handleProductClick = () => {
-    setIsModalOpen(true);
-
-    
-  };
 
   useEffect(() => {
     dispatch(fetchCart());
-  }, [dispatch]);
+    // if(!isAuthenticated){
+    //   dispatch(resetCart())
+    
+  }, [dispatch ]);
+
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (error)
     return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
+
+  // if (!isAuthenticated) {
+  //   return dispatch(resetCart())
+    
+  // }
+
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 flex flex-col lg:flex-row gap-6 justify-center">
       {productData && productData.length > 0 ? (
@@ -66,7 +73,7 @@ const Cart: React.FC = () => {
             Your cart is empty. Add products!
           </h1>
           <NavLink to={"/"}>
-            <Button className="" label="Go to Shopping" />
+            <Button label="Go to Shopping" className="" />
           </NavLink>
         </div>
       )}

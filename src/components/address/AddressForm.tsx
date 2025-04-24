@@ -1,8 +1,12 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import addressSchema, { addressSchemaType } from "../../schema/addressSchema";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { addAddress } from "../../store/Slice/addressSlice";
 
 const AddressForm: React.FC = () => {
+ const dispatch= useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
@@ -11,11 +15,23 @@ const AddressForm: React.FC = () => {
     resolver: zodResolver(addressSchema),
   });
 
-  const onSubmit = (data: addressSchemaType) => {
-    console.log("✅ Validated Address Data:", data);
+  const onSubmit:SubmitHandler<addressSchemaType>=async (data) => {
+    try{
+      const resultAction= await dispatch(addAddress(data));
+      if(addAddress.fulfilled.match(resultAction)){
+        console.log("Add Adreess")
+      }
+    }
+    catch(err){
+      console.log(" address is not add")
+    }
+    
+    console.log(data)
   };
 
   return (
+    <div className=" grid grid-row">
+
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow space-y-4"
@@ -101,6 +117,7 @@ const AddressForm: React.FC = () => {
         Save Address
       </button>
     </form>
+    </div>
   );
 };
 

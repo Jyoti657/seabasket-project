@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
  import axios from "axios";
+import { addressSchemaType } from "../../schema/addressSchema";
+import {Auth} from "../../types"
+import { setToken } from "../../Api/axiosInstance";
  
  const API = axios.create({
     baseURL: "http://localhost:3100/address",
@@ -8,9 +11,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addAddress = createAsyncThunk(
   "address/addAddress",
-  async (addressData: any, { rejectWithValue }: { rejectWithValue: (value: any) => void }) => {
+  async (addressData: addressSchemaType, { rejectWithValue ,getState }) => {
     try {
-      const response = await API.post("/add-address", addressData);
+      const state:any=getState();
+      const token =state.auth.token;
+      const response = await API.post("/add-address", addressData,{
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${token}`
+        }
+      });
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -30,14 +40,22 @@ export const fetchAddress = createAsyncThunk(
 );
 
 
-interface AddressState {
-  list: any[];
-  isLoggedIn: boolean;
-}
+// interface  {
+//   list: any[];
+//   isLoggedIn: boolean;
+// }
 
-const initialState: AddressState = {
-  list: [],
-  isLoggedIn: false,
+const initialState: Auth = {
+ 
+user:null,
+  token: "",
+  isAuthenticated: true,
+  otpVerified: false,
+  authError: null,
+  isLoading: false,
+  registerUser: true,
+  verifiedUser: true,
+
 };
 const addressSlice = createSlice({
   name: "address",
@@ -48,11 +66,16 @@ const addressSlice = createSlice({
   extraReducers: (builder) => { 
     builder
       .addCase(addAddress.pending, (state) => {
-        state.isLoggedIn = true;
+        state.isLoading=true;
+        state.authError=null
       })
       .addCase(addAddress.fulfilled, (state, action) => {
-        state.list.push(action.payload);
-        state.isLoggedIn = false;
+        // state.list.push(action.payload);
+        // state.isLoggedIn = true;
+        if(action.payload){
+          state.user=action.payload.address
+          state.isLoggedIn=true
+        }
       })
       .addCase(addAddress.rejected, (state) => {
         state.isLoggedIn = false;

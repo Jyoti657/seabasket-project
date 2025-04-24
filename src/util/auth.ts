@@ -1,29 +1,20 @@
-import { redirect } from "react-router-dom";
 
-export const getTokenDuration = () => {
-  const expriation = localStorage.getItem("expiration");
-  const expirationDate = new Date(expriation!);
-  const now = new Date();
-  const duration = expirationDate.getTime() - now.getTime();
-  return duration;
+ export const setToken = (token: string) => {
+  localStorage.setItem("token", token);
+  localStorage.setItem("lastLoginTime", new Date().getDate().toString());
 };
+
 export const getToken = () => {
+  const now = new Date(Date.now()).getTime();
+  const timeAllowed = 1000 * 60 * 30;
+  const lastLoginTime = localStorage.getItem("lastLoginTime");
   const token = localStorage.getItem("token");
-  if (!token) {
-    return null;
+  if (lastLoginTime && token && now - parseInt(lastLoginTime) < timeAllowed) {
+    return token;
   }
-  const tokenDuration = getTokenDuration();
-  if (tokenDuration < 0) {
-    return "Expired";
-  }
-  return token;
+  return null;
 };
-export const tokenLoader = () => {
-  return getToken();
-};
-export const checkAuthLoader = () => {
-  const token = getToken();
-  if (!token) {
-    return redirect("/login");
-  }
+export   const deleteToken = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("lastLoginTime");
 };

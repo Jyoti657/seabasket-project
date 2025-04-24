@@ -9,6 +9,7 @@ import { RootState } from "../../store/store";
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { productData } = useSelector((state: RootState) => state.cart);
+  const isAuthenticated= useSelector((state:RootState)=>state.auth.isAuthenticated)
   const handleLogo = () => {
     navigate("/");
   };
