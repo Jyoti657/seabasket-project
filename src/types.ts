@@ -79,14 +79,13 @@ export interface Auth {
 }
 
 export interface addressForm {
-  id: string;
-  fullname: string;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
+  AdressLine1:string;
+  AdressLine2:string;
+  PostalCode:number;
+  state:string;
+  city:string;
+  country:string
+
 }
 
 export interface order {

@@ -22,7 +22,7 @@ const ProductDetails: React.FC = () => {
     dispatch(fetchCartAdd(product));
   };
   const handleProductClick = (id: number) => {
-    navigate("/cart");
+    navigate("/checkout");
   };
 
   useEffect(() => {

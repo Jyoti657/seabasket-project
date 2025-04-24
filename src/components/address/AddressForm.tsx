@@ -1,8 +1,8 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import addressSchema, { addressSchemaType } from "../../schema/addressSchema";
 
-const AddressForm = () => {
+const AddressForm: React.FC = () => {
   const {
     register,
     handleSubmit,
@@ -11,110 +11,94 @@ const AddressForm = () => {
     resolver: zodResolver(addressSchema),
   });
 
-  const onSubmit: SubmitHandler<addressSchemaType> = (data) => {
-    console.log("Submitted Address:", data);
+  const onSubmit = (data: addressSchemaType) => {
+    console.log("✅ Validated Address Data:", data);
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-md mx-auto p-6 bg-white rounded-xl shadow-md space-y-5"
+      className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow space-y-4"
     >
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
-        <input
-          {...register("email")}
-          type="email"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-        )}
-      </div>
+      <h2 className="text-xl font-semibold mb-4">Enter Your Address</h2>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Name</label>
+        <label className="block mb-1 font-medium">Address Line 1</label>
         <input
-          {...register("name")}
           type="text"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          {...register("AddressLine1")}
+          className="w-full border rounded p-2"
         />
-        {errors.name && (
-          <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+        {errors.AddressLine1 && (
+          <p className="text-red-500 text-sm">{errors.AddressLine1.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Phone</label>
+        <label className="block mb-1 font-medium">Address Line 2</label>
         <input
-          {...register("phone")}
           type="text"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          {...register("AddressLine2")}
+          className="w-full border rounded p-2"
         />
-        {errors.phone && (
-          <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+        {errors.AddressLine2 && (
+          <p className="text-red-500 text-sm">{errors.AddressLine2.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Pincode
-        </label>
+        <label className="block mb-1 font-medium">Postal Code</label>
         <input
-          {...register("pincode", { valueAsNumber: true })}
           type="number"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          {...register("PostalCode", { valueAsNumber: true })}
+          className="w-full border rounded p-2"
         />
-        {errors.pincode && (
-          <p className="text-red-500 text-sm mt-1">
-            Pincode must be exactly 6 digits
-          </p>
+        {errors.PostalCode && (
+          <p className="text-red-500 text-sm">{errors.PostalCode.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">State</label>
+        <label className="block mb-1 font-medium">State</label>
         <input
-          {...register("state")}
           type="text"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          {...register("state")}
+          className="w-full border rounded p-2"
         />
         {errors.state && (
-          <p className="text-red-500 text-sm mt-1">{errors.state.message}</p>
+          <p className="text-red-500 text-sm">{errors.state.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">City</label>
+        <label className="block mb-1 font-medium">City</label>
         <input
-          {...register("city")}
           type="text"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          {...register("city")}
+          className="w-full border rounded p-2"
         />
         {errors.city && (
-          <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>
+          <p className="text-red-500 text-sm">{errors.city.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Country
-        </label>
+        <label className="block mb-1 font-medium">Country</label>
         <input
-          {...register("courty")}
           type="text"
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          {...register("country")}
+          className="w-full border rounded p-2"
         />
-        {errors.courty && (
-          <p className="text-red-500 text-sm mt-1">{errors.courty.message}</p>
+        {errors.country && (
+          <p className="text-red-500 text-sm">{errors.country.message}</p>
         )}
       </div>
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
       >
-        Submit
+        Save Address
       </button>
     </form>
   );
