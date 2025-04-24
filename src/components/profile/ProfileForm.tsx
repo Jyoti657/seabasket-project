@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
+import { useDispatch} from "react-redux";
+import { AppDispatch} from "../../store/store";
 import { ProfileSchemaType } from "../../schema/ProfileSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import profileSchema from "../../schema/ProfileSchema";
@@ -8,28 +8,27 @@ import { updateProfile } from "../../store/Slice/authSlice";
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-    const user= useSelector((state: RootState) => state.auth.user);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ProfileSchemaType>({ resolver: zodResolver(profileSchema) });
 
-  // const onSubmit: SubmitHandler<ProfileSchemaType> = async (data) => {
-  //   try {
-  //     const resultAction = await dispatch(updateProfile(data));
-
-  //     if (updateProfile.fulfilled.match(resultAction)) {
-  //       console.log("Profile updated successfully");
-  //     }
-  //   } catch (err) {
-  //     console.error("Error updating profile:", err);
-  //   }
-  // };
   const onSubmit: SubmitHandler<ProfileSchemaType> = async (data) => {
-    dispatch(updateProfile(data));
-  }
+    try {
+      const resultAction = await dispatch(updateProfile(data));
+
+      if (updateProfile.fulfilled.match(resultAction)) {
+        console.log("Profile updated successfully");
+        console.log(data)
+      }
+    } catch (err) {
+      console.error("Error updating profile:", err);
+    }
+  };
+  // const onSubmit: SubmitHandler<ProfileSchemaType> = async (data) => {
+  //   dispatch(updateProfile(data));
+  // }
 
 
   return (

@@ -29,12 +29,6 @@ const Profile: React.FC = () => {
   const handleAddress = () => {
     navigate("/address");
   };
-  // useEffect(() => {
-  //   if (userId) {
-  //     dispatch(updateProfile({ userId }));
-  //   }
-
-  // },[dispatch,userId]);
 
   return (
     <>

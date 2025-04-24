@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Auth } from "../../types";
 import { ProfileSchemaType } from "../../schema/ProfileSchema";
 import { signUpSchemaType } from "../../schema/signUpSchema";
@@ -7,8 +7,35 @@ import { OtpSchemaType } from "../../schema/optSchema";
 import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
 import axios from "axios";
 
+const setToken = (token: string) => {
+  localStorage.setItem("token", token);
+  localStorage.setItem("lastLoginTime", new Date().getDate().toString());
+};
+
+export const getToken = () => {
+  const now = new Date(Date.now()).getTime();
+  const timeAllowed = 1000 * 60 * 30;
+  const lastLoginTime = localStorage.getItem("lastLoginTime");
+  const token = localStorage.getItem("token");
+  if (lastLoginTime && token && now - parseInt(lastLoginTime) < timeAllowed) {
+    return token;
+  }
+  return null;
+};
+const deleteToken = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("lastLoginTime");
+};
+
 const API = axios.create({
   baseURL: "http://localhost:3100/auth",
+});
+API.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export const registerUser = createAsyncThunk(
@@ -71,16 +98,23 @@ export const resetPassword = createAsyncThunk(
 //  Update profile
 export const updateProfile = createAsyncThunk(
   "auth/updateProfile",
-  async (data: ProfileSchemaType, { rejectWithValue }) => {
+  async (data: ProfileSchemaType, { getState, rejectWithValue }) => {
     try {
-      const response = await API.put("/update-user-profile", data);
+      const state: any = getState();
+      const token = state.auth.token;
+      const response = await API.put("/update-user-profile", data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
-
+// const token=getToken()
 const initialState: Auth = {
   user: null,
   token: null,
@@ -89,6 +123,7 @@ const initialState: Auth = {
   authError: null,
   isLoading: false,
   registerUser: false,
+  verifiedUser: false,
 };
 const authSlice = createSlice({
   name: "auth",
@@ -98,6 +133,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      deleteToken();
     },
   },
   extraReducers: (builder) => {
@@ -111,6 +147,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.registerUser = true;
+        setToken(action.payload.token);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -126,6 +163,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
+        setToken(action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -141,6 +179,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.otpVerified = true;
+        setToken(action.payload.token);
       })
       .addCase(verifyOtp.rejected, (state, action) => {
         state.isLoading = false;
@@ -171,6 +210,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.otpVerified = true;
+        setToken(action.payload.token);
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
@@ -183,9 +223,7 @@ const authSlice = createSlice({
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user =
-          action.payload.user
-        state.token = action.payload.token;
+        state.user = action.payload.user;
         state.isAuthenticated = true;
       })
       .addCase(updateProfile.rejected, (state, action) => {

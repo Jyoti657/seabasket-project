@@ -38,7 +38,6 @@ export interface ProductState {
   productCategories: { name: string; images: any }[];
   productCategoriesList: [];
   getProductCategoriesList: ProductProps[];
-
   filteredProducts: ProductProps[];
   loading: boolean;
   error: string | null;
@@ -68,7 +67,8 @@ export interface Auth {
   } | null;
   isAuthenticated: boolean;
   otpVerified: boolean;
-  token: null | string;
+  verifiedUser: boolean;
+  token: null|string;
   authError: null | string;
   isLoading: boolean;
   registerUser:boolean

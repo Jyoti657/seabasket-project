@@ -1,9 +1,4 @@
-import {
-  createBrowserRouter,
-  
-  RouterProvider,
-  
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/HomePage";
 import Cart from "./pages/CartPage";
 import Checkout from "./pages/CheckoutPage";
@@ -20,51 +15,37 @@ import SignUpPage from "./pages/SignUpPage";
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage";
-import Opt ,{action as otpAction}from "./pages/Opt";
+import Opt from "./pages/Opt";
 import ForgotPasswordPage from "./pages/ForgetPasswordsPage";
-import { checkAuthLoader, tokenLoader } from "./util/auth";
+import PrivateRoute from "./pages/PrivateRoute";
 
 const App: React.FC = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <RootLayout />,
-      errorElement: <Error />,
-      id: "root",
-      loader: tokenLoader,
-      children: [
-        { index: true, element: <Home /> },
-        { path: "login", element: <Login />, },
-        { path: "category/:categoryName", element: <CategoryPage /> },
-        { path: "cart", element: <Cart /> },
-        { path: "products", element: <Products /> },
-        { path: "products/:id", element: <ProductDetails /> },
-        { path: "favorites", element: <FavoritesPage /> },
-        { path: "signUp", element: <SignUpPage /> },
-        { path: "forgotPassword", element: <ForgotPasswordPage /> },
-        { path: "search", element: <SearchPage /> },
-        { path: "otp", element: <Opt />, 
-          action:otpAction,
-        },
-        { path: "profile", element: <Profile />, 
-          loader:checkAuthLoader,
-        },
-        { path: "address", element: <AddressPage />, 
-          loader:checkAuthLoader,
-        },
-        { path: "checkout", element: <Checkout /> },
-        { path: "order", element: <Order />,
-          loader:checkAuthLoader,
-         },
-        { path: "order/:id", element: <OrderDetails />, 
-          loader:checkAuthLoader,
-        },
-      ],
-    },
-  ]);
   return (
     <>
-      <RouterProvider router={router} />
+      <Routes>
+        <Route path="/" element={<RootLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/category/:categoryName" element={<CategoryPage />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/signUp" element={<SignUpPage />} />
+          <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/otp" element={<Opt />} />
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/address" element={<AddressPage />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/order/:id" element={<OrderDetails />} />
+          </Route>
+        </Route>
+
+        <Route path="*" element={<Error />} />
+      </Routes>
     </>
   );
 };
