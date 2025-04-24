@@ -30,12 +30,13 @@ const App: React.FC = () => {
           <Route path="cart" element={<Cart />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetails />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
-          <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
           <Route path="/search" element={<SearchPage />} />
+
           <Route element={<PrivateRoute />}>
+            <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/otp" element={<Opt />} />
+            <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/address" element={<AddressPage />} />
             <Route path="/checkout" element={<Checkout />} />

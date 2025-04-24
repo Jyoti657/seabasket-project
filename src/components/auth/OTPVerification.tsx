@@ -7,6 +7,7 @@ import otpSchema from "../../schema/optSchema";
 import { OtpSchemaType } from "../../schema/optSchema";
 import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
+import password from "../../assets/password (1).png"
 
 const OTPVerification: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,11 +42,13 @@ const OTPVerification: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white rounded-xl shadow-md p-6 sm:p-10 w-full max-w-md">
+      <div className="bg-soft_mint rounded-xl shadow-md p-6 sm:p-10 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-2 text-seabasket_green">
           OTP Verification
         </h2>
-        <p className="text-center text-gray-600 mb-6">
+        <img src={password} alt="OTP" className="w-3/4 md:2/3 h-auto items-center ml-10 "/>
+
+        <p className="text-center text-gray-600 font-semibold mb-6">
           Please enter the OTP sent to your email.
         </p>
 

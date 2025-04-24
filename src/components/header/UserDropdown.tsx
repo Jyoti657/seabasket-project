@@ -39,14 +39,14 @@ const UserDropdown: React.FC = () => {
     >
       <button
         onClick={toggleDropdown}
-        className="flex items-center gap-2 p-2 border border-gray-300 rounded-md hover:bg-gray-100 transition bg-white"
+        className="flex items-center gap-2 p-2 border border-gray-300 rounded-md hover:bg-gray-100 transition bg-soft_mint "
       >
-        <AccountCircle className="w-6 h-6 text-seabasket_green" />
+        <AccountCircle className="w-6 h-6 text-seabasket_green " />
         <div className="flex flex-col items-start text-left">
-          <span className="text-xs text-gray-500">
+          <span className="text-sm font-medium text-teal-950 capitalize">
             {user?.firstName ? `Welcome, ${user.firstName}` : "Welcome!"}
           </span>
-          <span className="font-semibold text-sm text-gray-700">Account</span>
+          <span className="font-semibold  text-sm text-gray-700">Account</span>
         </div>
       </button>
 

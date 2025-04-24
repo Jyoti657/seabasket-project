@@ -2,17 +2,12 @@ import { useSelector } from "react-redux";
 import { selectCartTotal } from "../../store/Slice/cartSlice";
 import { currencyFormatter } from "../../util/formatting";
 import Button from "../ui/Button";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { calculateTotalAmount } from "../../util/calculateTotalAmount";
 
 const CartTotal: React.FC = () => {
-  const navigate = useNavigate();
   const subtotal = useSelector(selectCartTotal);
   const { total, tax, shipping } = calculateTotalAmount(subtotal);
-
-  const handleCheckout = () => {
-    navigate("/checkout");
-  };
 
   return (
     <div className="w-full max-w-md mx-auto bg-soft_mint rounded-2xl shadow-md border border-gray-200 p-6 mt-8">
