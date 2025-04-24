@@ -58,11 +58,14 @@ export interface Auth {
     firstName?: string;
     lastName?: string;
     mobile?: string;
-    addressLine1?: string;
-    addressLine2?: string;
-    city?: string;
-    postalCode?: string;
-    state?: string;
+    address:{
+      addressLine1?: string;
+      addressLine2?: string;
+      city?: string;
+      postalCode?: string;
+      state?: string;
+    }
+    
 
   } | null;
   isAuthenticated: boolean;

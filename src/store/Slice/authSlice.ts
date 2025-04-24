@@ -108,6 +108,7 @@ export const updateProfile = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response.data)
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -221,9 +222,23 @@ const authSlice = createSlice({
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
-        state.isAuthenticated = true;
+        if (action.payload) {
+          state.user =action.payload.profile
+          state.isAuthenticated = true;
+        } else {
+          state.authError = "Update failed. No user data returned.";
+        }
       })
+      // .addCase(updateProfile.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   if (action.payload && typeof action.payload === 'object') {
+      //     state.user = { ...state.user, ...action.payload };
+      //     state.isAuthenticated = true;
+      //   } else {
+      //     state.authError = "Update succeeded but no user data was returned.";
+      //   }
+      // })
+      
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.authError = action.payload as string;
