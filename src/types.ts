@@ -55,6 +55,7 @@ export interface confirmModalProps {
 
 export interface Auth {
   user: {
+    id:string
     firstName?: string;
     lastName?: string;
     mobile?: string;

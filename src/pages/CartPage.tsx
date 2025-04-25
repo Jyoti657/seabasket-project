@@ -23,9 +23,7 @@ const Cart: React.FC = () => {
     dispatch(fetchCart());
     // if(!isAuthenticated){
     //   dispatch(resetCart())
-    
-  }, [dispatch ]);
-
+  }, [dispatch]);
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (error)
@@ -33,7 +31,7 @@ const Cart: React.FC = () => {
 
   // if (!isAuthenticated) {
   //   return dispatch(resetCart())
-    
+
   // }
 
   return (

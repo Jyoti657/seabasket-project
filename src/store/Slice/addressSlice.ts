@@ -28,9 +28,17 @@ export const addAddress = createAsyncThunk(
 );
 export const fetchAddress = createAsyncThunk(
   "address/fetchAddress",
-  async (userId, { rejectWithValue }) => {
+  async (userId:string, { getState,rejectWithValue }) => {
     try {
-      const response = await API.get(`/get-address/${userId}`);
+      const state:any=getState();
+      const token=state.auth.token;
+
+      const response = await API.get(`/get-address/${userId}`,{
+        headers:{
+          "Content-Type":"application/json",
+          Authorization:`Bearer ${token}`
+        }
+      });
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -63,9 +71,11 @@ const addressSlice = createSlice({
         if (action.payload) {
           state.list.push = action.payload.address;
         }
+        state.isLoading=false
       })
-      .addCase(addAddress.rejected, (state) => {
+      .addCase(addAddress.rejected, (state,action) => {
         state.isLoading = true;
+        state.error=action.payload as string
       })
       .addCase(fetchAddress.pending, (state) => {
         state.isLoading = true;
@@ -74,8 +84,9 @@ const addressSlice = createSlice({
         state.list = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchAddress.rejected, (state) => {
+      .addCase(fetchAddress.rejected, (state,action) => {
         state.isLoading = false;
+        state.error =action.payload as string
       });
   },
 });
