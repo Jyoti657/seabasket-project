@@ -66,17 +66,17 @@ const addressSlice = createSlice({
       })
       .addCase(addAddress.rejected, (state) => {
         state.isLoading = true;
+      })
+      .addCase(fetchAddress.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchAddress.fulfilled, (state, action) => {
+        state.list = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchAddress.rejected, (state) => {
+        state.isLoading = false;
       });
-    // .addCase(fetchAddress.pending, (state) => {
-    //   state.isLoggedIn = true;
-    // })
-    // .addCase(fetchAddress.fulfilled, (state, action) => {
-    //   state.list = action.payload;
-    //   state.isLoggedIn = false;
-    // })
-    // .addCase(fetchAddress.rejected, (state) => {
-    //   state.isLoggedIn = false;
-    // });
   },
 });
 export const {} = addressSlice.actions;
