@@ -2,7 +2,7 @@ import { LuMinus } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
 import { currencyFormatter } from "../../util/formatting";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, fetchCartUpdate } from "../../store/Slice/cartSlice";
+import { fetchCartDelete, fetchCartUpdate } from "../../store/Slice/cartSlice";
 import { ProductProps } from "../../types";
 import { AppDispatch, RootState } from "../../store/store";
 
@@ -13,6 +13,9 @@ interface CartProductProps {
 
 const CartProducts: React.FC<CartProductProps> = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   const updatedItem = useSelector((state: RootState) =>
     state.cart.productData.find((product) => product.id === item.id)
@@ -31,8 +34,8 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
       );
     }
   };
-  
-  const handleDecrease   = () => {
+
+  const handleDecrease = () => {
     if (updatedItem) {
       dispatch(
         fetchCartUpdate({
@@ -45,10 +48,9 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
       );
     }
   };
-  
 
   const handleRemove = () => {
-    dispatch(deleteProduct(item.id));
+    dispatch(fetchCartDelete(item.id));
   };
 
   return (
@@ -77,7 +79,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
 
         {item.rating && (
           <div className="flex items-center justify-center sm:justify-start space-x-2">
-            <span className="text-yellow-500 text-xs sm:text-sm font-medium">
+            <span className="text-teal-500 text-xs sm:text-sm font-medium">
               {item.rating}
             </span>
           </div>
@@ -86,7 +88,8 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
         <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
           <button
             onClick={handleDecrease}
-            className="p-2 border rounded-md hover:bg-gray-100"
+            disabled={updatedItem?.quantity === 1}
+            className="p-2 border rounded-md hover:bg-soft_mint"
           >
             <LuMinus />
           </button>

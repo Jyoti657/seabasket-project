@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import RestartCart from "../components/cart/ReSetCart";
 import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../store/store";
@@ -13,11 +13,14 @@ const Cart: React.FC = () => {
   const { productData, loading, error } = useSelector(
     (state: RootState) => state.cart
   );
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchCart());
+    // if(!isAuthenticated){
+    //   dispatch(resetCart())
   }, [dispatch]);
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
@@ -60,7 +63,7 @@ const Cart: React.FC = () => {
             Your cart is empty. Add products!
           </h1>
           <NavLink to={"/"}>
-            <Button className="" label="Go to Shopping" />
+            <Button label="Go to Shopping" className="" />
           </NavLink>
         </div>
       )}

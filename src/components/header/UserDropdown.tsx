@@ -11,12 +11,14 @@ const UserDropdown: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthenicated = useSelector(
+  const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
+
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
   };
+
   const handleMouseLeave = () => {
     setTimeout(() => {
       setIsOpen(false);
@@ -37,14 +39,14 @@ const UserDropdown: React.FC = () => {
     >
       <button
         onClick={toggleDropdown}
-        className="flex items-center gap-2 p-2 border border-gray-300 rounded-md hover:bg-gray-100 transition bg-white"
+        className="flex items-center gap-2 p-2 border border-gray-300 rounded-md hover:bg-gray-100 transition bg-soft_mint "
       >
-        <AccountCircle className="w-6 h-6 text-seabasket_green" />
+        <AccountCircle className="w-6 h-6 text-seabasket_green " />
         <div className="flex flex-col items-start text-left">
-          <span className="text-xs text-gray-500">
-            {user ? `Welcome, ${user.name}` : "Welcome!"}
+          <span className="text-sm font-medium text-teal-950 capitalize">
+            {user?.firstName ? `Welcome, ${user.firstName}` : "Welcome!"}
           </span>
-          <span className="font-semibold text-sm text-gray-700">Account</span>
+          <span className="font-semibold  text-sm text-gray-700">Account</span>
         </div>
       </button>
 
@@ -52,12 +54,12 @@ const UserDropdown: React.FC = () => {
         <div className="absolute right-0 mt-2 w-52 sm:w-56 bg-white text-black shadow-lg rounded-md border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-200 bg-seabasket_green/10">
             <p className="text-sm font-semibold text-seabasket_green capitalize">
-              {user ? `Hello, ${user.name}` : "Hello, Guest"}
+              {user?.firstName ? `Hello, ${user.firstName}` : "Hello, Guest"}
             </p>
           </div>
 
           <div className="flex flex-col py-2">
-            {!isAuthenicated ? (
+            {!isAuthenticated ? (
               <>
                 <NavLink
                   to="/signUp"

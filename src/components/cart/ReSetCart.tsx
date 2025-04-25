@@ -26,9 +26,9 @@ const RestartCart: React.FC = () => {
       />
 
       <Confirm
-        isOpne={showConfirm}
+        isOpen={showConfirm}
         onClose={() => setShowConfirm(false)}
-        OnConfrim={confirmReset}
+        OnConfirm={confirmReset}
         message="Are you sure you want want to delete all products from  the cart?"
         ConfirmText="Yes,Delete"
         CancelText="Cancel"

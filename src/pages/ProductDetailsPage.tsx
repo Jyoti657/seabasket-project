@@ -22,7 +22,7 @@ const ProductDetails: React.FC = () => {
     dispatch(fetchCartAdd(product));
   };
   const handleProductClick = (id: number) => {
-    navigate("/checkout/cart");
+    navigate("/checkout");
   };
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const ProductDetails: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center px-4 py-10">
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="bg-soft_mint rounded-lg shadow-lg p-4 sm:p-6 max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
         
         
         <div className="flex justify-center items-center">

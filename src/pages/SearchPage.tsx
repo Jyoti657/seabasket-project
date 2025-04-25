@@ -4,7 +4,7 @@ import ProductCards from "../components/products/ProductCard";
 import { ProductProps } from "../types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
-import {  fetchCartAdd } from "../store/Slice/cartSlice";
+import { fetchCartAdd } from "../store/Slice/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 const SearchPage: React.FC = () => {

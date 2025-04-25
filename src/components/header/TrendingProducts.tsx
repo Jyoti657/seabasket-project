@@ -16,6 +16,8 @@ const TrendingProducts: React.FC = () => {
   return (
     <>
       <div className="relative mt-4 w-full max-w-screen-2xl mx-auto bg-deep_teal">
+      <h2 className="text-2xl font-bold text-white mb-4 border-l-4 pl-3 text-center border-teal-700">Trending Products</h2>
+
         <Carousel
           autoPlay
           infiniteLoop
@@ -23,6 +25,7 @@ const TrendingProducts: React.FC = () => {
           showIndicators={false}
           interval={2000}
         >
+
           {trendingProducts &&
             trendingProducts.map((products, index) => (
               <div
