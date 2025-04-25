@@ -42,11 +42,11 @@ const AddressForm: React.FC = () => {
         <label className="block mb-1 font-medium">Address Line 1</label>
         <input
           type="text"
-          {...register("AddressLine1")}
+          {...register("addressLine1")}
           className="w-full border rounded p-2"
         />
-        {errors.AddressLine1 && (
-          <p className="text-red-500 text-sm">{errors.AddressLine1.message}</p>
+        {errors.addressLine1 && (
+          <p className="text-red-500 text-sm">{errors.addressLine1.message}</p>
         )}
       </div>
 
@@ -54,23 +54,23 @@ const AddressForm: React.FC = () => {
         <label className="block mb-1 font-medium">Address Line 2</label>
         <input
           type="text"
-          {...register("AddressLine2")}
+          {...register("addressLine2")}
           className="w-full border rounded p-2"
         />
-        {errors.AddressLine2 && (
-          <p className="text-red-500 text-sm">{errors.AddressLine2.message}</p>
+        {errors.addressLine2 && (
+          <p className="text-red-500 text-sm">{errors.addressLine2.message}</p>
         )}
       </div>
 
       <div>
         <label className="block mb-1 font-medium">Postal Code</label>
         <input
-          type="number"
-          {...register("PostalCode", { valueAsNumber: true })}
+          type="text"
+          {...register("postalCode")}
           className="w-full border rounded p-2"
         />
-        {errors.PostalCode && (
-          <p className="text-red-500 text-sm">{errors.PostalCode.message}</p>
+        {errors.postalCode && (
+          <p className="text-red-500 text-sm">{errors.postalCode.message}</p>
         )}
       </div>
 

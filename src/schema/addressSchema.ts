@@ -1,13 +1,12 @@
 import { z } from "zod";
 const addressSchema = z.object({
-  AddressLine1: z
+  addressLine1: z
     .string()
-  
-    .trim(),
-  AddressLine2: z
+   .trim(),
+  addressLine2: z
     .string()
     .trim(),
-  PostalCode: z.number(),
+  postalCode: z.string().trim().min(6," Postal code should be six digit"),
   state: z.string().trim(),
   city: z.string().trim(),
   country: z.string().trim(),

@@ -81,7 +81,7 @@ export interface Auth {
 export interface addressForm {
   AdressLine1:string;
   AdressLine2:string;
-  PostalCode:number;
+  PostalCode:string;
   state:string;
   city:string;
   country:string
