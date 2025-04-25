@@ -13,9 +13,6 @@ interface CartProductProps {
 
 const CartProducts: React.FC<CartProductProps> = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
 
   const updatedItem = useSelector((state: RootState) =>
     state.cart.productData.find((product) => product.id === item.id)

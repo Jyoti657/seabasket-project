@@ -20,9 +20,9 @@ export const deleteToken = () => {
   localStorage.removeItem("lastLoginTime");
 };
 
-export const api = "http://localhost:3100";
+// export const api = "";
 export const API = axios.create({
-  baseURL: `${api}/auth`,
+  baseURL: `http://localhost:3100`,
 });
 API.interceptors.request.use((config) => {
   const token = getToken();

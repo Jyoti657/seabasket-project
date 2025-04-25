@@ -5,13 +5,14 @@ import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
 import { OtpSchemaType } from "../../schema/optSchema";
 import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
-import { API, setToken, deleteToken } from "../../Api/axiosInstance";
+import { API, deleteToken } from "../../Api/axiosInstance";
+const authApi = `/auth`;
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (user: signUpSchemaType, { rejectWithValue }) => {
     try {
-      const response = await API.post("/sign-up", user);
+      const response = await API.post(`${authApi}/sign-up`, user);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -22,7 +23,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (user: logInSchemaType, { rejectWithValue }) => {
     try {
-      const response = await API.post("/sign-in", user);
+      const response = await API.post(`${authApi}/sign-in`, user);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -33,7 +34,7 @@ export const verifyOtp = createAsyncThunk(
   "auth/verifyOtp",
   async (otpData: OtpSchemaType, { rejectWithValue }) => {
     try {
-      const response = await API.post("/verify-otp", otpData);
+      const response = await API.post(`${authApi}/verify-otp`, otpData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -45,7 +46,7 @@ export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (data: ForgetPasswordSchemaType, { rejectWithValue }) => {
     try {
-      const response = await API.post("/forgot-password", data);
+      const response = await API.post(`${authApi}/forgot-password`, data);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -57,7 +58,7 @@ export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (data: ForgetPasswordSchemaType, { rejectWithValue }) => {
     try {
-      const response = await API.post("/reset-password", data);
+      const response = await API.post(`${authApi}/reset-password`, data);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -71,7 +72,7 @@ export const updateProfile = createAsyncThunk(
     try {
       const state: any = getState();
       const token = state.auth.token;
-      const response = await API.put("/update-user-profile", data, {
+      const response = await API.put(`${authApi}/update-user-profile`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -86,6 +87,7 @@ export const updateProfile = createAsyncThunk(
 );
 
 const initialState: Auth = {
+  userId: "",
   user: null,
   token: null,
   isAuthenticated: false,
@@ -147,7 +149,6 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.otpVerified = true;
-        setToken(action.payload.token);
       })
       .addCase(verifyOtp.rejected, (state, action) => {
         state.isLoading = false;
@@ -178,7 +179,6 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.otpVerified = true;
-        setToken(action.payload.token);
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;

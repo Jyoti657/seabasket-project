@@ -1,14 +1,14 @@
 export interface ProductProps {
   id: number;
   title: string;
-  price: number ;
+  price: number;
   category: string;
   quantity: number;
   description: string;
   images: string[];
   brand: string;
   discount?: number;
-  rating?: number
+  rating?: number;
 }
 
 export interface StateProps {
@@ -54,39 +54,37 @@ export interface confirmModalProps {
 }
 
 export interface Auth {
+  userId:string
   user: {
-    id:string
     firstName?: string;
     lastName?: string;
     mobile?: string;
-    address:{
+    address: {
+      id:string
       addressLine1?: string;
       addressLine2?: string;
       city?: string;
       postalCode?: string;
       state?: string;
-    }
-    
-
+    };
   } | null;
   isAuthenticated: boolean;
   otpVerified: boolean;
   verifiedUser: boolean;
-  token: null|string;
+  token: null | string;
   authError: null | string;
   isLoading: boolean;
-  registerUser:boolean
-  
+  registerUser: boolean;
 }
 
 export interface addressForm {
-  AdressLine1:string;
-  AdressLine2:string;
-  PostalCode:string;
-  state:string;
-  city:string;
-  country:string
-
+  id: string;
+  addressLine1: string;
+  addressLine2: string;
+  postalCode: string;
+  state: string;
+  city: string;
+  country: string;
 }
 
 export interface order {

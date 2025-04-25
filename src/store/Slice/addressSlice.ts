@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { addressSchemaType } from "../../schema/addressSchema";
+import { addressForm } from "../../types";
+import {API} from "../../Api/axiosInstance"
 
-const API = axios.create({
-  baseURL: "http://localhost:3100/address",
-});
+
+
+
+const addressApi='/address'
 
 export const addAddress = createAsyncThunk(
   "address/addAddress",
@@ -12,7 +14,7 @@ export const addAddress = createAsyncThunk(
     try {
       const state: any = getState();
       const token = state.auth.token;
-      const response = await API.post("/add-address", addressData, {
+      const response = await API.post(`${addressApi}/add-address`, addressData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -31,7 +33,7 @@ export const fetchAddress = createAsyncThunk(
       const state: any = getState();
       const token = state.auth.token;
 
-      const response = await API.get(`/get-address/${userId}`, {
+      const response = await API.get(`${addressApi}/get-address/${userId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -45,15 +47,17 @@ export const fetchAddress = createAsyncThunk(
 );
 
 interface AddressState {
-  list: addressSchemaType[];
+  list:addressForm[];
   isLoading: boolean;
   error: string | null;
+  userId:string
 }
 
 const initialState: AddressState = {
   list: [],
   isLoading: false,
   error: null,
+  userId:""
 };
 const addressSlice = createSlice({
   name: "address",
@@ -66,22 +70,31 @@ const addressSlice = createSlice({
         state.error = null;
       })
       .addCase(addAddress.fulfilled, (state, action) => {
-        if (action.payload) {
-          state.list.push = action.payload.address;
-        }
         state.isLoading = false;
+
+        if (action.payload) {
+          state.list.push(action.payload.address);
+        }
       })
       .addCase(addAddress.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.error = action.payload as string;
       })
       .addCase(fetchAddress.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(fetchAddress.fulfilled, (state, action) => {
-        state.list = action.payload;
         state.isLoading = false;
+        console.log("Fetched payload:", action.payload); 
+      
+        if (action.payload?.list && action.payload?.userId) {
+          state.list = action.payload.list;
+          state.userId = action.payload.userId;
+        } else {
+          state.error = "Invalid response format from server";
+        }
       })
+      
       .addCase(fetchAddress.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;

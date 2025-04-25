@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { sortProducts } from "../../store/Slice/productSlice";
 
 const SortProducts: React.FC = () => {
-  const [sortBy, setSortBy] = useState<string>(""); // Default empty
+  const [sortBy, setSortBy] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, allProducts } = useSelector(
     (state: RootState) => state.product
@@ -17,8 +17,6 @@ const SortProducts: React.FC = () => {
       dispatch(sortProducts(selectedValue));
     }
   };
-
-  // Only run initial sort when products are available
   useEffect(() => {
     if (allProducts.length > 0 && sortBy === "") {
       dispatch(sortProducts("title"));
