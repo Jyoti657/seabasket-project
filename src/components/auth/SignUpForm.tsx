@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import Button from "../ui/Button";
 import { registerUser } from "../../store/Slice/authSlice";
-import signin from "../../assets/signin.png"
+import signin from "../../assets/signin.png";
 
 const SignUpForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +32,7 @@ const SignUpForm: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
-     <img src={signin} alt="signup" className="w-2/3 md:w-2/4 h-auto mt-2"/>
+      <img src={signin} alt="signup" className="w-2/3 md:w-2/4 h-auto mt-2" />
       <div className="w-full max-w-lg bg-soft_mint p-8 rounded-2xl shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Create an Account

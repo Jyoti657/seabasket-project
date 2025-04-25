@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 export const setToken = (token: string) => {
   localStorage.setItem("token", token);
   localStorage.setItem("lastLoginTime", new Date().getDate().toString());
@@ -16,12 +15,12 @@ export const getToken = () => {
   }
   return null;
 };
-export   const deleteToken = () => {
+export const deleteToken = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("lastLoginTime");
 };
 
- export const api="http://localhost:3100"
+export const api = "http://localhost:3100";
 export const API = axios.create({
   baseURL: `${api}/auth`,
 });

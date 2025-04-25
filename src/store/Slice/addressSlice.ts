@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { addressSchemaType } from "../../schema/addressSchema";
-import { Auth } from "../../types";
-import { setToken } from "../../Api/axiosInstance";
 
 const API = axios.create({
   baseURL: "http://localhost:3100/address",
@@ -28,16 +26,16 @@ export const addAddress = createAsyncThunk(
 );
 export const fetchAddress = createAsyncThunk(
   "address/fetchAddress",
-  async (userId:string, { getState,rejectWithValue }) => {
+  async (userId: string, { getState, rejectWithValue }) => {
     try {
-      const state:any=getState();
-      const token=state.auth.token;
+      const state: any = getState();
+      const token = state.auth.token;
 
-      const response = await API.get(`/get-address/${userId}`,{
-        headers:{
-          "Content-Type":"application/json",
-          Authorization:`Bearer ${token}`
-        }
+      const response = await API.get(`/get-address/${userId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
       return response.data;
     } catch (error: any) {
@@ -71,11 +69,11 @@ const addressSlice = createSlice({
         if (action.payload) {
           state.list.push = action.payload.address;
         }
-        state.isLoading=false
+        state.isLoading = false;
       })
-      .addCase(addAddress.rejected, (state,action) => {
+      .addCase(addAddress.rejected, (state, action) => {
         state.isLoading = true;
-        state.error=action.payload as string
+        state.error = action.payload as string;
       })
       .addCase(fetchAddress.pending, (state) => {
         state.isLoading = true;
@@ -84,9 +82,9 @@ const addressSlice = createSlice({
         state.list = action.payload;
         state.isLoading = false;
       })
-      .addCase(fetchAddress.rejected, (state,action) => {
+      .addCase(fetchAddress.rejected, (state, action) => {
         state.isLoading = false;
-        state.error =action.payload as string
+        state.error = action.payload as string;
       });
   },
 });

@@ -21,17 +21,15 @@ const AddressCard: React.FC = () => {
   return (
     <>
       <div className=" space-y-4">
-      <ol className="space-y-2">
-  {/* {list.map((address: addressForm) => (
+        <ol className="space-y-2">
+          {/* {list.map((address: addressForm) => (
     <li key={address.id} className="border p-4 rounded shadow">
       <p>{address.addressLine1}, {address.addressLine2}</p>
       <p>{address.city}, {address.state}, {address.postalCode}</p>
       <p>{address.country}</p>
     </li>
   ))} */}
-</ol>
-
-
+        </ol>
       </div>
     </>
   );

@@ -28,7 +28,9 @@ const LoginForm: React.FC = () => {
       if (loginUser.fulfilled.match(resultAction)) {
         navigate("/otp");
       }
-    } catch (err) {}
+    } catch (err) {
+     console.log(err) 
+    }
   };
 
   return (
@@ -72,20 +74,16 @@ const LoginForm: React.FC = () => {
                 {errors.password.message}
               </p>
             )}
-          </div> 
-          {authError &&  (
+          </div>
+          {authError && (
             <p className="text-red-600 text-sm mt-2">{authError}</p>
-          )} 
-           {otp && (
-            <p className="text-green-600 text-sm mt-2">{otp}</p>
-          )}   
+          )}
+          {otp && <p className="text-green-600 text-sm mt-2">{otp}</p>}
 
           <Button
             label="login"
             type="submit"
             className="w-full bg-teal-700 text-white py-3 rounded-lg font-semibold hover:bg-teal-950 transition duration-200"
-            
-
           />
           <div className="text-center">
             <p className="text-sm text-gray-600">

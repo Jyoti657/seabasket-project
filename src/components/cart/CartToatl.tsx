@@ -33,9 +33,9 @@ const CartTotal: React.FC = () => {
         </div>
       </div>
 
-      <NavLink to="/checkout">
+      <NavLink to="/order">
         <Button
-          label="Checkout"
+          label="Place Order"
           className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
         />
       </NavLink>

@@ -2,10 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ProductProps, ProductState } from "../../types";
 import axios from "axios";
 
-
 const basic_URL = "https://dummyjson.com/products";
-
-//  const baseURL="http//localhost:3100/product/get-products"
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
@@ -124,30 +121,33 @@ const ProductSlice = createSlice({
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
-    filterProducts:(state, action) => {
-     const {priceRange, rating, discount,category}=action.payload;
-     let filter=[...state.allProducts];
-     if(priceRange){
-      filter=filter.filter((product)=>product.price>=priceRange[0] && product.price<=priceRange[1])
-     }
-     if (rating) {
-      filter = filter.filter(
-        (product) => product.rating && product.rating >= rating
-      );
-    }
-    if (discount) {
-      filter = filter.filter(
-        (product) => product.discount && product.discount >= discount
-      );
-    }
-    if (category) {
-      filter= filter.filter((product) =>
-        product.category.toLowerCase().includes(category.toLowerCase())
-      );
-    }
-    
-     state.filteredProducts=filter;
-    }
+    filterProducts: (state, action) => {
+      const { priceRange, rating, discount, category } = action.payload;
+      let filter = [...state.allProducts];
+      if (priceRange) {
+        filter = filter.filter(
+          (product) =>
+            product.price >= priceRange[0] && product.price <= priceRange[1]
+        );
+      }
+      if (rating) {
+        filter = filter.filter(
+          (product) => product.rating && product.rating >= rating
+        );
+      }
+      if (discount) {
+        filter = filter.filter(
+          (product) => product.discount && product.discount >= discount
+        );
+      }
+      if (category) {
+        filter = filter.filter((product) =>
+          product.category.toLowerCase().includes(category.toLowerCase())
+        );
+      }
+
+      state.filteredProducts = filter;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -244,5 +244,5 @@ const ProductSlice = createSlice({
   },
 });
 
-export const { setSearchQuery,filterProducts } = ProductSlice.actions;
+export const { setSearchQuery, filterProducts } = ProductSlice.actions;
 export default ProductSlice.reducer;

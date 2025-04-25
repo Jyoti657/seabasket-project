@@ -5,36 +5,7 @@ import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
 import { OtpSchemaType } from "../../schema/optSchema";
 import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
-import { API ,setToken,deleteToken} from "../../Api/axiosInstance";
-
-// const setToken = (token: string) => {
-//   localStorage.setItem("token", token);
-//   localStorage.setItem("lastLoginTime", new Date().getDate().toString());
-// };
-
-// export const getToken = () => {
-//   const now = new Date(Date.now()).getTime();
-//   const timeAllowed = 1000 * 60 * 30;
-//   const lastLoginTime = localStorage.getItem("lastLoginTime");
-//   const token = localStorage.getItem("token");
-//   if (lastLoginTime && token && now - parseInt(lastLoginTime) < timeAllowed) {
-//     return token;
-//   }
-//   return null;
-// };
-// const deleteToken = () => {
-//   localStorage.removeItem("token");
-//   localStorage.removeItem("lastLoginTime");
-// };
-
-
-// API.interceptors.request.use((config) => {
-//   const token = getToken();
-//   if (token) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//   }
-//   return config;
-// });
+import { API, setToken, deleteToken } from "../../Api/axiosInstance";
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
