@@ -36,7 +36,7 @@ const AddressCard: React.FC = () => {
         />
       ) : (
         <ol className="space-y-4">
-          {shipping.length > 0 ? (
+          {shipping && shipping.length > 0 ? (
             shipping.map((address) => (
               <li
                 key={address.id}
@@ -65,9 +65,11 @@ const AddressCard: React.FC = () => {
                 </p>
               </li>
             ))
-          ) : (
+          ) 
+          : (
             <p className="text-center text-gray-500">No addresses available.</p>
-          )}
+          )
+          }
         </ol>
       )}
     </div>

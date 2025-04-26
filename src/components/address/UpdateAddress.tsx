@@ -1,147 +1,21 @@
-// import { useDispatch } from "react-redux";
-// import { AppDispatch } from "../../store/store";
-// import { SubmitHandler, useForm } from "react-hook-form";
-// import addressSchema, { addressSchemaType } from "../../schema/addressSchema";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { updateAddress } from "../../store/Slice/addressSlice";
-// import { useEffect } from "react";
-
-// const UpdateAddressForm: React.FC = () => {
-//   const dispatch = useDispatch<AppDispatch>();
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm<addressSchemaType>({ resolver: zodResolver(addressSchema) });
-//   useEffect(()=>{
-//     if(address)
-//   })
-
-//   const onSubmit:SubmitHandler<addressSchemaType>=async(data)=>{
-//     try{
-//         const resultAction=await dispatch(updateAddress(id :string,data));
-//         if(updateAddress.fulfilled.match(resultAction)){
-//             console.log("Update Address")
-//         }
-//     }
-//     catch(error){
-//         console.log("Address is not update")
-//     }
-//   }
-//   return (
-//     <div className=" grid grid-row">
-//       <form
-//         onSubmit={handleSubmit(onSubmit)}
-//         className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow space-y-4"
-//       >
-//         <h2 className="text-xl font-semibold mb-4">Enter Your Address</h2>
-
-//         <div>
-//           <label className="block mb-1 font-medium">Address Line 1</label>
-//           <input
-//             type="text"
-//             {...register("addressLine1")}
-//             className="w-full border rounded p-2"
-//           />
-//           {errors.addressLine1 && (
-//             <p className="text-red-500 text-sm">
-//               {errors.addressLine1.message}
-//             </p>
-//           )}
-//         </div>
-
-//         <div>
-//           <label className="block mb-1 font-medium">Address Line 2</label>
-//           <input
-//             type="text"
-//             {...register("addressLine2")}
-//             className="w-full border rounded p-2"
-//           />
-//           {errors.addressLine2 && (
-//             <p className="text-red-500 text-sm">
-//               {errors.addressLine2.message}
-//             </p>
-//           )}
-//         </div>
-
-//         <div>
-//           <label className="block mb-1 font-medium">Postal Code</label>
-//           <input
-//             type="text"
-//             {...register("postalCode")}
-//             className="w-full border rounded p-2"
-//           />
-//           {errors.postalCode && (
-//             <p className="text-red-500 text-sm">{errors.postalCode.message}</p>
-//           )}
-//         </div>
-
-//         <div>
-//           <label className="block mb-1 font-medium">State</label>
-//           <input
-//             type="text"
-//             {...register("state")}
-//             className="w-full border rounded p-2"
-//           />
-//           {errors.state && (
-//             <p className="text-red-500 text-sm">{errors.state.message}</p>
-//           )}
-//         </div>
-
-//         <div>
-//           <label className="block mb-1 font-medium">City</label>
-//           <input
-//             type="text"
-//             {...register("city")}
-//             className="w-full border rounded p-2"
-//           />
-//           {errors.city && (
-//             <p className="text-red-500 text-sm">{errors.city.message}</p>
-//           )}
-//         </div>
-
-//         <div>
-//           <label className="block mb-1 font-medium">Country</label>
-//           <input
-//             type="text"
-//             {...register("country")}
-//             className="w-full border rounded p-2"
-//           />
-//           {errors.country && (
-//             <p className="text-red-500 text-sm">{errors.country.message}</p>
-//           )}
-//         </div>
-
-//         <button
-//           type="submit"
-//           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-//         >
-//           Save Address
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default UpdateAddressForm;
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppDispatch } from "../../store/store";
-import { updateAddress } from "../../store/Slice/addressSlice";
+import { fetchAddress, updateAddress } from "../../store/Slice/addressSlice";
 import addressSchema, { addressSchemaType } from "../../schema/addressSchema";
 
-// Define prop types
 interface UpdateAddressFormProps {
-  address: addressSchemaType & { id: string }; // must include ID for update
+  address: addressSchemaType & { id: string };
   onClose: () => void;
 }
 
-const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose }) => {
+const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({
+  address,
+  onClose,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
-
-  // useForm setup with Zod schema
   const {
     register,
     handleSubmit,
@@ -151,14 +25,12 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
     resolver: zodResolver(addressSchema),
   });
 
-  // Prefill form with existing address data
   useEffect(() => {
     if (address) {
       reset(address);
     }
   }, [address, reset]);
 
-  // Submit handler for address update
   const onSubmit: SubmitHandler<addressSchemaType> = async (data) => {
     try {
       const resultAction = await dispatch(
@@ -166,11 +38,12 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
       );
 
       if (updateAddress.fulfilled.match(resultAction)) {
-        console.log("✅ Address updated successfully");
-        onClose(); // Close the modal or form after success
+        console.log("Address updated successfully");
+        await dispatch(fetchAddress());
+        onClose();
       }
     } catch (error) {
-      console.error("❌ Failed to update address:", error);
+      console.error(" Failed to update address:", error);
     }
   };
 
@@ -181,7 +54,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
     >
       <h2 className="text-xl font-semibold mb-4">Update Address</h2>
 
-      {/* Address Line 1 */}
       <div>
         <label className="block mb-1 font-medium">Address Line 1</label>
         <input
@@ -194,7 +66,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
         )}
       </div>
 
-      {/* Address Line 2 */}
       <div>
         <label className="block mb-1 font-medium">Address Line 2</label>
         <input
@@ -207,7 +78,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
         )}
       </div>
 
-      {/* Postal Code */}
       <div>
         <label className="block mb-1 font-medium">Postal Code</label>
         <input
@@ -220,7 +90,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
         )}
       </div>
 
-      {/* State */}
       <div>
         <label className="block mb-1 font-medium">State</label>
         <input
@@ -233,7 +102,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
         )}
       </div>
 
-      {/* City */}
       <div>
         <label className="block mb-1 font-medium">City</label>
         <input
@@ -246,7 +114,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
         )}
       </div>
 
-      {/* Country */}
       <div>
         <label className="block mb-1 font-medium">Country</label>
         <input
@@ -259,7 +126,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({ address, onClose 
         )}
       </div>
 
-      {/* Submit Button */}
       <div className="flex justify-between">
         <button
           type="submit"
