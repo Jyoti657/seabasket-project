@@ -87,7 +87,7 @@ export const updateProfile = createAsyncThunk(
 );
 
 const initialState: Auth = {
-  userId: "",
+  userId: null,
   user: null,
   token: null,
   isAuthenticated: false,
@@ -131,6 +131,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.userId = action.payload.user?.id;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
@@ -146,6 +147,7 @@ const authSlice = createSlice({
       })
       .addCase(verifyOtp.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.userId = action.payload.userID;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.otpVerified = true;

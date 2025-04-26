@@ -54,7 +54,7 @@ export interface confirmModalProps {
 }
 
 export interface Auth {
-  userId:string
+  userId:string| null
   user: {
     firstName?: string;
     lastName?: string;

@@ -29,14 +29,14 @@ const AddressPage: React.FC = () => {
           </div>
         </div>
       )} */}  
-      {/* <AddressCard/> */}
+       <AddressCard/> 
 
-      <div className="bg-white p-6 rounded-2xl shadow-md">
+      {/* <div className="bg-white p-6 rounded-2xl shadow-md">
         <h3 className="text-xl font-semibold mb-4 text-gray-800">
           Add / Edit Address
         </h3>
         <AddressForm />
-      </div>
+      </div> */}
     </div>
   );
 };

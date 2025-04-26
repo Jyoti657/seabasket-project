@@ -38,15 +38,9 @@ export const fetchCartAdd = createAsyncThunk(
 // update cart
 export const fetchCartUpdate = createAsyncThunk(
   "cart/fetchCartUpdate",
-  async (
-    {
-      cartId,
-      updatedProduct,
-    }: { cartId: number; updatedProduct: ProductProps },
-    thunkAPI
-  ) => {
+  async ({ updatedProduct }: { updatedProduct: ProductProps }, thunkAPI) => {
     try {
-      const response = await axios.put(`${basic_URL}/${cartId}`, {
+      const response = await axios.put(`${basic_URL}/`, {
         merge: true,
         products: [
           {

@@ -24,10 +24,11 @@ export const deleteToken = () => {
 export const API = axios.create({
   baseURL: `http://localhost:3100`,
 });
-API.interceptors.request.use((config) => {
-  const token = getToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+
+// API.interceptors.request.use((config) => {
+//   const token = getToken();
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+//   return config;
+// });
