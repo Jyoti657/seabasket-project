@@ -48,8 +48,32 @@ export const fetchAddress = createAsyncThunk(
     }
   }
 );
+export const updateAddress = createAsyncThunk(
+  "address/updateAddress",
+  async (
+    { id, updateaddress }: { id: string; updateaddress: addressSchemaType },
+    { getState, rejectWithValue }
+  ) => {
+    try {
+      const state: any = getState();
+      const token = state.auth.token;
+      const response = await API.put(
+        `${addressApi}/update-address/${id}`,
+        updateaddress,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
 
-//
 interface AddressState {
   list: addressForm[];
   isLoading: boolean;
@@ -94,6 +118,18 @@ const addressSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
         console.error("Error fetching address:", action.payload);
+      })
+      .addCase(updateAddress.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAddress.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.list = action.payload.updateAddress;
+      })
+      .addCase(updateAddress.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+        console.error("Error");
       });
   },
 });
