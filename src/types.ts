@@ -54,13 +54,13 @@ export interface confirmModalProps {
 }
 
 export interface Auth {
-  userId:string| null
+  userId: string | null;
   user: {
     firstName?: string;
     lastName?: string;
     mobile?: string;
     address: {
-      id:string
+      id: string;
       addressLine1?: string;
       addressLine2?: string;
       city?: string;
@@ -75,6 +75,7 @@ export interface Auth {
   authError: null | string;
   isLoading: boolean;
   registerUser: boolean;
+  reset: string | null;
 }
 
 export interface addressForm {

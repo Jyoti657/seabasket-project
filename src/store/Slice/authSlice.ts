@@ -96,6 +96,7 @@ const initialState: Auth = {
   isLoading: false,
   registerUser: false,
   verifiedUser: false,
+  reset:null
 };
 const authSlice = createSlice({
   name: "auth",
