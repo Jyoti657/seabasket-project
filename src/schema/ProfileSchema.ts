@@ -1,20 +1,32 @@
 import { z } from "zod";
-const profileSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required ")
-    .email("Invalid email adrees")
-    .trim(),
-  name: z
-    .string()
-    .min(3, {message:"The name must be at least 3 characters "})
-    .max(50, { message:"Name must not be more than 225 characters"})
-    .trim(),
-  phone: z.string()
-  .min(10,{message:"Must be  a valid  mobile Number "})
-  .max(14,{message:"Must be valid mobile Number"}),
-  
 
+const profileSchema = z.object({
+  firstName: z
+    .string()
+    .min(1, "First name is required")
+    .max(50, "First name must not be more than 50 characters")
+    .trim(),
+
+  lastName: z
+    .string()
+    .min(1, "Last name is required")
+    .max(50, "Last name must not be more than 50 characters")
+    .trim(),
+
+  mobile: z
+    .string()
+    .min(10, "Mobile number must be 10 digits")
+    .max(10, "Mobile number must be 10 digits")
+    .regex(/^\d+$/, "Mobile must be numeric")
+    .trim(),
+
+  addressLine1: z.string().trim().optional(),
+  addressLine2: z.string().trim().optional(),
+  city: z.string().trim().optional(),
+  postalCode: z.string().trim().optional(),
+  state: z.string().trim().optional(),
 });
-export type profileSchemaType = z.infer<typeof profileSchema>;
+
+export type ProfileSchemaType = z.infer<typeof profileSchema>;
+
 export default profileSchema;

@@ -1,16 +1,16 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ProductProps } from "../../types";
 import axios from "axios";
 const basic_URL = "https://dummyjson.com/carts";
 // all the cart
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-  async (_, thunkAPI) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${basic_URL}`);
       return response.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -35,14 +35,12 @@ export const fetchCartAdd = createAsyncThunk(
     }
   }
 );
-// update cart 
- export const fetchCartUpdate = createAsyncThunk(
+// update cart
+export const fetchCartUpdate = createAsyncThunk(
   "cart/fetchCartUpdate",
-  async (
-    { cartId, updatedProduct }: { cartId: number; updatedProduct: ProductProps },
-    thunkAPI) => {
-    try{
-      const response = await axios.put(`${basic_URL}/${cartId}`, {
+  async ({ updatedProduct }: { updatedProduct: ProductProps }, thunkAPI) => {
+    try {
+      const response = await axios.put(`${basic_URL}/`, {
         merge: true,
         products: [
           {
@@ -52,12 +50,23 @@ export const fetchCartAdd = createAsyncThunk(
         ],
       });
       return response.data;
-    }
-    catch (error: any) {
+    } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  })
-
+  }
+);
+// delete cart
+export const fetchCartDelete = createAsyncThunk(
+  "cart/fetchCartDelete",
+  async (cartId: number, thunkAPI) => {
+    try {
+      const response = await axios.delete(`${basic_URL}/${cartId}`);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 interface CartState {
   productData: ProductProps[];
   loading: boolean;
@@ -74,20 +83,6 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // updateQuantity: (
-    //   state,
-    //   action: PayloadAction<{ id: number; quantity: number }>
-    // ) => {
-    //   const product = state.productData.find((p) => p.id === action.payload.id);
-    //   if (product) {
-    //     product.quantity = action.payload.quantity;
-    //   }
-    // },
-    deleteProduct: (state, action: PayloadAction<number>) => {
-      state.productData = state.productData.filter(
-        (item) => item.id !== action.payload
-      );
-    },
     resetCart: (state) => {
       state.productData = [];
     },
@@ -125,29 +120,44 @@ export const cartSlice = createSlice({
       })
       // update cart
       .addCase(fetchCartUpdate.pending, (state) => {
-        state.loading = true;
         state.error = null;
       })
       .addCase(fetchCartUpdate.fulfilled, (state, action) => {
-        state.loading = false;
         const updatedProducts = action.payload.products;
-      
+
         if (Array.isArray(updatedProducts)) {
           updatedProducts.forEach((updatedProduct: ProductProps) => {
-            const index = state.productData.findIndex(p => p.id === updatedProduct.id);
+            const index = state.productData.findIndex(
+              (p) => p.id === updatedProduct.id
+            );
             if (index !== -1) {
               state.productData[index] = {
                 ...state.productData[index],
                 quantity: updatedProduct.quantity,
               };
-            } 
+            }
           });
         }
       })
-      
       .addCase(fetchCartUpdate.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Failed to update product to cart";
+        state.error =
+          action.error.message || "Failed to update product to cart";
+      })
+      .addCase(fetchCartDelete.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(fetchCartDelete.fulfilled, (state, action) => {
+        state.loading = false;
+        const deletedProductId = action.payload.id;
+        state.productData = state.productData.filter(
+          (item) => item.id !== deletedProductId
+        );
+      })
+      .addCase(fetchCartDelete.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || "Failed to delete product from cart";
       });
   },
 });
@@ -158,6 +168,6 @@ export const selectCartTotal = (state: { cart: CartState }) =>
     0
   );
 
-export const { deleteProduct, resetCart} = cartSlice.actions;
+export const { resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

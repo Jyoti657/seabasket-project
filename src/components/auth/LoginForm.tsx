@@ -4,59 +4,56 @@ import logInSchema, { logInSchemaType } from "../../schema/logInSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { setCredinatials } from "../../store/Slice/authSlice";
+import { loginUser } from "../../store/Slice/authSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+import login from "../../assets/login .png";
 
 const LoginForm: React.FC = () => {
-  const [hasSubmitted, setHasSubmitted] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const authError = useSelector((state: RootState) => state.auth.authError);
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const otp = useSelector((state: RootState) => state.auth.otpVerified);
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<logInSchemaType>({ resolver: zodResolver(logInSchema) });
 
-  const onSubmit: SubmitHandler<logInSchemaType> = (data) => {
-    setHasSubmitted(true);
-    dispatch(setCredinatials(data));
+  const onSubmit: SubmitHandler<logInSchemaType> = async (data) => {
+    try {
+      const resultAction = await dispatch(loginUser(data));
+      if (loginUser.fulfilled.match(resultAction)) {
+        navigate("/otp");
+      }
+    } catch (err) {
+     console.log(err) 
+    }
   };
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      reset();
-      navigate("/");
-    }
-  }, [navigate, isAuthenticated, reset]);
-
   return (
-    <div className="w-full max-w-4xl mx-auto mt-20 shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row">
-      <div className="w-full md:w-1/2 bg-seabasket_green text-white flex flex-col justify-center items-start p-8">
-        <h1 className="text-4xl font-bold mb-2">Login</h1>
-        <p className="text-lg mb-1">Welcome back!</p>
-        <p className="text-sm text-gray-700">
+    <div className="w-full max-w-6xl mx-auto mt-20 shadow-xl rounded-2xl overflow-hidden flex flex-col md:flex-row bg-white m-20">
+      <div className="w-full md:w-1/2 bg-soft_mint text-teal-800 flex flex-col justify-center items-center p-10 space-y-4">
+        <h1 className="text-4xl font-bold">Login</h1>
+        <p className="text-lg">Welcome back!</p>
+        <p className="text-sm text-teal-800 text-center">
           Get access to your Orders, Wishlist, and Recommendations.
         </p>
+        <img src={login} alt="Login" className="w-2/3 md:w-3/4 h-auto mt-4" />
       </div>
 
-      <div className="w-full md:w-1/2 p-8">
+      <div className="w-full md:w-1/2 p-10">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="relative">
             <input
               {...register("email")}
               type="email"
               placeholder="Enter Email"
-              className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full p-3 pl-12 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-700"
             />
-            <MdMarkEmailUnread className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            <MdMarkEmailUnread className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl" />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.email.message}
@@ -69,28 +66,44 @@ const LoginForm: React.FC = () => {
               {...register("password")}
               type="password"
               placeholder="Enter Password"
-              className="w-full p-3 pl-12 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-500"
+              className="w-full p-3 pl-12 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-700"
             />
-            <RiLockPasswordFill className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            <RiLockPasswordFill className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl" />
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.password.message}
               </p>
             )}
           </div>
-
-          {hasSubmitted && authError && (
+          {authError && (
             <p className="text-red-600 text-sm mt-2">{authError}</p>
           )}
-
-          {hasSubmitted && isAuthenticated && (
-            <p className="text-green-600 text-sm mt-2">Login Successful</p>
-          )}
+          {otp && <p className="text-green-600 text-sm mt-2">{otp}</p>}
 
           <Button
-            label="Submit"
-            className="w-full bg-yellow-400 text-black py-2 rounded-md font-semibold hover:bg-yellow-500 transition duration-200 mt-4"
+            label="login"
+            type="submit"
+            className="w-full bg-teal-700 text-white py-3 rounded-lg font-semibold hover:bg-teal-950 transition duration-200"
           />
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <span
+                className="text-teal-700 cursor-pointer hover:underline"
+                onClick={() => navigate("/signUp")}
+              >
+                Sign Up
+              </span>
+            </p>
+            <p className="text-sm text-gray-600">
+              <span
+                className="text-teal-700 cursor-pointer hover:underline"
+                onClick={() => navigate("/forgotPassword")}
+              >
+                Forgot Password?
+              </span>
+            </p>
+          </div>
         </form>
       </div>
     </div>

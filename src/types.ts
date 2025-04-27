@@ -1,14 +1,14 @@
 export interface ProductProps {
   id: number;
   title: string;
-  price: number ;
+  price: number;
   category: string;
   quantity: number;
   description: string;
   images: string[];
   brand: string;
   discount?: number;
-  rating?: number
+  rating?: number;
 }
 
 export interface StateProps {
@@ -28,6 +28,7 @@ export interface ButtonProps {
   label: string;
   onClick?: () => void;
   className: string;
+  type?: "button" | "submit" | "reset";
 }
 
 export interface ProductState {
@@ -37,7 +38,6 @@ export interface ProductState {
   productCategories: { name: string; images: any }[];
   productCategoriesList: [];
   getProductCategoriesList: ProductProps[];
-  sortProducts: ProductProps[];
   filteredProducts: ProductProps[];
   loading: boolean;
   error: string | null;
@@ -45,37 +45,46 @@ export interface ProductState {
 }
 
 export interface confirmModalProps {
-  isOpne: boolean;
+  isOpen: boolean;
   onClose?: () => void;
-  OnConfrim?: () => void;
+  OnConfirm?: () => void;
   message: string;
   ConfirmText?: string;
   CancelText?: string;
 }
 
 export interface Auth {
+  userId: string | null;
   user: {
-    name?: string;
-    email: string;
-    password?: string;
-    phone?: string;
+    firstName?: string;
+    lastName?: string;
+    mobile?: string;
+    address: {
+      id: string;
+      addressLine1?: string;
+      addressLine2?: string;
+      city?: string;
+      postalCode?: string;
+      state?: string;
+    };
   } | null;
   isAuthenticated: boolean;
   otpVerified: boolean;
+  verifiedUser: boolean;
   token: null | string;
   authError: null | string;
   isLoading: boolean;
-  registerUser: null;
+  registerUser: boolean;
+  reset: string | null;
 }
 
 export interface addressForm {
   id: string;
-  fullname: string;
-  phoneNumber: string;
-  address: string;
-  city: string;
+  addressLine1: string;
+  addressLine2: string;
+  postalCode: string;
   state: string;
-  zipCode: string;
+  city: string;
   country: string;
 }
 

@@ -18,10 +18,10 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div>
-        <TrendingProducts />
+         <TrendingProducts /> 
       </div>
       <div>
-        <CategoryList />
+        <CategoryList /> 
       </div>
     </div>
   );

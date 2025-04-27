@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { sortProducts } from "../../store/Slice/productSlice";
 
 const SortProducts: React.FC = () => {
-  const [sortBy, setSortBy] = useState<string>(""); // Default empty
+  const [sortBy, setSortBy] = useState<string>("");
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, allProducts } = useSelector(
     (state: RootState) => state.product
@@ -17,8 +17,6 @@ const SortProducts: React.FC = () => {
       dispatch(sortProducts(selectedValue));
     }
   };
-
-  // Only run initial sort when products are available
   useEffect(() => {
     if (allProducts.length > 0 && sortBy === "") {
       dispatch(sortProducts("title"));
@@ -29,7 +27,9 @@ const SortProducts: React.FC = () => {
   return (
     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 mb-4">
       <div className="flex items-center gap-2">
-        <label htmlFor="sort" className="text-sm font-medium">Sort by:</label>
+        <label htmlFor="sort" className="text-sm font-medium">
+          Sort by:
+        </label>
         <select
           id="sort"
           value={sortBy}
@@ -43,7 +43,9 @@ const SortProducts: React.FC = () => {
         </select>
       </div>
 
-      {loading && <p className="text-sm text-gray-500">Loading sorted products...</p>}
+      {loading && (
+        <p className="text-sm text-gray-500">Loading sorted products...</p>
+      )}
       {error && <p className="text-sm text-red-500">Error: {error}</p>}
     </div>
   );

@@ -1,22 +1,30 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
-import { profileSchemaType } from "../../schema/ProfileSchema";
+import { ProfileSchemaType } from "../../schema/ProfileSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import profileSchema from "../../schema/ProfileSchema";
-import { addProfile } from "../../store/Slice/authSlice";
+import { updateProfile } from "../../store/Slice/authSlice";
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<profileSchemaType>({ resolver: zodResolver(profileSchema) });
+  } = useForm<ProfileSchemaType>({ resolver: zodResolver(profileSchema) });
 
-  const onSubmit: SubmitHandler<profileSchemaType> = (data) => {
-    dispatch(addProfile(data));
+  const onSubmit: SubmitHandler<ProfileSchemaType> = async (data) => {
+    try {
+      const resultAction = await dispatch(updateProfile(data));
+
+      if (updateProfile.fulfilled.match(resultAction)) {
+        console.log("Profile updated successfully");
+        console.log(data);
+      }
+    } catch (err) {
+      console.error("Error updating profile:", err);
+    }
   };
 
   return (
@@ -28,63 +36,142 @@ const ProfileForm: React.FC = () => {
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label
-            htmlFor="name"
+            htmlFor="firstName"
             className="block text-sm font-medium text-gray-700"
           >
-            Name
+            First Name
           </label>
           <input
             type="text"
-            id="name"
-            {...register("name")}
+            id="firstName"
+            {...register("firstName")}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          {errors.firstName && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.firstName.message}
+            </p>
           )}
         </div>
 
         <div>
           <label
-            htmlFor="email"
+            htmlFor="lastName"
             className="block text-sm font-medium text-gray-700"
           >
-            Email
+            Last Name
           </label>
           <input
-            type="email"
-            id="email"
-            {...register("email")}
+            type="text"
+            id="lastName"
+            {...register("lastName")}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          {errors.lastName && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.lastName.message}
+            </p>
           )}
         </div>
 
         <div>
           <label
-            htmlFor="phone"
+            htmlFor="mobile"
             className="block text-sm font-medium text-gray-700"
           >
-            Phone
+            Mobile Number
           </label>
           <input
             type="text"
-            id="phone"
-            {...register("phone")}
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-seabasket_green focus:border-seabasket_green"
+            id="mobile"
+            {...register("mobile")}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
-          {errors.phone && (
-            <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+          {errors.mobile && (
+            <p className="text-red-500 text-sm mt-1">{errors.mobile.message}</p>
           )}
+        </div>
+
+        <div>
+          <label
+            htmlFor="addressLine1"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Address Line 1
+          </label>
+          <input
+            type="text"
+            id="addressLine1"
+            {...register("addressLine1")}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="addressLine2"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Address Line 2
+          </label>
+          <input
+            type="text"
+            id="addressLine2"
+            {...register("addressLine2")}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="city"
+            className="block text-sm font-medium text-gray-700"
+          >
+            City
+          </label>
+          <input
+            type="text"
+            id="city"
+            {...register("city")}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="postalCode"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Postal Code
+          </label>
+          <input
+            type="text"
+            id="postalCode"
+            {...register("postalCode")}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="state"
+            className="block text-sm font-medium text-gray-700"
+          >
+            State
+          </label>
+          <input
+            type="text"
+            id="state"
+            {...register("state")}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-seabasket_green text-white py-2 rounded-md  transition duration-200"
+          className="w-full bg-seabasket_green text-white py-2 rounded-md transition duration-200"
         >
-          Edit
+          Edit Profile
         </button>
       </form>
     </div>

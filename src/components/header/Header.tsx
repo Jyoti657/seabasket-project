@@ -9,6 +9,7 @@ import { RootState } from "../../store/store";
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { productData } = useSelector((state: RootState) => state.cart);
+  const isAuthenticated= useSelector((state:RootState)=>state.auth.isAuthenticated)
   const handleLogo = () => {
     navigate("/");
   };
@@ -47,13 +48,13 @@ const Header: React.FC = () => {
           </NavLink>
 
           <NavLink
-            to="/checkout/cart"
-            className="relative flex items-center gap-1 hover:text-yellow-400 transition"
+            to="/cart"
+            className="relative flex items-center gap-1 hover:text-teal-300 transition"
           >
             <ShoppingCart className="w-6 h-6" />
             <span className="hidden sm:inline text-sm font-medium">Cart</span>
             {productData?.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs w-5 h-5 flex items-center justify-center rounded-full">
+              <span className="absolute -top-2 -right-2 bg-white  text-teal-950 font-semibold text-xs w-5 h-5 flex items-center justify-center rounded-full">
                 {productData.length}
               </span>
             )}

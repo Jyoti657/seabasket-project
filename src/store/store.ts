@@ -8,7 +8,6 @@
   import favoriteReducer from "./Slice/favoriteSlice";
   import addressReducer from "./Slice/addressSlice";
   import authReducer from "./Slice/authSlice";
-
   import orderReducer from "./Slice/orderSlice"
 
   const persistConfig = {
@@ -23,7 +22,6 @@
     favorites: favoriteReducer,
     address: addressReducer,
     auth: authReducer,
-    
     order:orderReducer
   });
 

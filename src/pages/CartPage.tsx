@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import RestartCart from "../components/cart/ReSetCart";
 import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../store/store";
 import { ProductProps } from "../types";
 import Button from "../components/ui/Button";
-import CartTotal from "../components/cart/CartToatl";
 import CartProducts from "../components/cart/CartProducts";
 import { fetchCart } from "../store/Slice/cartSlice";
 
@@ -13,12 +12,17 @@ const Cart: React.FC = () => {
   const { productData, loading, error } = useSelector(
     (state: RootState) => state.cart
   );
+  const isAuthenticated= useSelector((state:RootState)=> state.auth.isAuthenticated)
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchCart());
+    // if(!isAuthenticated){
+    //   dispatch(resetCart())
   }, [dispatch]);
+   
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (error)
@@ -45,14 +49,26 @@ const Cart: React.FC = () => {
             <div className="pt-4 border-t flex justify-end">
               <RestartCart />
             </div>
-          </div>
+            {/* {if(!isAuthenticated){
+              N
+            }
 
-          <div className="w-full lg:w-1/4 bg-white shadow-md rounded-lg p-6 h-fit">
+            }
+             */}
+            
+            <NavLink to="/checkout">
+            <Button 
+            label="Checkout"
+          className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
+          />
+            </NavLink>
+          </div>
+           {/* <div className="w-full lg:w-1/4 bg-white shadow-md rounded-lg p-6 h-fit">
             <h3 className="text-xl font-semibold text-gray-800 border-b pb-4 mb-4">
               Cart Summary
             </h3>
             <CartTotal />
-          </div>
+          </div> */}
         </>
       ) : (
         <div className="flex flex-col items-center justify-center w-full py-10">
@@ -60,7 +76,7 @@ const Cart: React.FC = () => {
             Your cart is empty. Add products!
           </h1>
           <NavLink to={"/"}>
-            <Button className="" label="Go to Shopping" />
+            <Button label="Go to Shopping" className="" />
           </NavLink>
         </div>
       )}

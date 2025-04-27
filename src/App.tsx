@@ -16,6 +16,9 @@ import SignUpPage from "./pages/SignUpPage";
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage";
+import Opt from "./pages/Opt";
+import ForgotPasswordPage from "./pages/ForgetPasswordsPage";
+import PrivateRoute from "./pages/PrivateRoute";
 
 const App: React.FC = () => {
   return (
@@ -25,20 +28,26 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/category/:categoryName" element={<CategoryPage />} />
-          <Route path="/checkout" element={<Checkout />}>
-            <Route path="cart" element={<Cart />} />
-          </Route>
-          <Route path="/order" element={<Order />} />
-          <Route path="/order/:id" element={<OrderDetails />} />
-          <Route path="/address" element={<AddressPage />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetails />} />
-          <Route path="/profile" element={<Profile />}></Route>
-          <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="*" element={<Error />} />
+          <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/otp" element={<Opt />} />
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/address" element={<AddressPage />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/order/:id" element={<OrderDetails />} />
+          </Route>
         </Route>
+
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );
