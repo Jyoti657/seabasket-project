@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import addressSchema, { addressSchemaType } from "../../schema/addressSchema";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
-import { addAddress } from "../../store/Slice/addressSlice";
+import { addAddress, fetchAddress } from "../../store/Slice/addressSlice";
 
 const AddressForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,6 +20,7 @@ const AddressForm: React.FC = () => {
       const resultAction = await dispatch(addAddress(data));
       if (addAddress.fulfilled.match(resultAction)) {
         console.log("Add Adreess");
+        await dispatch(fetchAddress())
       }
     } catch (err) {
       console.log(" address is not add");
@@ -29,10 +30,10 @@ const AddressForm: React.FC = () => {
   };
 
   return (
-    <div className=" grid grid-row">
+    
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow space-y-4"
+        className="max-w-xl mx-auto p-6 bg-soft_mint rounded-lg shadow space-y-4"
       >
         <h2 className="text-xl font-semibold mb-4">Enter Your Address</h2>
 
@@ -114,12 +115,12 @@ const AddressForm: React.FC = () => {
 
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+          className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md"
         >
           Save Address
         </button>
       </form>
-    </div>
+  
   );
 };
 

@@ -73,7 +73,24 @@ export const updateAddress = createAsyncThunk(
     }
   }
 );
-
+export const deleteAddress = createAsyncThunk(
+  "address/deleteAddress",
+  async (id: string, { getState, rejectWithValue }) => {
+    try {
+      const state: any = getState();
+      const token = state.auth.token;
+      await API.delete(`${addressApi}/delete-address/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return id;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
 
 interface AddressState {
   list: addressForm[];
@@ -128,6 +145,21 @@ const addressSlice = createSlice({
         state.list = action.payload.updateAddress;
       })
       .addCase(updateAddress.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+        console.error("Error");
+      })
+      .addCase(deleteAddress.pending, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteAddress.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const deleteAddressId = action.payload;
+        state.list = state.list.filter(
+          (address) => address.id !== deleteAddressId
+        );
+      })
+      .addCase(deleteAddress.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
         console.error("Error");

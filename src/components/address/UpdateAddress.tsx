@@ -27,7 +27,14 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({
 
   useEffect(() => {
     if (address) {
-      reset(address);
+      reset({
+        addressLine1: address.addressLine1,
+        addressLine2: address.addressLine2,
+        city: address.city,
+        state: address.state,
+        country: address.country,
+        postalCode: address.postalCode,
+      });
     }
   }, [address, reset]);
 
