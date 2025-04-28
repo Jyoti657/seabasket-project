@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ProductProps, ProductState } from "../../types";
+import { filter, ProductState } from "../../types";
 import axios from "axios";
-import {API} from "../../Api/axiosInstance"
+import { API } from "../../Api/axiosInstance";
 
-const productApi='/product'
+const productApi = "/product";
 
 const basic_URL = "https://dummyjson.com/products";
 
@@ -21,7 +21,7 @@ export const fetchProducts = createAsyncThunk(
 // for the ProductsDetails
 export const fetchproductsDetails = createAsyncThunk(
   "products/fetchproductsDetails",
-  async (id:string,{rejectWithValue}) => {
+  async (id: string, { rejectWithValue }) => {
     try {
       const response = await API.get(`${productApi}/get-product/${id}`);
       return response.data;
@@ -35,7 +35,23 @@ export const productSearch = createAsyncThunk(
   "products/productSearch",
   async (query: string, { rejectWithValue }) => {
     try {
-      const response = await API.get(`${productApi}/search-product`, { params: {name: query } });
+      const response = await API.get(`${productApi}/search-product`, {
+        params: { name: query },
+      });
+      return response.data;
+    } catch (e: any) {
+      return rejectWithValue(e.message);
+    }
+  }
+);
+// for filter Products
+export const productFilter = createAsyncThunk(
+  "products/productFilter",
+  async (filter: filter, { rejectWithValue }) => {
+    try {
+      const response = await API.get(`${productApi}/filter-products`, {
+        params: filter,
+      });
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.message);
@@ -124,33 +140,33 @@ const ProductSlice = createSlice({
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
-    filterProducts: (state, action) => {
-      const { priceRange, rating, discount, category } = action.payload;
-      let filter = [...state.allProducts];
-      if (priceRange) {
-        filter = filter.filter(
-          (product) =>
-            product.price >= priceRange[0] && product.price <= priceRange[1]
-        );
-      }
-      if (rating) {
-        filter = filter.filter(
-          (product) => product.rating && product.rating >= rating
-        );
-      }
-      if (discount) {
-        filter = filter.filter(
-          (product) => product.discount && product.discount >= discount
-        );
-      }
-      if (category) {
-        filter = filter.filter((product) =>
-          product.category.toLowerCase().includes(category.toLowerCase())
-        );
-      }
+    // filterProducts: (state, action) => {
+    //   const { priceRange, rating, discount, category } = action.payload;
+    //   let filter = [...state.allProducts];
+    //   if (priceRange) {
+    //     filter = filter.filter(
+    //       (product) =>
+    //         product.price >= priceRange[0] && product.price <= priceRange[1]
+    //     );
+    //   }
+    //   if (rating) {
+    //     filter = filter.filter(
+    //       (product) => product.rating && product.rating >= rating
+    //     );
+    //   }
+    //   if (discount) {
+    //     filter = filter.filter(
+    //       (product) => product.discount && product.discount >= discount
+    //     );
+    //   }
+    //   if (category) {
+    //     filter = filter.filter((product) =>
+    //       product.category.toLowerCase().includes(category.toLowerCase())
+    //     );
+    //   }
 
-      state.filteredProducts = filter;
-    },
+    //   state.filteredProducts = filter;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -243,9 +259,21 @@ const ProductSlice = createSlice({
       .addCase(sortProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(productFilter.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productFilter.fulfilled, (state, action) => {
+        state.loading = false;
+        state.filteredProducts = action.payload.products;
+      })
+      .addCase(productFilter.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { setSearchQuery, filterProducts } = ProductSlice.actions;
+export const { setSearchQuery } = ProductSlice.actions;
 export default ProductSlice.reducer;

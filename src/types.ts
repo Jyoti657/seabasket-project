@@ -18,6 +18,14 @@ export interface StateProps {
 export interface Product {
   product: ProductProps;
 }
+ export interface filter{
+  category?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      minDiscount?: number;
+      maxDiscount?: number;
+      sort?: string;
+ }
 export interface Category {
   name: string;
   image: string;
