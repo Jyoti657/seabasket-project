@@ -52,6 +52,7 @@ export const productFilter = createAsyncThunk(
       const response = await API.get(`${productApi}/filter-products`, {
         params: filter,
       });
+      console.log('Response Data',response.data)
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.message);
@@ -264,10 +265,20 @@ const ProductSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
+      // .addCase(productFilter.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.filteredProducts = action.payload
+      // })
+      
       .addCase(productFilter.fulfilled, (state, action) => {
         state.loading = false;
-        state.filteredProducts = action.payload.products;
+        if (action.payload && action.payload.products) {
+          state.filteredProducts = action.payload.products;
+        } else {
+          state.filteredProducts = []; 
+        }
       })
+      
       .addCase(productFilter.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;

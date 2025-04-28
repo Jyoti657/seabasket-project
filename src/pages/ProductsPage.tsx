@@ -17,7 +17,7 @@ const Product: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className=" bg-gray-50 grid grid-cols-1 lg:grid-cols-4 gap-8 p-4">
+    <div className="h-full bg-gray-50 grid grid-cols-1 lg:grid-cols-4 gap-8 p-4">
       <div className="lg:block p-4 bg-white shadow-lg rounded-md">
         <h2 className="text-xl font-bold text-gray-700 mb-4">Filters</h2>
         <FilterProducts />
