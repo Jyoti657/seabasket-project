@@ -21,12 +21,12 @@ export const fetchProducts = createAsyncThunk(
 // for the ProductsDetails
 export const fetchproductsDetails = createAsyncThunk(
   "products/fetchproductsDetails",
-  async (id: string): Promise<ProductProps> => {
+  async (id:string,{rejectWithValue}) => {
     try {
-      const response = await axios.get(`${basic_URL}/${id}`);
+      const response = await API.get(`${productApi}/get-product/${id}`);
       return response.data;
     } catch (e: any) {
-      return e;
+      return rejectWithValue(e.message);
     }
   }
 );
@@ -173,7 +173,7 @@ const ProductSlice = createSlice({
       })
       .addCase(fetchproductsDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.productsDetails = action.payload;
+        state.productsDetails = action.payload.product;
       })
       .addCase(fetchproductsDetails.rejected, (state, action) => {
         state.loading = false;

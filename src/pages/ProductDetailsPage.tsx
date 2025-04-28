@@ -42,8 +42,8 @@ const ProductDetails: React.FC = () => {
         
         <div className="flex justify-center items-center">
           <img
-            src={productsDetails.images[0]}
-            alt={productsDetails.title}
+            src={productsDetails.images}
+            alt={productsDetails.name}
             className="w-full max-w-xs sm:max-w-sm md:max-w-md h-auto object-contain border border-gray-300 p-4 rounded-lg shadow"
           />
         </div>
@@ -51,7 +51,7 @@ const ProductDetails: React.FC = () => {
         
         <div className="flex flex-col justify-between space-y-4">
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-            {productsDetails.title}
+            {productsDetails.name}
           </h1>
 
           <p className="text-lg sm:text-xl text-green-600 font-semibold">
@@ -63,10 +63,10 @@ const ProductDetails: React.FC = () => {
           <p className="text-gray-500 text-sm">
             Category: <span className="capitalize">{productsDetails.category}</span>
           </p>
-
+{/* 
           <p className="text-gray-500 text-sm">
-            Rating: {productsDetails.rating?.rate} ({productsDetails.rating?.count} reviews)
-          </p>
+            Rating: {productsDetails.rating} 
+          </p> */}
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Button
