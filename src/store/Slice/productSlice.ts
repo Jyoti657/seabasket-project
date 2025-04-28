@@ -35,7 +35,7 @@ export const productSearch = createAsyncThunk(
   "products/productSearch",
   async (query: string, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${basic_URL}/search?q=${query}`);
+      const response = await API.get(`${productApi}/search-product`, { params: {name: query } });
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.message);
