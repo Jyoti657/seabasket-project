@@ -49,7 +49,7 @@ import ProductList from "../components/products/ProductList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-import SortProducts from "../components/products/SortProducts";
+// import SortProducts from "../components/products/SortProducts";
 import FilterProducts from "../components/products/FilterProducts";
 
 const Product: React.FC = () => {
@@ -63,6 +63,7 @@ const Product: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchProducts());
+    console.log(fetchProducts)
   }, [dispatch]);
 
   return (
@@ -71,7 +72,7 @@ const Product: React.FC = () => {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Featured Products
         </h1>
-         <SortProducts /> 
+         {/* <SortProducts />  */}
         {/* <FilterProducts /> */}
 
         {loading && <p className="text-center text-blue-500">Loading...</p>}
