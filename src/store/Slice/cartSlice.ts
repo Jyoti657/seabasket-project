@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ProductProps } from "../../types";
-import axios from "axios";
+import {API} from "../../Api/axiosInstance"
 const basic_URL = "https://dummyjson.com/carts";
 // all the cart
+const cartApi='/cart'
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${basic_URL}`);
+      const response = await API.get(`${basic_URL}`);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -20,7 +21,7 @@ export const fetchCartAdd = createAsyncThunk(
   "cart/fetchCartAdd",
   async (product: ProductProps, thunkAPI) => {
     try {
-      const response = await axios.post(`${basic_URL}/add`, {
+      const response = await API.post(`${cartApi}/add-to-cart`, {
         userId: 1,
         products: [
           {
@@ -36,37 +37,37 @@ export const fetchCartAdd = createAsyncThunk(
   }
 );
 // update cart
-export const fetchCartUpdate = createAsyncThunk(
-  "cart/fetchCartUpdate",
-  async ({ updatedProduct }: { updatedProduct: ProductProps }, thunkAPI) => {
-    try {
-      const response = await axios.put(`${basic_URL}/`, {
-        merge: true,
-        products: [
-          {
-            id: updatedProduct.id,
-            quantity: updatedProduct.quantity,
-          },
-        ],
-      });
-      return response.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// export const fetchCartUpdate = createAsyncThunk(
+//   "cart/fetchCartUpdate",
+//   async ({ updatedProduct }: { updatedProduct: ProductProps }, thunkAPI) => {
+//     try {
+//       const response = await axios.put(`${basic_URL}/`, {
+//         merge: true,
+//         products: [
+//           {
+//             id: updatedProduct.id,
+//             quantity: updatedProduct.quantity,
+//           },
+//         ],
+//       });
+//       return response.data;
+//     } catch (error: any) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
 // delete cart
-export const fetchCartDelete = createAsyncThunk(
-  "cart/fetchCartDelete",
-  async (cartId: number, thunkAPI) => {
-    try {
-      const response = await axios.delete(`${basic_URL}/${cartId}`);
-      return response.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// export const fetchCartDelete = createAsyncThunk(
+//   "cart/fetchCartDelete",
+//   async (cartId: number, thunkAPI) => {
+//     try {
+//       const response = await axios.delete(`${basic_URL}/${cartId}`);
+//       return response.data;
+//     } catch (error: any) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
 interface CartState {
   productData: ProductProps[];
   loading: boolean;
@@ -119,48 +120,52 @@ export const cartSlice = createSlice({
         state.error = action.error.message || "Failed to add product to cart";
       })
       // update cart
-      .addCase(fetchCartUpdate.pending, (state) => {
-        state.error = null;
-      })
-      .addCase(fetchCartUpdate.fulfilled, (state, action) => {
-        const updatedProducts = action.payload.products;
+//       .addCase(fetchCartUpdate.pending, (state) => {
+//         state.error = null;
+//       })
+//       .addCase(fetchCartUpdate.fulfilled, (state, action) => {
+//         const updatedProducts = action.payload.products;
 
-        if (Array.isArray(updatedProducts)) {
-          updatedProducts.forEach((updatedProduct: ProductProps) => {
-            const index = state.productData.findIndex(
-              (p) => p.id === updatedProduct.id
-            );
-            if (index !== -1) {
-              state.productData[index] = {
-                ...state.productData[index],
-                quantity: updatedProduct.quantity,
-              };
-            }
-          });
-        }
-      })
-      .addCase(fetchCartUpdate.rejected, (state, action) => {
-        state.loading = false;
-        state.error =
-          action.error.message || "Failed to update product to cart";
-      })
-      .addCase(fetchCartDelete.pending, (state) => {
-        state.error = null;
-      })
-      .addCase(fetchCartDelete.fulfilled, (state, action) => {
-        state.loading = false;
-        const deletedProductId = action.payload.id;
-        state.productData = state.productData.filter(
-          (item) => item.id !== deletedProductId
-        );
-      })
-      .addCase(fetchCartDelete.rejected, (state, action) => {
-        state.loading = false;
-        state.error =
-          action.error.message || "Failed to delete product from cart";
-      });
-  },
+//         if (Array.isArray(updatedProducts)) {
+//           updatedProducts.forEach((updatedProduct: ProductProps) => {
+//             const index = state.productData.findIndex(
+//               (p) => p.id === updatedProduct.id
+//             );
+//             if (index !== -1) {
+//               state.productData[index] = {
+//                 ...state.productData[index],
+//                 quantity: updatedProduct.quantity,
+//               };
+//             }
+//           });
+//         }
+//       })
+//       .addCase(fetchCartUpdate.rejected, (state, action) => {
+//         state.loading = false;
+//         state.error =
+//           action.error.message || "Failed to update product to cart";
+//       })
+//       .addCase(fetchCartDelete.pending, (state) => {
+//         state.error = null;
+//       })
+//       .addCase(fetchCartDelete.fulfilled, (state, action) => {
+//         state.loading = false;
+//         const deletedProductId = action.payload.id;
+//         state.productData = state.productData.filter(
+//           (item) => item.id !== deletedProductId
+//         );
+//       })
+//       .addCase(fetchCartDelete.rejected, (state, action) => {
+//         state.loading = false;
+//         state.error =
+//           action.error.message || "Failed to delete product from cart";
+//       });
+//  
+// 
+
+},
 });
+    
 
 export const selectCartTotal = (state: { cart: CartState }) =>
   state.cart.productData.reduce(
