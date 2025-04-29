@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CategoryList from "../components/header/CategoryList";
+// import CategoryList from "../components/header/CategoryList";
 import TrendingProducts from "../components/header/TrendingProducts";
 import Spinner from "../components/ui/Spinner";
 
@@ -21,7 +21,7 @@ const Home: React.FC = () => {
          <TrendingProducts /> 
       </div>
       <div>
-        <CategoryList /> 
+        {/* <CategoryList />  */}
       </div>
     </div>
   );
