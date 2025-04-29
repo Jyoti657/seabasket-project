@@ -55,6 +55,7 @@ export const productFilter = createAsyncThunk(
       minDiscount,
       maxDiscount,
       sort,
+      SortFeild,
     }: {
       category?: string;
       minprice?: number;
@@ -62,6 +63,7 @@ export const productFilter = createAsyncThunk(
       minDiscount?: number;
       maxDiscount?: number;
       sort?: "asc" | "desc";
+      SortFeild?: string;
     },
     { rejectWithValue }
   ) => {
@@ -74,9 +76,9 @@ export const productFilter = createAsyncThunk(
           minDiscount,
           maxDiscount,
           sort,
+          SortFeild,
         },
       });
-      console.log("Response Data", response.data);
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.message);
@@ -159,7 +161,6 @@ const ProductSlice = createSlice({
         state.error = null;
       })
       .addCase(productFilter.fulfilled, (state, action) => {
-        console.log("Filter Response Payload", action.payload);
         state.loading = false;
         state.allProducts = action.payload?.products || [];
       })
