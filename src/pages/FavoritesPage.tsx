@@ -21,15 +21,15 @@ const FavoritesPage: React.FC = () => {
   const handleRemoveFavorite = (id: string) => {
       dispatch(deleteWishlist(id));
       console.log("Deleting item from wishlist:", id); 
-
-
   };
+
   const handleResetFavorite = () => {
     dispatch(resetFavorites());
   };
   const handleProductClick = (id: number) => {
     navigate(`/products/${id}`);
   };
+  
   useEffect(() => {
     dispatch(getWhislist());
   }, [dispatch]);

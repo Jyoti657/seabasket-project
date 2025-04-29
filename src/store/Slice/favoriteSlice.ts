@@ -20,7 +20,6 @@ export const wishlistadd = createAsyncThunk(
           },
         }
       );
-
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -33,9 +32,7 @@ export const getWhislist = createAsyncThunk(
     try {
       const state: any = getState();
       const token = state.auth.token;
-      const response = await API.get(
-        `${wishlistApi}/get-wishlist`, 
-        {
+      const response = await API.get(`${wishlistApi}/get-wishlist`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -105,8 +102,6 @@ const favoritSlice = createSlice({
         if (!exists) {
           state.favoriteProducts.push(action.payload);
         }
-
-        console.log(" Wishlist added:", action.payload);
       })
       .addCase(wishlistadd.rejected, (state, action) => {
         state.isLoading = false;
@@ -130,14 +125,6 @@ const favoritSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      // .addCase(deleteWishlist.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   console.log("this wishdelete",action.payload)
-      //   const deleteWishlistId = action.payload.productId;
-      //   state.favoriteProducts = state.favoriteProducts.filter(
-      //     (wishList) => wishList.id !== deleteWishlistId
-      //   );
-      // })
       .addCase(deleteWishlist.fulfilled, (state, action) => {
         state.isLoading = false;
         const deletedItemId = action.payload.id;

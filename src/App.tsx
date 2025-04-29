@@ -15,7 +15,7 @@ import SignUpPage from "./pages/SignUpPage";
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage";
-import Opt from "./pages/Opt";
+import Opt from "./pages/OTP";
 import ForgotPasswordPage from "./pages/ForgetPasswordsPage";
 import PrivateRoute from "./pages/PrivateRoute";
 import ResetPasswordPage from "./pages/ResetPasswordPage";

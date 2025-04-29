@@ -22,14 +22,13 @@ const Product: React.FC = () => {
       <div className="lg:block p-4 bg-white shadow-lg rounded-md">
         <h2 className="text-xl font-bold text-gray-700 mb-4">Filters</h2>
         <FilterProducts />
-        
       </div>
 
       <div className="col-span-3">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Featured Products
         </h1>
-        <SortProducts/>
+        <SortProducts />
 
         {loading && <p className="text-center text-blue-500">Loading...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
