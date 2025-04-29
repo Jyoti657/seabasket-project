@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
-import { getWhislist, removeFavorites, resetFavorites } from "../store/Slice/favoriteSlice";
+import {
+  deleteWishlist,
+  getWhislist,
+  resetFavorites,
+} from "../store/Slice/favoriteSlice";
 
 import { currencyFormatter } from "../util/formatting";
 import Button from "../components/ui/Button";
@@ -14,8 +18,11 @@ const FavoritesPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const handleRemoveFavorite = (id: number) => {
-    dispatch(removeFavorites({ id }));
+  const handleRemoveFavorite = (id: string) => {
+      dispatch(deleteWishlist(id));
+      console.log("Deleting item from wishlist:", id); 
+
+
   };
   const handleResetFavorite = () => {
     dispatch(resetFavorites());
@@ -23,15 +30,15 @@ const FavoritesPage: React.FC = () => {
   const handleProductClick = (id: number) => {
     navigate(`/products/${id}`);
   };
- useEffect(()=>{
-  dispatch(getWhislist())
- },[dispatch])
+  useEffect(() => {
+    dispatch(getWhislist());
+  }, [dispatch]);
   return (
     <>
       <div className="container mx-auto py-10">
         <h1 className="text-2xl font-bold text-center mb-6">MY WishList</h1>
 
-        { favoriteProducts&& favoriteProducts.length > 0 ? (
+        {favoriteProducts && favoriteProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
             {favoriteProducts.map((product) => (
               <div
@@ -56,7 +63,7 @@ const FavoritesPage: React.FC = () => {
                   <Button
                     className="text-xl cursor-pointer bg-seabasket_green hover:bg-teal-950 text-white"
                     label="Remove"
-                    onClick={() => handleRemoveFavorite(product.id)}
+                    onClick={() => handleRemoveFavorite(product.id.toString())}
                   />
                 </div>
               </div>

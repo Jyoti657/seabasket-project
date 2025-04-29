@@ -33,7 +33,9 @@ export const getWhislist = createAsyncThunk(
     try {
       const state: any = getState();
       const token = state.auth.token;
-      const response = await API.get(`${wishlistApi}/get-wishlist`, {
+      const response = await API.get(
+        `${wishlistApi}/get-wishlist`, 
+        {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -46,7 +48,26 @@ export const getWhislist = createAsyncThunk(
     }
   }
 );
-
+export const deleteWishlist = createAsyncThunk(
+  "products/deleteWishlist",
+  async (wishlistItemId: string, { rejectWithValue, getState }) => {
+    try {
+      const state: any = getState();
+      const token = state.auth.token;
+      const response = await API.delete(
+        `${wishlistApi}/remove-from-wishlist/${wishlistItemId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 interface FavoriteState {
   favoriteProducts: ProductProps[];
@@ -64,11 +85,6 @@ const favoritSlice = createSlice({
   name: "favorite",
   initialState,
   reducers: {
-    removeFavorites: (state, action) => {
-      state.favoriteProducts = state.favoriteProducts.filter(
-        (item) => item.id !== action.payload.id
-      );
-    },
     resetFavorites: (state) => {
       state.favoriteProducts = [];
     },
@@ -103,15 +119,39 @@ const favoritSlice = createSlice({
       })
       .addCase(getWhislist.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log("this product",action.payload)
+        console.log("this product", action.payload);
         state.favoriteProducts = action.payload.wishlistItems;
       })
       .addCase(getWhislist.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteWishlist.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      // .addCase(deleteWishlist.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   console.log("this wishdelete",action.payload)
+      //   const deleteWishlistId = action.payload.productId;
+      //   state.favoriteProducts = state.favoriteProducts.filter(
+      //     (wishList) => wishList.id !== deleteWishlistId
+      //   );
+      // })
+      .addCase(deleteWishlist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const deletedItemId = action.payload.id;
+        state.favoriteProducts = state.favoriteProducts.filter(
+          (item) => item.id !== deletedItemId
+        );
+      })
+
+      .addCase(deleteWishlist.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });
   },
 });
 
-export const { removeFavorites, resetFavorites } = favoritSlice.actions;
+export const { resetFavorites } = favoritSlice.actions;
 export default favoritSlice.reducer;
