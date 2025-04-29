@@ -1,22 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchCartAdd } from "../store/Slice/cartSlice";
+import { productFilter } from "../store/Slice/productSlice";
+import { useEffect } from "react";
+import Button from "../components/ui/Button";
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
   const navigae = useNavigate();
   const getcategory = useSelector(
-    (state: RootState) => state.product.productCategoriesList
+    (state: RootState) => state.product.allProducts
   );
 
   const dispatch = useDispatch<AppDispatch>();
-  // useEffect(() => {
-  //   if (categoryName) {
-  //     dispatch(getproductCategoriesList(categoryName));
-  //   }
-  // }, [dispatch, categoryName]);
+  useEffect(() => {
+    if (categoryName) {
+      dispatch(productFilter({ category: categoryName }));
+    }
+  }, [dispatch, categoryName]);
 
   if (!getcategory || getcategory.length === 0) {
     return (
@@ -37,14 +39,14 @@ const CategoryPage: React.FC = () => {
         {categoryName}
       </h2>
 
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {getcategory.map((product, index) => (
           <div
             key={index}
             className="bg-white border rounded-xl shadow hover:shadow-lg transition duration-300 flex flex-col p-4"
           >
             <img
-              src={product.images}
+              src={product.imageUrl}
               alt={product.name}
               className="w-full h-40 object-contain rounded-lg mb-4 cursor-pointer"
               onClick={() => handleProductClick(product.id)}
@@ -71,7 +73,7 @@ const CategoryPage: React.FC = () => {
             </div>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

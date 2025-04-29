@@ -1,11 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { filter, ProductState } from "../../types";
+import { ProductState } from "../../types";
 
 import { API } from "../../Api/axiosInstance";
 
 const productApi = "/product";
-
-// const basic_URL = "https://dummyjson.com/products";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
@@ -18,6 +16,7 @@ export const fetchProducts = createAsyncThunk(
     }
   }
 );
+
 // for the ProductsDetails
 export const fetchproductsDetails = createAsyncThunk(
   "products/fetchproductsDetails",
@@ -30,6 +29,7 @@ export const fetchproductsDetails = createAsyncThunk(
     }
   }
 );
+
 // for search products
 export const productSearch = createAsyncThunk(
   "products/productSearch",
