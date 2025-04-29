@@ -96,6 +96,19 @@ export const productCategories = createAsyncThunk(
     }
   }
 );
+// for the trending products
+export const trendingProducts=createAsyncThunk(
+  "products/trendingProducts",
+  async(_,{rejectWithValue})=>{
+    try{
+      const response=await API.get(`${productApi}/trending-products`)
+      return response.data
+    }
+    catch(error:any){
+      return rejectWithValue (error.message)
+    }
+  }
+)
 
 const initialState: ProductState = {
   allProducts: [],
@@ -179,7 +192,20 @@ const ProductSlice = createSlice({
       .addCase(productCategories.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-      });
+      })
+      // for the trending products
+      .addCase(trendingProducts.pending,(state)=>{
+        state.loading=true;
+        state.error=null
+      })
+      .addCase(trendingProducts.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.allProducts=action.payload.trendingProducts
+      })
+      .addCase(trendingProducts.rejected,(state,action)=>{
+        state.loading=false;
+        state.error =action.payload as string
+      })
   },
 });
 

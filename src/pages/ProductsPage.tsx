@@ -32,7 +32,7 @@ const Product: React.FC = () => {
 
         {loading && <p className="text-center text-blue-500">Loading...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
-        {!loading && !error && allProducts.length > 0 ? (
+        {allProducts && allProducts.length > 0 ? (
           <ProductList productData={allProducts} />
         ) : (
           !loading &&
