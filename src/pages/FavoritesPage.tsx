@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
-import { removeFavorites, resetFavorites } from "../store/Slice/favoriteSlice";
+import { getWhislist, removeFavorites, resetFavorites } from "../store/Slice/favoriteSlice";
 
 import { currencyFormatter } from "../util/formatting";
 import Button from "../components/ui/Button";
+import { useEffect } from "react";
 
 const FavoritesPage: React.FC = () => {
   const { favoriteProducts } = useSelector(
@@ -22,13 +23,15 @@ const FavoritesPage: React.FC = () => {
   const handleProductClick = (id: number) => {
     navigate(`/products/${id}`);
   };
-
+ useEffect(()=>{
+  dispatch(getWhislist())
+ },[dispatch])
   return (
     <>
       <div className="container mx-auto py-10">
         <h1 className="text-2xl font-bold text-center mb-6">MY WishList</h1>
 
-        {favoriteProducts.length > 0 ? (
+        { favoriteProducts&& favoriteProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
             {favoriteProducts.map((product) => (
               <div

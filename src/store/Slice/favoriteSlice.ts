@@ -27,26 +27,26 @@ export const wishlistadd = createAsyncThunk(
     }
   }
 );
- export const getWhislist=createAsyncThunk(
+export const getWhislist = createAsyncThunk(
   "products/getWishlist",
-  async({rejecWithValue,getstate})=>{
-    try{
-      const state:any =getstate();
-      const  token=state.auth.token
-      const response=await API.get(`${wishlistApi}/get-wishlist`,
-        {
-          headers:{
-            "Content-Type":"application/json"
-          }
-        }
-      )
+  async (_, { rejectWithValue, getState }) => {
+    try {
+      const state: any = getState();
+      const token = state.auth.token;
+      const response = await API.get(`${wishlistApi}/get-wishlist`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    }
-    catch(error:any){
-
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
     }
   }
- )
+);
+
 
 interface FavoriteState {
   favoriteProducts: ProductProps[];
@@ -96,6 +96,19 @@ const favoritSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
         console.error("Failed to add to wishlist:", action.payload);
+      })
+      .addCase(getWhislist.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getWhislist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log("this product",action.payload)
+        state.favoriteProducts = action.payload.wishlistItems;
+      })
+      .addCase(getWhislist.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });
