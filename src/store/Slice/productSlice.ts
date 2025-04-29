@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { filter, ProductState } from "../../types";
-import axios from "axios";
+
 import { API } from "../../Api/axiosInstance";
 
 const productApi = "/product";
 
-const basic_URL = "https://dummyjson.com/products";
+// const basic_URL = "https://dummyjson.com/products";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
@@ -47,12 +47,36 @@ export const productSearch = createAsyncThunk(
 // for filter Products
 export const productFilter = createAsyncThunk(
   "products/productFilter",
-  async (filter: filter, { rejectWithValue }) => {
+  async (
+    {
+      category,
+      minprice,
+      maxprice,
+      minDiscount,
+      maxDiscount,
+      sort,
+    }: {
+      category?: string;
+      minprice?: number;
+      maxprice?: number;
+      minDiscount?: number;
+      maxDiscount?: number;
+      sort?: "asc" | "desc";
+    },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await API.get(`${productApi}/filter-products`, {
-        params: filter,
+        params: {
+          category,
+          minPrice: minprice,
+          maxPrice: maxprice,
+          minDiscount,
+          maxDiscount,
+          sort,
+        },
       });
-      console.log('Response Data',response.data)
+      console.log("Response Data", response.data);
       return response.data;
     } catch (e: any) {
       return rejectWithValue(e.message);
@@ -72,67 +96,15 @@ export const productCategories = createAsyncThunk(
   }
 );
 
-// for the products categories-list
-export const productCategoriesList = createAsyncThunk(
-  "products/productsCategoriesList",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${basic_URL}/category-list`);
-      return response.data;
-    } catch (e: any) {
-      return rejectWithValue(e.message);
-    }
-  }
-);
-
-// get products categories list
-export const getproductCategoriesList = createAsyncThunk(
-  "products/getproductCategoriesList",
-  async (category: string, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${basic_URL}/category/${category}`);
-      return response.data;
-    } catch (e: any) {
-      return rejectWithValue(e.message);
-    }
-  }
-);
-
-// sort products
-export const sortProducts = createAsyncThunk(
-  "products/sortProducts",
-  async (sortBy: string, { getState, rejectWithValue }) => {
-    try {
-      const state: any = getState();
-      const products = state.product.allProducts;
-      const sorted = [...products];
-
-      if (sortBy === "title") {
-        sorted.sort((a, b) => a.title.localeCompare(b.title));
-      } else if (sortBy === "price") {
-        sorted.sort((a, b) => a.price - b.price);
-      } else if (sortBy === "rating") {
-        sorted.sort((a, b) => b.rating - a.rating);
-      }
-
-      return sorted;
-    } catch (e: any) {
-      return rejectWithValue(e.message);
-    }
-  }
-);
 const initialState: ProductState = {
   allProducts: [],
   productsDetails: null,
   productSearch: null,
-  filteredProducts: [],
   loading: false,
   error: null,
   searchQuery: "",
   productCategories: [],
   productCategoriesList: [],
-  getProductCategoriesList: [],
-  // sortProducts: [],
 };
 const ProductSlice = createSlice({
   name: "products",
@@ -141,33 +113,6 @@ const ProductSlice = createSlice({
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
-    // filterProducts: (state, action) => {
-    //   const { priceRange, rating, discount, category } = action.payload;
-    //   let filter = [...state.allProducts];
-    //   if (priceRange) {
-    //     filter = filter.filter(
-    //       (product) =>
-    //         product.price >= priceRange[0] && product.price <= priceRange[1]
-    //     );
-    //   }
-    //   if (rating) {
-    //     filter = filter.filter(
-    //       (product) => product.rating && product.rating >= rating
-    //     );
-    //   }
-    //   if (discount) {
-    //     filter = filter.filter(
-    //       (product) => product.discount && product.discount >= discount
-    //     );
-    //   }
-    //   if (category) {
-    //     filter = filter.filter((product) =>
-    //       product.category.toLowerCase().includes(category.toLowerCase())
-    //     );
-    //   }
-
-    //   state.filteredProducts = filter;
-    // },
   },
   extraReducers: (builder) => {
     builder
@@ -209,6 +154,19 @@ const ProductSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
+      .addCase(productFilter.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productFilter.fulfilled, (state, action) => {
+        console.log("Filter Response Payload", action.payload);
+        state.loading = false;
+        state.allProducts = action.payload?.products || [];
+      })
+      .addCase(productFilter.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
       // for the categories
       .addCase(productCategories.pending, (state) => {
         state.loading = true;
@@ -216,70 +174,9 @@ const ProductSlice = createSlice({
       })
       .addCase(productCategories.fulfilled, (state, action) => {
         state.loading = false;
-        state.productCategories = action.payload;
+        state.productCategories = action.payload.categories || [];
       })
       .addCase(productCategories.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-      // for the categories-list
-      .addCase(productCategoriesList.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(productCategoriesList.fulfilled, (state, action) => {
-        state.loading = false;
-        state.productCategoriesList = action.payload.products;
-      })
-      .addCase(productCategoriesList.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-      // for the get product categories list
-      .addCase(getproductCategoriesList.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getproductCategoriesList.fulfilled, (state, action) => {
-        state.loading = false;
-        state.getProductCategoriesList = action.payload.products;
-      })
-      .addCase(getproductCategoriesList.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-      // for the sort products
-      .addCase(sortProducts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(sortProducts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.allProducts = action.payload;
-      })
-      .addCase(sortProducts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-      .addCase(productFilter.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      // .addCase(productFilter.fulfilled, (state, action) => {
-      //   state.loading = false;
-      //   state.filteredProducts = action.payload
-      // })
-      
-      .addCase(productFilter.fulfilled, (state, action) => {
-        state.loading = false;
-        if (action.payload && action.payload.products) {
-          state.filteredProducts = action.payload.products;
-        } else {
-          state.filteredProducts = []; 
-        }
-      })
-      
-      .addCase(productFilter.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { useEffect } from "react";
-import { productCategoriesList } from "../../store/Slice/productSlice";
 
 const CategoriesListProduct: React.FC = () => {
   const CategoryList = useSelector(
@@ -11,9 +10,9 @@ const CategoriesListProduct: React.FC = () => {
   const loading = useSelector((state: RootState) => state.product.loading);
 
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(productCategoriesList());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(productCategoriesList());
+  // }, [dispatch]);
   if (error) return <p>{error}</p>;
   if (loading) return <p className="text-gray-500 text-center">Loading...</p>;
 

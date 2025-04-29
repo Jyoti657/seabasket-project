@@ -15,11 +15,11 @@ const FilterProducts: React.FC = () => {
     dispatch(
       productFilter({
         category,
-        minPrice: priceRange.min,
-        maxPrice: priceRange.max,
+        minprice: priceRange.min,
+        maxprice: priceRange.max,
         minDiscount: discount,
         maxDiscount: discount,
-        sort: "",
+        
       })
     );
   };

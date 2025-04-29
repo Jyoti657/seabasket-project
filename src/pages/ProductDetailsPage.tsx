@@ -42,7 +42,7 @@ const ProductDetails: React.FC = () => {
         
         <div className="flex justify-center items-center">
           <img
-            src={productsDetails.images}
+            src={productsDetails.imageUrl}
             alt={productsDetails.name}
             className="w-full max-w-xs sm:max-w-sm md:max-w-md h-auto object-contain border border-gray-300 p-4 rounded-lg shadow"
           />

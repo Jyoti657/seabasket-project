@@ -40,15 +40,15 @@ const TrendingProducts: React.FC = () => {
                 role="button"
               >
                 <img
-                  src={products.images?.[0] || "/fallback.jpg"}
-                  alt={products.title || `Slide ${index + 1}`}
+                  src={products.imageUrl}
+                  alt={products.name || `Slide ${index + 1}`}
                   loading="lazy"
                   className="w-full md:w-1/2 h-64 object-contain rounded-xl"
                 />
 
                 <div className="text-center md:text-left">
                   <h2 className="text-xl font-semibold mb-2">
-                    {products.title}
+                    {products.name}
                   </h2>
                   <p className="text-gray-600 mb-2 line-clamp-3">
                     {products.description}

@@ -4,25 +4,21 @@
 // import { productCategories } from "../../store/Slice/productSlice";
 // import { useNavigate } from "react-router-dom";
 
-// interface Category {
-//   name: string;
-//   images?: string;
-// }
+
 // const CategoryList: React.FC = () => {
 //   const navigate = useNavigate();
 //   const rawCategories = useSelector(
 //     (state: RootState) => state.product.productCategories
 //   );
-//   const categories: Category[] = rawCategories.filter(
-//     (category) => typeof category === "object" && "name" in category
-//   ) as Category[];
+ 
+  
 //   const dispatch = useDispatch<AppDispatch>();
 
 //   useEffect(() => {
 //     dispatch(productCategories());
 //   }, [dispatch]);
 
-//   if (!categories || categories.length === 0) {
+//   if (!rawCategories || rawCategories.length === 0) {
 //     return <p className="text-gray-700 text-center">No Categories Found</p>;
 //   }
 //   const handleCategoryClick = (categoryName: string) => {
@@ -36,19 +32,19 @@
 //       </h2>
 //       <div className="">
 //         <ul className="flex flex-wrap justify-center gap-4">
-//           {categories.map((category, index) => (
+//           {rawCategories.map((category, index) => (
 //             <li
 //               key={index}
 //               onClick={() => handleCategoryClick(category.name)}
 //               className="p-3 border hover:bg-seabasket_green hover:text-white cursor-pointer text-center transition rounded-l bg-soft_mint shadow-md"
 //             >
-//               {category.images && (
+              
 //                 <img
-//                   src={category.images}
+//                   src={category.imageUrl}
 //                   alt={category.name}
 //                   className="w-16 h-16 object-cover mx-auto mt-2 rounded-full border-2 border-seabasket_green"
 //                 />
-//               )}
+            
 
 //               {typeof category.name === "string" ? (
 //                 <span>{category.name}</span>
