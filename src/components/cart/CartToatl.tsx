@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../../store/Slice/cartSlice";
 import { currencyFormatter } from "../../util/formatting";
-import Button from "../ui/Button";
-import { NavLink } from "react-router-dom";
 import { calculateTotalAmount } from "../../util/calculateTotalAmount";
 
 const CartTotal: React.FC = () => {
@@ -32,13 +30,6 @@ const CartTotal: React.FC = () => {
           <span>{currencyFormatter.format(total)}</span>
         </div>
       </div>
-
-      <NavLink to="/order">
-        <Button
-          label="Place Order"
-          className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
-        />
-      </NavLink>
     </div>
   );
 };

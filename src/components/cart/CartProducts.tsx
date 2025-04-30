@@ -16,20 +16,15 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
 
   const updatedItem = useSelector((state: RootState) =>
     state.cart.productData.find((product) => product.id === item.id)
-  ); 
-  // const handlefetchCartAdd=()=>{
-  //   dispatch(fetchCartAdd())
-  // }
-  const handleIncrease= async()=>{
-    if(item.id){
-      dispatch(fetchCartAdd(item.id))
-      await dispatch(fetchCart())
-      console.log("The increase item",fetchCartAdd(item.id))
+  );
 
-
+  const handleIncrease = async () => {
+    if (item.id) {
+      dispatch(fetchCartAdd(item.id));
+      await dispatch(fetchCart());
+      console.log("The increase item", fetchCartAdd(item.id));
     }
-    
-  }
+  };
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-4 bg-white shadow-md rounded-lg border border-gray-200 w-full">
@@ -65,7 +60,6 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
 
         <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
           <button
-            // onClick={handleDecrease}
             disabled={updatedItem?.quantity === 1}
             className="p-2 border rounded-md hover:bg-soft_mint"
           >
@@ -75,7 +69,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
             {updatedItem?.quantity ?? item.quantity}
           </span>
           <button
-             onClick={handleIncrease}
+            onClick={handleIncrease}
             className="p-2 border rounded-md hover:bg-gray-100"
           >
             +
