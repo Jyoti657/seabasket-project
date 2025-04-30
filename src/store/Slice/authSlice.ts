@@ -5,7 +5,7 @@ import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
 import { OtpSchemaType } from "../../schema/optSchema";
 import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
-import { API, deleteToken } from "../../Api/axiosInstance";
+import { API } from "../../Api/axiosInstance";
 const authApi = `/auth`;
 
 export const registerUser = createAsyncThunk(
@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk(
       const response = await API.post(`${authApi}/sign-up`, user);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -26,7 +26,7 @@ export const loginUser = createAsyncThunk(
       const response = await API.post(`${authApi}/sign-in`, user);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -37,7 +37,7 @@ export const verifyOtp = createAsyncThunk(
       const response = await API.post(`${authApi}/verify-otp`, otpData);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -57,7 +57,7 @@ export const forgotPassword = createAsyncThunk(
       console.log(response);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -74,7 +74,7 @@ export const resetPassword = createAsyncThunk(
       );
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -94,7 +94,7 @@ export const updateProfile = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -119,7 +119,6 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      deleteToken();
     },
   },
   extraReducers: (builder) => {

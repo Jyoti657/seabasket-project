@@ -1,5 +1,4 @@
-import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
-import forgetPasswordSchema from "../../schema/forgetPasswordSchema";
+import forgetPasswordSchema,{ ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { forgotPassword } from "../../store/Slice/authSlice";
