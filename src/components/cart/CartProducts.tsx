@@ -4,7 +4,7 @@ import { currencyFormatter } from "../../util/formatting";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductProps } from "../../types";
 import { AppDispatch, RootState } from "../../store/store";
-import { fetchCartAdd } from "../../store/Slice/cartSlice";
+import { fetchCart, fetchCartAdd } from "../../store/Slice/cartSlice";
 
 interface CartProductProps {
   item: ProductProps;
@@ -20,9 +20,10 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
   // const handlefetchCartAdd=()=>{
   //   dispatch(fetchCartAdd())
   // }
-  const handleIncrease=()=>{
+  const handleIncrease= async()=>{
     if(item.id){
       dispatch(fetchCartAdd(item.id))
+      await dispatch(fetchCart())
       console.log("The increase item",fetchCartAdd(item.id))
 
 

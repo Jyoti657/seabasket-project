@@ -97,18 +97,28 @@ export const productCategories = createAsyncThunk(
   }
 );
 // for the trending products
-export const trendingProducts=createAsyncThunk(
+export const trendingProducts = createAsyncThunk(
   "products/trendingProducts",
-  async(_,{rejectWithValue})=>{
-    try{
-      const response=await API.get(`${productApi}/trending-products`)
-      return response.data
-    }
-    catch(error:any){
-      return rejectWithValue (error.message)
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await API.get(`${productApi}/trending-products`);
+      const reviews = response.data.trendingProducts;
+
+      // Fetch product details for each productId
+      const productPromises = reviews.map((review: any) =>
+        API.get(`${productApi}/get-product/${review.productId}`)
+      );
+
+      const productResponses = await Promise.all(productPromises);
+
+      const trendingProducts = productResponses.map((res) => res.data.product);
+      return trendingProducts;
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
     }
   }
-)
+);
 
 const initialState: ProductState = {
   allProducts: [],
@@ -194,18 +204,18 @@ const ProductSlice = createSlice({
         state.error = action.payload as string;
       })
       // for the trending products
-      .addCase(trendingProducts.pending,(state)=>{
-        state.loading=true;
-        state.error=null
+      .addCase(trendingProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(trendingProducts.fulfilled,(state,action)=>{
-        state.loading=false;
-        state.allProducts=action.payload.trendingProducts
+      .addCase(trendingProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allProducts = action.payload;
       })
-      .addCase(trendingProducts.rejected,(state,action)=>{
-        state.loading=false;
-        state.error =action.payload as string
-      })
+      .addCase(trendingProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
   },
 });
 

@@ -4,23 +4,55 @@ import { API } from "../../Api/axiosInstance";
 
 // all the cart
 const cartApi = "/cart";
+// export const fetchCart = createAsyncThunk(
+//   "cart/fetchCart",
+//   async (_, { rejectWithValue, getState }) => {
+//     try {
+//       const state: any = getState();
+//       const token = state.auth.token;
+//       const response = await API.get(`${cartApi}/get-cart`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//       return response.data;
+//     } catch (error: any) {
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async (_, { rejectWithValue, getState }) => {
     try {
       const state: any = getState();
       const token = state.auth.token;
-      const response = await API.get(`${cartApi}/get-cart`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+
+      const cartRes = await API.get(`${cartApi}/get-cart`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      return response.data;
+
+      const cartItems = cartRes.data.cart;
+
+      const productPromises = cartItems.map((item: any) =>
+        API.get(`/product/get-product/${item.productId}`)
+      );
+
+      const productResponses = await Promise.all(productPromises);
+
+      const detailedCartItems = cartItems.map((item: any, index: number) => ({
+        ...productResponses[index].data.product,
+        quantity: item.quantity,
+        cartId: item.id,
+      }));
+
+      return { cart: detailedCartItems };
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
+
 // add cart
 
 export const fetchCartAdd = createAsyncThunk(
@@ -75,9 +107,7 @@ export const cartSlice = createSlice({
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading = false;
-        if (action.payload && Array.isArray(action.payload.products)) {
-          state.productData = action.payload.products;
-        }
+        state.productData = action.payload.cart;
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.loading = false;
