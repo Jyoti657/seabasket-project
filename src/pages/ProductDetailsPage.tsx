@@ -19,7 +19,7 @@ const ProductDetails: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const handleAddToCart = (product: ProductProps) => {
-    dispatch(fetchCartAdd(product));
+    dispatch(fetchCartAdd(product.id));
   };
   const handleProductClick = (id: number) => {
     navigate("/checkout");
@@ -65,10 +65,6 @@ const ProductDetails: React.FC = () => {
             Category:{" "}
             <span className="capitalize">{productsDetails.category}</span>
           </p>
-          {/* 
-          <p className="text-gray-500 text-sm">
-            Rating: {productsDetails.rating} 
-          </p> */}
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Button

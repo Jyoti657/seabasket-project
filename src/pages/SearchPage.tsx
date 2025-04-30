@@ -17,7 +17,7 @@ const SearchPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleAddToCart = (product: ProductProps) => {
-    dispatch(fetchCartAdd(product));
+    dispatch(fetchCartAdd(product.id));
   };
 
   const handleProductClick = (id: number) => {
