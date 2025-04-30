@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/HomePage";
 import Cart from "./pages/CartPage";
-import Checkout from "./pages/CheckoutPage";
+import CheckoutPage from "./pages/CheckoutPage";
 import Order from "./pages/OrderPage";
 import Products from "./pages/ProductsPage";
 import Profile from "./pages/ProfilePage";
@@ -34,15 +34,16 @@ const App: React.FC = () => {
           <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password/:token" element={<ResetPasswordPage/>}/>
-
-
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPasswordPage />}
+          />
           <Route element={<PrivateRoute />}>
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/otp" element={<Opt />} />
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/address" element={<AddressPage />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/order" element={<Order />} />
             <Route path="/order/:id" element={<OrderDetails />} />
           </Route>
