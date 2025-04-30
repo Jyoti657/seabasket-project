@@ -87,60 +87,25 @@ export const cartSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
+
       .addCase(fetchCartAdd.fulfilled, (state, action) => {
         state.loading = false;
-        state.productData.push = action.payload.products;
-        // if (products && Array.isArray(products)) {
-        //   state.productData.push(...products);
-        // }
+        const newProduct = action.payload;
+        const existingIndex = state.productData.findIndex(
+          (p) => p.id === newProduct.id
+        );
+
+        if (existingIndex !== -1) {
+          state.productData[existingIndex].quantity = newProduct.quantity;
+        } else {
+          state.productData.push(newProduct);
+        }
       })
+
       .addCase(fetchCartAdd.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to add product to cart";
       });
-    // update cart
-    //       .addCase(fetchCartUpdate.pending, (state) => {
-    //         state.error = null;
-    //       })
-    //       .addCase(fetchCartUpdate.fulfilled, (state, action) => {
-    //         const updatedProducts = action.payload.products;
-
-    //         if (Array.isArray(updatedProducts)) {
-    //           updatedProducts.forEach((updatedProduct: ProductProps) => {
-    //             const index = state.productData.findIndex(
-    //               (p) => p.id === updatedProduct.id
-    //             );
-    //             if (index !== -1) {
-    //               state.productData[index] = {
-    //                 ...state.productData[index],
-    //                 quantity: updatedProduct.quantity,
-    //               };
-    //             }
-    //           });
-    //         }
-    //       })
-    //       .addCase(fetchCartUpdate.rejected, (state, action) => {
-    //         state.loading = false;
-    //         state.error =
-    //           action.error.message || "Failed to update product to cart";
-    //       })
-    //       .addCase(fetchCartDelete.pending, (state) => {
-    //         state.error = null;
-    //       })
-    //       .addCase(fetchCartDelete.fulfilled, (state, action) => {
-    //         state.loading = false;
-    //         const deletedProductId = action.payload.id;
-    //         state.productData = state.productData.filter(
-    //           (item) => item.id !== deletedProductId
-    //         );
-    //       })
-    //       .addCase(fetchCartDelete.rejected, (state, action) => {
-    //         state.loading = false;
-    //         state.error =
-    //           action.error.message || "Failed to delete product from cart";
-    //       });
-    //
-    //
   },
 });
 
