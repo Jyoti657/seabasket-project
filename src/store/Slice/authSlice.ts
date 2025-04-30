@@ -6,8 +6,6 @@ import { logInSchemaType } from "../../schema/logInSchema";
 import { OtpSchemaType } from "../../schema/optSchema";
 import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
 import { API, deleteToken } from "../../Api/axiosInstance";
-import { resetPasswordSchemaType } from "../../schema/resetPasswordSchema";
-import { Password, Token } from "@mui/icons-material";
 const authApi = `/auth`;
 
 export const registerUser = createAsyncThunk(

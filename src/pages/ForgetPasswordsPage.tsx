@@ -2,9 +2,7 @@ import ForgotPassword from "../components/auth/ForgotPassword";
 
 const ForgotPasswordPage= () => {
     return (
-        
-       <ForgotPassword/>
-        
-    );
+        <ForgotPassword/>
+         );
     }
     export default ForgotPasswordPage;

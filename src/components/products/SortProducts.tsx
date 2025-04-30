@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { useEffect, useState } from "react";
-import { sortProducts } from "../../store/Slice/productSlice";
+import { useState } from "react";
+import { productFilter } from "../../store/Slice/productSlice";
 
 const SortProducts: React.FC = () => {
   const [sortBy, setSortBy] = useState<string>("");
@@ -13,16 +13,33 @@ const SortProducts: React.FC = () => {
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
     setSortBy(selectedValue);
-    if (selectedValue) {
-      dispatch(sortProducts(selectedValue));
+
+    let sortField = "";
+    let sortOrder: "asc" | "desc" | undefined;
+
+    switch (selectedValue) {
+      case "title":
+        sortField = "name";
+        sortOrder = "asc";
+        break;
+      case "price":
+        sortField = "price";
+        sortOrder = "asc";
+        break;
+
+      default:
+        return;
+    }
+
+    if (allProducts.length > 0) {
+      dispatch(
+        productFilter({
+          sort: sortOrder,
+          SortFeild: sortField,
+        })
+      );
     }
   };
-  useEffect(() => {
-    if (allProducts.length > 0 && sortBy === "") {
-      dispatch(sortProducts("title"));
-      setSortBy("title");
-    }
-  }, [allProducts, dispatch, sortBy]);
 
   return (
     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 mb-4">
@@ -39,7 +56,6 @@ const SortProducts: React.FC = () => {
           <option value="">Select</option>
           <option value="title">Title (A-Z)</option>
           <option value="price">Price (Low to High)</option>
-          <option value="rating">Rating (High to Low)</option>
         </select>
       </div>
 

@@ -1,12 +1,11 @@
 export interface ProductProps {
+  quantity: number;
   id: number;
-  title: string;
+  name: string;
   price: number;
   category: string;
-  quantity: number;
   description: string;
-  images: string[];
-  brand: string;
+  imageUrl: string;
   discount?: number;
   rating?: number;
 }
@@ -20,10 +19,16 @@ export interface StateProps {
 export interface Product {
   product: ProductProps;
 }
-export interface Category {
-  name: string;
-  image: string;
+export interface filter {
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  minDiscount?: number;
+  maxDiscount?: number;
+  sort?: string;
 }
+
+
 export interface ButtonProps {
   label: string;
   onClick?: () => void;
@@ -35,10 +40,8 @@ export interface ProductState {
   allProducts: ProductProps[];
   productsDetails: null | any;
   productSearch: null;
-  productCategories: { name: string; images: any }[];
+  productCategories: [];
   productCategoriesList: [];
-  getProductCategoriesList: ProductProps[];
-  filteredProducts: ProductProps[];
   loading: boolean;
   error: string | null;
   searchQuery: string;
