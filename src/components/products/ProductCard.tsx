@@ -16,9 +16,7 @@ const ProductCards: React.FC<ProductCardProps> = ({
   handleProductClick,
 }) => {
   return (
-    <div
-      className="border p-4 rounded shadow hover:shadow-lg transition flex flex-col justify-between h-full bg-soft_mint"
-    >
+    <div className="border p-4 rounded shadow hover:shadow-lg transition flex flex-col justify-between h-full bg-soft_mint">
       <div className="flex-grow">
         <img
           src={product.imageUrl}
@@ -27,7 +25,9 @@ const ProductCards: React.FC<ProductCardProps> = ({
           onClick={() => handleProductClick(product.id)}
         />
         <h2 className="text-lg font-semibold">{product.name}</h2>
-        <p className="text-gray-600">{currencyFormatter.format(product.price)}</p>
+        <p className="text-gray-600">
+          {currencyFormatter.format(product.price)}
+        </p>
       </div>
 
       <div className="flex items-center justify-between mt-4 pt-4 border-t">

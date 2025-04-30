@@ -76,10 +76,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
           </button>
         </div>
 
-        <button
-          className="flex items-center justify-center sm:justify-start gap-1 text-red-500 hover:text-red-700 mt-2"
-          // onClick={handleRemove}
-        >
+        <button className="flex items-center justify-center sm:justify-start gap-1 text-red-500 hover:text-red-700 mt-2">
           <IoMdClose />
           <span>Remove</span>
         </button>

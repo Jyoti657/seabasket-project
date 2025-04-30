@@ -68,7 +68,6 @@ const ForgotPassword: React.FC = () => {
               </p>
             )}
           </div>
-
           <Button
             label="Send Reset Link"
             type="submit"
