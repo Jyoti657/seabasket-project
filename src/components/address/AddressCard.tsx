@@ -25,9 +25,7 @@ const AddressCard: React.FC = () => {
 
   return (
     <div className="bg-seabasket_green rounded-2xl shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-700 mb-6">
-        📍 Saved Addresses
-      </h2>
+      <h2 className="text-2xl font-bold text-gray-700 mb-6">Saved Addresses</h2>
 
       {editingAddress ? (
         <UpdateAddressForm

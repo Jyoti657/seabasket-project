@@ -11,8 +11,10 @@ interface FavoriteButtonProps {
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const favoriteProducts = useSelector((state: RootState) => state.favorites);
-
+  const favoriteProducts = useSelector((state: RootState) =>
+    state.favorites.favoriteProducts.map((product) => product.id.toString())
+  );
+  const isFavorited = favoriteProducts.includes(product.id.toString());
   const handleToggleFavorite = () => {
     dispatch(wishlistadd(product.id.toString()));
   };
@@ -20,7 +22,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
   return (
     <button
       className={`text-2xl cursor-pointer transition ${
-        favoriteProducts
+        isFavorited
           ? "text-red-500 hover:text-red-700"
           : "text-gray-400 hover:text-gray-600"
       }`}

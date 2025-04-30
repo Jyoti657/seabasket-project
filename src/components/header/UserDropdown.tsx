@@ -54,7 +54,7 @@ const UserDropdown: React.FC = () => {
         <div className="absolute right-0 mt-2 w-52 sm:w-56 bg-white text-black shadow-lg rounded-md border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-200 bg-seabasket_green/10">
             <p className="text-sm font-semibold text-seabasket_green capitalize">
-              {user?.firstName ? `Hello, ${user.firstName}` : "Hello, Guest"}
+              {user?.firstName ? `Hello, ${user.firstName}`:`${user?.firstName}` }
             </p>
           </div>
 
