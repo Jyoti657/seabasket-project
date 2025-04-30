@@ -19,6 +19,7 @@ import SearchPage from "./pages/SearchPage";
 import Opt from "./pages/Opt";
 import ForgotPasswordPage from "./pages/ForgetPasswordsPage";
 import PrivateRoute from "./pages/PrivateRoute";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const App: React.FC = () => {
           <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password/:token" element={<ResetPasswordPage/>}/>
 
 
           <Route element={<PrivateRoute />}>

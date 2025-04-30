@@ -5,8 +5,11 @@ import { useForm } from "react-hook-form";
 import { forgotPassword } from "../../store/Slice/authSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
+import Button from "../ui/Button";
+import { useNavigate } from "react-router-dom";
 const ForgotPassword: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,6 +22,12 @@ const ForgotPassword: React.FC = () => {
       const resultAction = await dispatch(forgotPassword(data));
       if (forgotPassword.fulfilled.match(resultAction)) {
         console.log("Password reset link sent successfully");
+        const token = resultAction.payload?.token;
+        if (token) {
+          navigate(`/reset-password/${token}`);
+        } else {
+          console.error("Token not found in the response");
+        }
       } else {
         console.error("Failed to send password reset link");
       }
@@ -60,12 +69,11 @@ const ForgotPassword: React.FC = () => {
             )}
           </div>
 
-          <button
+          <Button
+            label="Send Reset Link"
             type="submit"
             className="w-full bg-seabasket_green text-white py-2 rounded-md hover:bg-seabasket_green/90 transition duration-200"
-          >
-            Send Reset Link
-          </button>
+          />
         </form>
       </div>
     </div>

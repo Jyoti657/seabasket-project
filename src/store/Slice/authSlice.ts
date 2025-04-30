@@ -6,6 +6,8 @@ import { logInSchemaType } from "../../schema/logInSchema";
 import { OtpSchemaType } from "../../schema/optSchema";
 import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
 import { API, deleteToken } from "../../Api/axiosInstance";
+import { resetPasswordSchemaType } from "../../schema/resetPasswordSchema";
+import { Password, Token } from "@mui/icons-material";
 const authApi = `/auth`;
 
 export const registerUser = createAsyncThunk(
@@ -44,9 +46,17 @@ export const verifyOtp = createAsyncThunk(
 // forgot password
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
-  async (data: ForgetPasswordSchemaType, { rejectWithValue }) => {
+  async (data: ForgetPasswordSchemaType, { getState, rejectWithValue }) => {
     try {
-      const response = await API.post(`${authApi}/forgot-password`, data);
+      const state: any = getState();
+      const token = state.auth.token;
+      const response = await API.post(`${authApi}/forgot-password`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -56,9 +66,14 @@ export const forgotPassword = createAsyncThunk(
 // reset password
 export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
-  async (data: ForgetPasswordSchemaType, { rejectWithValue }) => {
+  async (data: { token: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await API.post(`${authApi}/reset-password`, data);
+      const response = await API.post(
+        `${authApi}/reset-password/${data.token}`,
+        {
+          password: data.password,
+        }
+      );
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -96,7 +111,7 @@ const initialState: Auth = {
   isLoading: false,
   registerUser: false,
   verifiedUser: false,
-  reset:null
+  reset: null,
 };
 const authSlice = createSlice({
   name: "auth",
@@ -165,8 +180,7 @@ const authSlice = createSlice({
       .addCase(forgotPassword.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.otpVerified = true;
+        state.reset = action.payload;
       })
       .addCase(forgotPassword.rejected, (state, action) => {
         state.isLoading = false;
@@ -179,9 +193,7 @@ const authSlice = createSlice({
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.otpVerified = true;
+        state.reset = action.payload;
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
