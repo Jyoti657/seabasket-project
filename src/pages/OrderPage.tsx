@@ -4,8 +4,8 @@ const Order: React.FC = () => {
   return (
     <>
       <h1>
-        {/* <OrderList /> */}
-        
+        <OrderList />
+
       </h1>
     </>
   );

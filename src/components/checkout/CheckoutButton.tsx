@@ -1,29 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { orderPlace } from "../../store/Slice/orderSlice";
-import { resetCart } from "../../store/Slice/cartSlice";
-import { useNavigate } from "react-router-dom";
+import Button from "../ui/Button";
+import { NavLink } from "react-router-dom";
 
 const CheckoutButton = () => {
-    const dispatch = useDispatch<AppDispatch>();
-  const navigate=  useNavigate()
-    const selectedAddressId = useSelector((state: RootState) => state.order.selectedAddressId); 
-    const addressId = selectedAddressId; 
-    const paymentType = "Cash on Delivery"; 
-  
-    const handlePlaceOrder = () => {
-      dispatch(orderPlace({ paymentType, addressId }))
-        .unwrap()
-        .then((data) => {
-          alert(data);
-          dispatch(resetCart()); 
-          navigate("/order-success");
-        })
-        .catch((err) => {
-          alert(err);
-        });
-    };
-  
-    return <button onClick={handlePlaceOrder}>Place Order</button>;
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedAddressId = useSelector(
+    (state: RootState) => state.order.selectedAddressId
+  );
+  const addressId = selectedAddressId;
+  const paymentType = "Cash on Delivery";
+
+  const handlePlaceOrder = () => {
+    dispatch(orderPlace({ paymentType, addressId }));
   };
-export default CheckoutButton
+
+  return (
+    <>
+    <NavLink to="/order">
+    <Button
+        label="PlaceOrder"
+        className="text-xl cursor-pointer bg-teal-900 hover:bg-teal-950 text-white items-center py-2 rounded-md w-full sm:w-auto mt-8"
+        onClick={handlePlaceOrder}
+      />
+    </NavLink>
+    
+    </>
+  );
+};
+export default CheckoutButton;
