@@ -8,7 +8,6 @@ import { fetchCart, fetchCartAdd } from "../../store/Slice/cartSlice";
 
 interface CartProductProps {
   item: ProductProps;
-  images?: string[];
 }
 
 const CartProducts: React.FC<CartProductProps> = ({ item }) => {
