@@ -54,15 +54,15 @@ export const productFilter = createAsyncThunk(
       minDiscount,
       maxDiscount,
       sort,
-      SortFeild,
+      
     }: {
       category?: string;
       minprice?: number;
       maxprice?: number;
       minDiscount?: number;
       maxDiscount?: number;
-      sort?: "asc" | "desc";
-      SortFeild?: string;
+      sort?: string;
+      
     },
     { rejectWithValue }
   ) => {
@@ -75,7 +75,7 @@ export const productFilter = createAsyncThunk(
           minDiscount,
           maxDiscount,
           sort,
-          SortFeild,
+        
         },
       });
       return response.data;
