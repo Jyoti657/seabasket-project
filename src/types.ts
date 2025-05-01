@@ -8,6 +8,7 @@ export interface ProductProps {
   imageUrl: string;
   discount?: number;
   rating?: number;
+  wishlistItemId?: string;
 }
 
 export interface StateProps {
@@ -19,9 +20,6 @@ export interface StateProps {
 export interface Product {
   product: ProductProps;
 }
-
-
-
 
 export interface ButtonProps {
   label: string;

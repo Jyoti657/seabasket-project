@@ -18,18 +18,18 @@ const ForgotPassword: React.FC = () => {
   } = useForm<ForgetPasswordSchemaType>({
     resolver: zodResolver(forgetPasswordSchema),
   });
-  const { reset} = useSelector((state: RootState) => state.auth);
+  // const { reset} = useSelector((state: RootState) => state.auth);
 
-  useEffect(()=>{
-    useEffect(() => {
-      const token = reset;
-      if (token) {
-        navigate(`reset-password/${token}`);
-      }
-    }, [reset]);
+  // useEffect(()=>{
+  //   useEffect(() => {
+  //     const token = reset;
+  //     if (token) {
+  //       navigate(`reset-password/${token}`);
+  //     }
+  //   }, [reset]);
     
     
-  },[reset  ])
+  // },[reset  ])
   const onSubmit = async (data: ForgetPasswordSchemaType) => {
     try {
       const resultAction = await dispatch(forgotPassword(data));

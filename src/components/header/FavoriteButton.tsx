@@ -11,12 +11,12 @@ interface FavoriteButtonProps {
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const favoriteProducts = useSelector((state: RootState) =>
-    state.favorites.favoriteProducts.map((product) => product.id.toString())
+  const favoriteProducts = useSelector(
+    (state: RootState) => state.favorites.favoriteProducts
   );
-  const isFavorited = favoriteProducts.includes(product.id.toString());
+  const isFavorited = favoriteProducts.some((fav) => fav.id === product.id);
   const handleToggleFavorite = () => {
-    dispatch(wishlistadd(product.id.toString()));
+    dispatch(wishlistadd(product.id));
   };
 
   return (

@@ -9,18 +9,23 @@ import {
 
 import { currencyFormatter } from "../util/formatting";
 import Button from "../components/ui/Button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const FavoritesPage: React.FC = () => {
+  const [successMsg, setSuccessMesg] = useState("");
   const { favoriteProducts } = useSelector(
     (state: RootState) => state.favorites
   );
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const handleRemoveFavorite = (id: string) => {
-      dispatch(deleteWishlist(id));
-      console.log("Deleting item from wishlist:", id); 
+  const handleRemoveFavorite = async (id: string) => {
+    const result = await dispatch(deleteWishlist(id));
+    if (result) {
+      setSuccessMesg("Item removed from wshilist");
+      dispatch(getWhislist());
+      setTimeout(()=>setSuccessMesg(""),1000)
+    }
   };
 
   const handleResetFavorite = () => {
@@ -29,7 +34,7 @@ const FavoritesPage: React.FC = () => {
   const handleProductClick = (id: number) => {
     navigate(`/products/${id}`);
   };
-  
+
   useEffect(() => {
     dispatch(getWhislist());
   }, [dispatch]);
@@ -37,7 +42,11 @@ const FavoritesPage: React.FC = () => {
     <>
       <div className="container mx-auto py-10">
         <h1 className="text-2xl font-bold text-center mb-6">MY WishList</h1>
-
+        {successMsg && (
+          <p className="text-center text-green-600 font-medium mb-4">
+            {successMsg}
+          </p>
+        )}
         {favoriteProducts && favoriteProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
             {favoriteProducts.map((product) => (
