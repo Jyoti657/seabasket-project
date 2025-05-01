@@ -9,6 +9,7 @@ import { RootState } from "../../store/store";
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { productData } = useSelector((state: RootState) => state.cart);
+  const token =useSelector((state:RootState)=> state.auth.token)
   const handleLogo = () => {
     navigate("/");
   };
@@ -52,11 +53,11 @@ const Header: React.FC = () => {
           >
             <ShoppingCart className="w-6 h-6" />
             <span className="hidden sm:inline text-sm font-medium">Cart</span>
-            {productData?.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-white  text-teal-950 font-semibold text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                {productData.length}
-              </span>
-            )}
+            {token && productData?.length > 0 && (
+    <span className="absolute -top-2 -right-2 bg-white text-teal-950 font-semibold text-xs w-5 h-5 flex items-center justify-center rounded-full">
+      {productData.length}
+    </span>
+  )}
           </NavLink>
         </div>
       </div>

@@ -8,13 +8,16 @@ interface ProductCardProps {
   product: ProductProps;
   handleAddToCart: (product: ProductProps) => void;
   handleProductClick: (id: number) => void;
+  onFavoriteSuccess:()=>void;
 }
 
 const ProductCards: React.FC<ProductCardProps> = ({
   product,
   handleAddToCart,
   handleProductClick,
+  onFavoriteSuccess,
 }) => {
+
   return (
     <div className="border p-4 rounded shadow hover:shadow-lg transition flex flex-col justify-between h-full bg-soft_mint">
       <div className="flex-grow">
@@ -40,7 +43,7 @@ const ProductCards: React.FC<ProductCardProps> = ({
           className="text-xl cursor-pointer"
           onClick={() => handleAddToCart(product)}
         />
-        <FavoriteButton product={product} />
+        <FavoriteButton product={product}  onsuccess={onFavoriteSuccess}/>
       </div>
     </div>
   );

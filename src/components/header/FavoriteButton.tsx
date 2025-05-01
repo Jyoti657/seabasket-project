@@ -6,17 +6,21 @@ import { ProductProps } from "../../types";
 
 interface FavoriteButtonProps {
   product: ProductProps;
+  onsuccess:()=>void
 }
 
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product }) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product,onsuccess }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const favoriteProducts = useSelector((state: RootState) =>
-    state.favorites.favoriteProducts.map((product) => product.id.toString())
+  const favoriteProducts = useSelector(
+    (state: RootState) => state.favorites.favoriteProducts
   );
-  const isFavorited = favoriteProducts.includes(product.id.toString());
+  const isFavorited = favoriteProducts.some((fav) => fav.id === product.id);
   const handleToggleFavorite = () => {
-    dispatch(wishlistadd(product.id.toString()));
+    dispatch(wishlistadd(product.id));
+    if(onsuccess){
+      onsuccess()
+    }
   };
 
   return (

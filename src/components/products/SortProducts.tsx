@@ -4,7 +4,7 @@ import { useState } from "react";
 import { productFilter } from "../../store/Slice/productSlice";
 
 const SortProducts: React.FC = () => {
-  const [sortBy, setSortBy] = useState<string>("");
+  const [sortBy, setSortBy] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, allProducts } = useSelector(
     (state: RootState) => state.product
@@ -14,19 +14,15 @@ const SortProducts: React.FC = () => {
     const selectedValue = e.target.value;
     setSortBy(selectedValue);
 
-    let sortField = "";
-    let sortOrder: "asc" | "desc" | undefined;
+    let sortQuery = "";
 
     switch (selectedValue) {
       case "title":
-        sortField = "name";
-        sortOrder = "asc";
+        sortQuery = "name-asc";
         break;
       case "price":
-        sortField = "price";
-        sortOrder = "asc";
+        sortQuery = "price-asc";
         break;
-
       default:
         return;
     }
@@ -34,8 +30,7 @@ const SortProducts: React.FC = () => {
     if (allProducts.length > 0) {
       dispatch(
         productFilter({
-          sort: sortOrder,
-          SortFeild: sortField,
+          sort: sortQuery,
         })
       );
     }

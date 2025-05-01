@@ -82,7 +82,7 @@ const OrderPlacementForm: React.FC = () => {
       return;
     }
 
-    dispatch(orderPlace());
+    dispatch(orderPlace({ paymentType, addressId }));
   };
 
   return (

@@ -8,6 +8,7 @@ export interface ProductProps {
   imageUrl: string;
   discount?: number;
   rating?: number;
+  wishlistItemId?: string;
 }
 
 export interface StateProps {
@@ -20,14 +21,12 @@ export interface Product {
   product: ProductProps;
 }
 
-
-
-
 export interface ButtonProps {
   label: string;
   onClick?: () => void;
   className: string;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 export interface ProductState {
