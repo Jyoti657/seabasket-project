@@ -6,7 +6,7 @@ const wishlistApi = "/wishlist";
 
 export const wishlistadd = createAsyncThunk(
   "products/wishlistadd",
-  async (id: string, { rejectWithValue, getState }) => {
+  async (id: number, { rejectWithValue, getState }) => {
     try {
       const state: any = getState();
       const token = state.auth.token;
@@ -88,51 +88,48 @@ const favoritSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(wishlistadd.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(wishlistadd.fulfilled, (state, action) => {
-        state.isLoading = false;
-
-        const exists = state.favoriteProducts.find(
-          (item) => item.id === action.payload.id
-        );
-
-        if (!exists) {
-          state.favoriteProducts.push(action.payload);
-        }
-      })
-      .addCase(wishlistadd.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-        console.error("Failed to add to wishlist:", action.payload);
-      })
       .addCase(getWhislist.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
       })
       .addCase(getWhislist.fulfilled, (state, action) => {
+        const uniqueItems = action.payload.wishlistItems
+          .filter(
+            (item: any, index: number, self: any[]) =>
+              index === self.findIndex((t) => t.product.id === item.product.id)
+          )
+          .map((item: any) => ({
+            ...item.product,
+            wishlistItemId: item.id,
+          }));
+        state.favoriteProducts = uniqueItems;
         state.isLoading = false;
-        console.log("this product", action.payload);
-        state.favoriteProducts = action.payload.wishlistItems;
+        state.error = null;
       })
       .addCase(getWhislist.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+      .addCase(wishlistadd.fulfilled, (state, action) => {
+        const item = {
+          ...action.payload.product,
+          wishlistItemId: action.payload.id,
+        };
+        const exist = state.favoriteProducts.some(
+          (p) => p.wishlistItemId === item.wishlistItemId
+        );
+        if (!exist) state.favoriteProducts.push(item);
       })
       .addCase(deleteWishlist.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(deleteWishlist.fulfilled, (state, action) => {
-        state.isLoading = false;
-        const deletedItemId = action.payload.id;
+        const deletedId = action.payload.productId;
         state.favoriteProducts = state.favoriteProducts.filter(
-          (item) => item.id !== deletedItemId
+          (p) => p.wishlistItemId?.toString !== deletedId
         );
+        state.isLoading = false;
       })
-
       .addCase(deleteWishlist.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;

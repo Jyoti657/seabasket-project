@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-// import CashForm from "../payment/CashForm";
-// import CreditCardForm from "../payment/CreditCardForm";
-// import UPIForm from "../payment/UPIForm";
+import CashForm from "../../Payment/CashForm";
+import CreditCardForm from "../../Payment/CreditCardForm";
+import UPIForm from "../../Payment/UPIForm";
 
 const PaymentForm: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState("upi");
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-md p-6 border border-gray-200 mt-8 space-y-6">
+    <div className="w-full max-w-md mx-auto bg-soft_mint rounded-xl shadow-md p-6 border border-gray-200 mt-8 space-y-6">
       <h2 className="text-xl font-semibold text-gray-800">
         Select Payment Method
       </h2>
@@ -27,7 +27,7 @@ const PaymentForm: React.FC = () => {
             UPI
           </label>
         </div>
-        {/* {paymentMethod === "upi" && <UPIForm />} */}
+        {paymentMethod === "upi" && <UPIForm />}
 
         <div className="flex items-center gap-3">
           <input
@@ -43,7 +43,7 @@ const PaymentForm: React.FC = () => {
             Credit/Debit Card
           </label>
         </div>
-        {/* {paymentMethod === "card" && <CreditCardForm />} */}
+        {paymentMethod === "card" && <CreditCardForm />}
         <div className="flex items-center gap-3">
           <input
             type="radio"
@@ -58,7 +58,7 @@ const PaymentForm: React.FC = () => {
             Cash
           </label>
         </div>
-        {/* {paymentMethod === "cash" && <CashForm />} */}
+        {paymentMethod === "cash" && <CashForm />}
       </div>
     </div>
   );

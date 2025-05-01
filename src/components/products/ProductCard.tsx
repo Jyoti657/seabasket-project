@@ -4,17 +4,20 @@ import FavoriteButton from "../header/FavoriteButton";
 import Button from "../ui/Button";
 import { currencyFormatter } from "../../util/formatting";
 
-interface ProductsProps {
+interface ProductCardProps {
   product: ProductProps;
   handleAddToCart: (product: ProductProps) => void;
   handleProductClick: (id: number) => void;
+  onFavoriteSuccess:()=>void;
 }
 
-const ProductCards: React.FC<ProductsProps> = ({
+const ProductCards: React.FC<ProductCardProps> = ({
   product,
   handleAddToCart,
   handleProductClick,
+  onFavoriteSuccess,
 }) => {
+
   return (
     <div className="border p-4 rounded shadow hover:shadow-lg transition flex flex-col justify-between h-full bg-soft_mint">
       <div className="flex-grow">
@@ -25,7 +28,6 @@ const ProductCards: React.FC<ProductsProps> = ({
           onClick={() => handleProductClick(product.id)}
         />
         <h2 className="text-lg font-semibold">{product.name}</h2>
-        {/* <p className="text-gray-500">{product.category}</p> */}
         <p className="text-gray-600">
           {currencyFormatter.format(product.price)}
         </p>
@@ -41,7 +43,7 @@ const ProductCards: React.FC<ProductsProps> = ({
           className="text-xl cursor-pointer"
           onClick={() => handleAddToCart(product)}
         />
-        <FavoriteButton product={product} />
+        <FavoriteButton product={product}  onsuccess={onFavoriteSuccess}/>
       </div>
     </div>
   );

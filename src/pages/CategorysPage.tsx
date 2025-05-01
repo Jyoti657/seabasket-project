@@ -5,6 +5,7 @@ import { fetchCartAdd } from "../store/Slice/cartSlice";
 import { productFilter } from "../store/Slice/productSlice";
 import { useEffect } from "react";
 import Button from "../components/ui/Button";
+import { ProductProps } from "../types";
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
@@ -30,8 +31,8 @@ const CategoryPage: React.FC = () => {
   const handleProductClick = (id: number) => {
     navigae(`/products/${id}`);
   };
-  const handleAddToCart = (product: any) => {
-    dispatch(fetchCartAdd(product));
+  const handleAddToCart = (product:ProductProps) => {
+    dispatch(fetchCartAdd(product.id));
   };
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-12 py-6 bg-gray-50">
