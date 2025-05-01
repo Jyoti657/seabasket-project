@@ -80,6 +80,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { useState } from "react";
 import { orderPlace } from "../../store/Slice/orderSlice";
 import AddressForm from "../address/AddressForm";
+import CheckoutButton from "./CheckoutButton";
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
@@ -94,23 +95,23 @@ const Checkout: React.FC = () => {
   const [localError, setLocalError] = useState<string | null>(null);
   const orderLoading = useSelector((state: RootState) => state.order.loading);
 
-  const handleplaceorder = () => {
-    if (!addressId || !paymentType) {
-      setLocalError("Please select address and payment method.");
-      return;
-    }
-    setLocalError(null);
+  // const handleplaceorder = () => {
+  //   if (!addressId || !paymentType) {
+  //     setLocalError("Please select address and payment method.");
+  //     return;
+  //   }
+  //   setLocalError(null);
 
-    dispatch(orderPlace({ addressId, paymentType }))
-      .unwrap()
-      .then((res) => {
-        alert("Order placed successfully!");
-        navigate("/order"); // ✅ navigate only if success
-      })
-      .catch((err) => {
-        alert("Order failed: " + err);
-      });
-  };
+  //   dispatch(orderPlace({ addressId, paymentType }))
+  //     .unwrap()
+  //     .then((res) => {
+  //       alert("Order placed successfully!");
+  //       navigate("/order"); // ✅ navigate only if success
+  //     })
+  //     .catch((err) => {
+  //       alert("Order failed: " + err);
+  //     });
+  // };
 
   return (
     <div className="w-full max-w-6xl mx-auto my-10 px-4">
@@ -133,19 +134,20 @@ const Checkout: React.FC = () => {
               <div className="mt-4">
                 <AddressForm onClose={() => setShowAddAddress(false)} />
               </div>
-            )}
+            )}  
           </div>
           {localError && (
             <p className="text-red-600 text-sm mt-2 font-medium">
               {localError}
             </p>
           )}
-          <Button
+          {/* <Button
             label={orderLoading ? "Placing Order..." : "Confirm Order"}
             className="w-full bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl mt-6"
             onClick={handleplaceorder}
             disabled={orderLoading}
-          />
+          /> */}
+          <CheckoutButton/>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ import { fetchCart } from "../store/Slice/cartSlice";
 import CartTotal from "../components/cart/CartToatl";
 
 const Cart: React.FC = () => {
-  const { productData, loading, error } = useSelector(
+  const { productData, error } = useSelector(
     (state: RootState) => state.cart
   );
 
