@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { AppDispatch } from "../../store/store";
 import { resetPassword } from "../../store/Slice/authSlice";
 import { useForm } from "react-hook-form";
@@ -21,6 +21,11 @@ const ResetPassword: React.FC = () => {
   });
   const onSubmit = async (data: resetPasswordSchemaType) => {
     try {
+      if (!token) {
+        console.error("Token is missing in the url");
+        return;
+      }
+
       const resultAction = await dispatch(
         resetPassword({ token: token || "", password: data.password })
       );

@@ -1,12 +1,12 @@
-import forgetPasswordSchema,{ ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
+import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
+import forgetPasswordSchema from "../../schema/forgetPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { forgotPassword } from "../../store/Slice/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
 import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 const ForgotPassword: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -17,23 +17,17 @@ const ForgotPassword: React.FC = () => {
   } = useForm<ForgetPasswordSchemaType>({
     resolver: zodResolver(forgetPasswordSchema),
   });
-  const { reset} = useSelector((state: RootState) => state.auth);
-
-  useEffect(()=>{
-    useEffect(() => {
-      const token = reset;
-      if (token) {
-        navigate(`reset-password/${token}`);
-      }
-    }, [reset]);
-    
-    
-  },[reset  ])
   const onSubmit = async (data: ForgetPasswordSchemaType) => {
     try {
       const resultAction = await dispatch(forgotPassword(data));
       if (forgotPassword.fulfilled.match(resultAction)) {
         console.log("Password reset link sent successfully");
+        const token = resultAction.payload?.token;
+        if (token) {
+          navigate(`/reset-password/${token}`);
+        } else {
+          console.error("Token not found in the response");
+        }
       } else {
         console.error("Failed to send password reset link");
       }
@@ -74,6 +68,7 @@ const ForgotPassword: React.FC = () => {
               </p>
             )}
           </div>
+
           <Button
             label="Send Reset Link"
             type="submit"
