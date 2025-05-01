@@ -39,7 +39,6 @@ export const fetchAddress = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Fetched address data:", response.data);
 
       return response.data;
     } catch (error: any) {

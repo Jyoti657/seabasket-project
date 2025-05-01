@@ -1,11 +1,17 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
 import { currencyFormatter } from "../../util/formatting";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { getUserOrder } from "../../store/Slice/orderSlice";
 
 const OrderList: React.FC = () => {
   const naviagate = useNavigate();
-  const orders = useSelector((state: RootState) => state.order.orders);
+   const  {orders,loading,error}=  useSelector((state:RootState)=>state.order)
+   const dispatch= useDispatch<AppDispatch>()
+   useEffect(()=>{
+    dispatch(getUserOrder())
+   },[dispatch])
 
   const handleOrderDetails = (id: number) => {
     naviagate(`/order/${id}`);
@@ -14,7 +20,8 @@ const OrderList: React.FC = () => {
   return (
     <div className="p-4 max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">My Orders</h2>
-
+      {loading && <p>Loading orders...</p>}
+      {error && <p className="text-red-600">Error: {error}</p>}
       <div className="space-y-4">
         {orders.map((order) => (
           <div

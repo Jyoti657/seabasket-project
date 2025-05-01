@@ -21,7 +21,6 @@ const Cart: React.FC = () => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (error)
     return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
   return (
@@ -46,17 +45,13 @@ const Cart: React.FC = () => {
             <div className="pt-4 border-t flex justify-end">
               <RestartCart />
             </div>
-           
-           
-
-         
           </div>
           <div className="w-full lg:w-1/4 bg-white shadow-md rounded-lg p-6 h-fit">
             <h3 className="text-xl font-semibold text-gray-800 border-b pb-4 mb-4">
               Cart Summary
             </h3>
             <CartTotal />
-               <NavLink to="/checkout">
+            <NavLink to="/checkout">
               <Button
                 label="Checkout"
                 className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"

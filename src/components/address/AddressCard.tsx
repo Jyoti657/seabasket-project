@@ -10,7 +10,7 @@ import UpdateAddressForm from "./UpdateAddress";
 const AddressCard: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const shipping = useSelector((state: RootState) => state.address.list);
-  console.log(shipping);
+   const selectedAddress= useSelector((state:RootState)=>state.order.selectedAddressId)
   const isLoading = useSelector((state: RootState) => state.address.isLoading);
   const [editingAddress, setEditingAddress] = useState<addressForm | null>(
     null
@@ -38,7 +38,9 @@ const AddressCard: React.FC = () => {
             shipping.map((address, index) => (
               <div
                 key={index}
-                className="relative border bg-teal-800 border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-all"
+                className={`p-4 border rounded-md mb-2 cursor-pointer ${
+                  selectedAddress === address.id ? "border-green-500 bg-green-50" : ""
+                }`}
               >
                 <div className="absolute top-3 right-3 flex space-x-2">
                   <Button
