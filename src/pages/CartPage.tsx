@@ -10,9 +10,7 @@ import { fetchCart } from "../store/Slice/cartSlice";
 import CartTotal from "../components/cart/CartToatl";
 
 const Cart: React.FC = () => {
-  const { productData, error } = useSelector(
-    (state: RootState) => state.cart
-  );
+  const { productData } = useSelector((state: RootState) => state.cart);
 
   const [isModalOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -21,8 +19,6 @@ const Cart: React.FC = () => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  if (error)
-    return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 flex flex-col lg:flex-row gap-6 justify-center">
       {productData && productData.length > 0 ? (

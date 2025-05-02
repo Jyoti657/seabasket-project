@@ -1,16 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import CartTotal from "../cart/CartToatl";
 import Button from "../ui/Button";
 import AddressCard from "../address/AddressCard";
 import PaymentForm from "./PaymentForm";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
 import { useState } from "react";
 import AddressForm from "../address/AddressForm";
 import CheckoutButton from "./CheckoutButton";
 
 const Checkout: React.FC = () => {
-  const navigate = useNavigate();
   const [showAddAddress, setShowAddAddress] = useState(false);
 
   return (

@@ -1,4 +1,4 @@
-import OrderList from "../components/order.tsx/OrderList";
+import OrderList from "../components/order/OrderList";
 
 const Order: React.FC = () => {
   return (

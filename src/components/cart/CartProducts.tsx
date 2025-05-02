@@ -8,21 +8,20 @@ import { fetchCart, fetchCartAdd } from "../../store/Slice/cartSlice";
 
 interface CartProductProps {
   item: ProductProps;
-  images?: string[];
 }
 
 const CartProducts: React.FC<CartProductProps> = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const updatedItem = useSelector((state: RootState) =>
-    state.cart.productData.find((product) => product.id === item.id)
-  );
+  const cartItems = useSelector((state: RootState) => state.cart.productData);
 
-  const handleIncrease = async () => {
+  const updatedItem = cartItems.find((cartItem) => cartItem.id === item.id);
+
+  const handleIncrease = () => {
     if (item.id) {
-      dispatch(fetchCartAdd(item.id));
-      await dispatch(fetchCart());
-      console.log("The increase item", fetchCartAdd(item.id));
+      dispatch(fetchCartAdd(item.id)).then(() => {
+        dispatch(fetchCart()); // optional if backend doesn't return updated cart immediately
+      });
     }
   };
 
@@ -60,7 +59,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
 
         <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
           <button
-            disabled={updatedItem?.quantity === 1}
+            disabled={(updatedItem?.quantity ?? item.quantity) === 1}
             className="p-2 border rounded-md hover:bg-soft_mint"
           >
             <LuMinus />

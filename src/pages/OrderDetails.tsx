@@ -3,7 +3,7 @@ import { order } from "../types";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { currencyFormatter } from "../util/formatting";
-import OrderSteeper from "../components/order.tsx/OrderSteeper";
+import OrderSteeper from "../components/order/OrderSteeper";
 
 const OrderDetails: React.FC = () => {
   const { id } = useParams();
