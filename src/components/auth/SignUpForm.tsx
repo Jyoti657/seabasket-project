@@ -22,11 +22,8 @@ const SignUpForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<signUpSchemaType> = async (data) => {
     try {
-      const resultAction = await dispatch(registerUser(data));
-      if (registerUser.fulfilled.match(resultAction)) {
-        navigate("/");
-      } else {
-      }
+      await dispatch(registerUser(data));
+      navigate("/");
     } catch (err) {}
   };
 

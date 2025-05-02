@@ -55,7 +55,7 @@ export const forgotPassword = createAsyncThunk(
         },
       });
       console.log(response);
-      return response.data;
+      return response.data.token;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }

@@ -9,9 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import login from "../../assets/login .png";
+import { useState } from "react";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const authError = useSelector((state: RootState) => state.auth.authError);
   const otp = useSelector((state: RootState) => state.auth.otpVerified);
@@ -24,12 +26,11 @@ const LoginForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<logInSchemaType> = async (data) => {
     try {
-      const resultAction = await dispatch(loginUser(data));
-      if (loginUser.fulfilled.match(resultAction)) {
-        navigate("/otp");
-      }
+      await dispatch(loginUser(data));
+      setIsSubmitted(true);
+      navigate("/otp");
     } catch (err) {
-     console.log(err) 
+      console.log(err);
     }
   };
 

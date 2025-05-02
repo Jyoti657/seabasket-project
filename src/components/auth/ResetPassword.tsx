@@ -21,14 +21,10 @@ const ResetPassword: React.FC = () => {
   });
   const onSubmit = async (data: resetPasswordSchemaType) => {
     try {
-      const resultAction = await dispatch(
+      await dispatch(
         resetPassword({ token: token || "", password: data.password })
       );
-      if (resetPassword.fulfilled.match(resultAction)) {
-        navigate("/login");
-      } else {
-        console.error("Failed to   resetPassword Try again");
-      }
+      navigate("/login");
     } catch (error) {
       console.error("Error in the password valiadtion", error);
     }

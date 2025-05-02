@@ -23,14 +23,9 @@ const OTPVerification: React.FC = () => {
 
   const onSubmit: SubmitHandler<OtpSchemaType> = async (data) => {
     try {
-      const resultAction = await dispatch(verifyOtp(data));
-      if (verifyOtp.fulfilled.match(resultAction)) {
-        console.log("OTP verified successfully");
-        reset();
-        navigate("/");
-      } else {
-        console.error("OTP verification failed");
-      }
+      await dispatch(verifyOtp(data));
+      reset();
+      navigate("/");
     } catch (err) {
       console.error("Error during OTP verification:", err);
     }
