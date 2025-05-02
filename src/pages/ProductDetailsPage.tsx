@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { ProductProps } from "../types";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { fetchCartAdd } from "../store/Slice/cartSlice";
 import { currencyFormatter } from "../util/formatting";
 import Button from "../components/ui/Button";
@@ -48,7 +48,7 @@ const ProductDetails: React.FC = () => {
           />
         </div>
 
-        <div className="flex flex-col justify-between space-y-4">
+        <div className="flex flex-col justify-between space-y-6">
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
             {productsDetails.name}
           </h1>
@@ -67,14 +67,17 @@ const ProductDetails: React.FC = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Button
-              label="Buy Now"
-              className="w-full sm:w-auto bg-seabasket_green text-white px-6 py-2 rounded-md hover:bg-teal-950 transition"
-              onClick={() => handleProductClick(productsDetails.id)}
-            />
+            <NavLink to="/checkout">
+              <Button
+                label="Buy Now"
+                className="w-full sm:w-auto bg-seabasket_green text-white px-6 py-2 rounded-md hover:bg-teal-950 transition duration-200 ease-in-out"
+                onClick={() => handleProductClick(productsDetails.id)}
+              />
+            </NavLink>
+
             <Button
               label="Add to Cart"
-              className="w-full sm:w-auto bg-seabasket_green text-white px-6 py-2 rounded-md hover:bg-teal-950 transition"
+              className="w-full sm:w-auto bg-seabasket_green text-white px-6 py-2 rounded-md hover:bg-teal-950 transition duration-200 ease-in-out"
               onClick={() => handleAddToCart(productsDetails)}
             />
           </div>

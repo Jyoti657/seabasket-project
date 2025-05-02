@@ -104,7 +104,6 @@ export const cartSlice = createSlice({
         if (newProduct && newProduct.product) {
           const productApi = {
             ...newProduct.product,
-
             quantity: newProduct.quantity,
             cartID: newProduct.id,
           };
