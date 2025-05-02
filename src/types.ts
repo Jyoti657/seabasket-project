@@ -84,18 +84,57 @@ export interface addressForm {
   country: string;
 }
 
+// export interface order {
+//   quantity: number;
+//   id: number;
+//   name: string;
+//   price: number;
+//   category: string;
+//   description: string;
+//   imageUrl: string;
+//   discount?: number;
+//   rating?: number;
+  
+  
+// }
 export interface order {
   id: number;
-  date: string;
-  productName: string;
-  image: string;
-  price: number;
-  status:
-    | "Delivered"
-    | "Shipped"
-    | "Processing"
-    | "Cancelled"
-    | "Returned"
-    | "orderConfirmed"
-    | "out for Delivery";
+  userId: number;
+  totalAmount: number;
+  paymentType: string;
+  paymentStatus: string;
+  orderStatus: string;
+  createdAt: string;
+  updatedAt: string;
+  orderItems: {
+    id: number;
+    orderId: number;
+    productId: number;
+    quantity: number;
+    price: number;
+    createdAt: string;
+    updatedAt: string;
+    product: {
+      id: number;
+      name: string;
+      description: string;
+      imageUrl: string;
+      price: number;
+      discount: number;
+      userId: number;
+      categoryId: number;
+      createdAt: string;
+      updatedAt: string;
+    };
+  }[];
+  address: {
+    id: number;
+    userId: number;
+    addressLine1: string;
+    addressLine2: string;
+    city: string;
+    state: string;
+    country: string;
+    postalCode: string;
+  };
 }

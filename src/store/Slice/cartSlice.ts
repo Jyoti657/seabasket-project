@@ -110,7 +110,7 @@ export const cartSlice = createSlice({
           };
 
           const existingIndex = state.productData.findIndex(
-            (p) => p.id === newProduct.id
+            (p) => p.id === newProduct.product.id
           );
 
           if (existingIndex !== -1) {

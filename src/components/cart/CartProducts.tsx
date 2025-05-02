@@ -1,9 +1,9 @@
 import { LuMinus } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
 import { currencyFormatter } from "../../util/formatting";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ProductProps } from "../../types";
-import { AppDispatch, RootState } from "../../store/store";
+import { AppDispatch } from "../../store/store";
 import {
   fetchCart,
   fetchCartAdd,
@@ -16,8 +16,6 @@ interface CartProductProps {
 
 const CartProducts: React.FC<CartProductProps> = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
-
-  // const cartItems = useSelector((state: RootState) => state.cart.productData);
 
   const handleIncrease = () => {
     if (item.id) {
