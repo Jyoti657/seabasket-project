@@ -16,8 +16,12 @@ const Cart: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    if(!productData){
+      return console.log("cart is empty")
+    }
     dispatch(fetchCart());
   }, [dispatch]);
+
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 flex flex-col lg:flex-row gap-6 justify-center">

@@ -3,6 +3,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { orderPlace } from "../../store/Slice/orderSlice";
 import Button from "../ui/Button";
 import { NavLink } from "react-router-dom";
+import { resetCart } from "../../store/Slice/cartSlice";
 
 const CheckoutButton = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,6 +15,7 @@ const CheckoutButton = () => {
 
   const handlePlaceOrder = () => {
     dispatch(orderPlace({ paymentType, addressId }));
+    dispatch(resetCart())
   };
 
   return (

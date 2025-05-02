@@ -4,49 +4,18 @@ import { API } from "../../Api/axiosInstance";
 
 // all the cart
 const cartApi = "/cart";
-// export const fetchCart = createAsyncThunk(
-//   "cart/fetchCart",
-//   async (_, { rejectWithValue, getState }) => {
-//     try {
-//       const state: any = getState();
-//       const token = state.auth.token;
-//       const response = await API.get(`${cartApi}/get-cart`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
-//       return response.data;
-//     } catch (error: any) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async (_, { rejectWithValue, getState }) => {
     try {
       const state: any = getState();
       const token = state.auth.token;
-
-      const cartRes = await API.get(`${cartApi}/get-cart`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const response = await API.get(`${cartApi}/get-cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-
-      const cartItems = cartRes.data.cart;
-
-      const productPromises = cartItems.map((item: any) =>
-        API.get(`/product/get-product/${item.productId}`)
-      );
-
-      const productResponses = await Promise.all(productPromises);
-
-      const detailedCartItems = cartItems.map((item: any, index: number) => ({
-        ...productResponses[index].data.product,
-        quantity: item.quantity,
-        cartId: item.id,
-      }));
-
-      return { cart: detailedCartItems };
+      return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -98,6 +67,12 @@ export const cartSlice = createSlice({
     resetCart: (state) => {
       state.productData = [];
     },
+    removeItem: (state, action: { payload: number }) => {
+      const removeitemId = action.payload;
+      state.productData = state.productData.filter(
+        (item) => item.id !== Number(removeitemId)
+      );
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -107,7 +82,11 @@ export const cartSlice = createSlice({
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.productData = action.payload.cart;
+        state.productData = action.payload.cart.map((item: any) => ({
+          ...item.product,
+          quantity: item.quantity,
+          cartID: item.id,
+        }));
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.loading = false;
@@ -120,15 +99,25 @@ export const cartSlice = createSlice({
 
       .addCase(fetchCartAdd.fulfilled, (state, action) => {
         state.loading = false;
-        const newProduct = action.payload;
-        const existingIndex = state.productData.findIndex(
-          (p) => p.id === newProduct.id
-        );
+        const newProduct = action.payload.cartItem;
 
-        if (existingIndex !== -1) {
-          state.productData[existingIndex].quantity = newProduct.quantity;
-        } else {
-          state.productData.push(newProduct);
+        if (newProduct && newProduct.product) {
+          const productApi = {
+            ...newProduct.product,
+
+            quantity: newProduct.quantity,
+            cartID: newProduct.id,
+          };
+
+          const existingIndex = state.productData.findIndex(
+            (p) => p.id === newProduct.id
+          );
+
+          if (existingIndex !== -1) {
+            state.productData[existingIndex].quantity = newProduct.quantity;
+          } else {
+            state.productData.push(productApi);
+          }
         }
       })
 
@@ -145,6 +134,6 @@ export const selectCartTotal = (state: { cart: CartState }) =>
     0
   );
 
-export const { resetCart } = cartSlice.actions;
+export const { resetCart, removeItem } = cartSlice.actions;
 
 export default cartSlice.reducer;
