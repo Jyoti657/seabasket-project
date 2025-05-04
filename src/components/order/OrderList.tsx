@@ -27,12 +27,11 @@ const OrderList: React.FC = () => {
               key={order.id}
               className="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition space-y-4"
             >
-              <h3 className="text-lg font-semibold text-gray-800">
-                Order #{order.id}
-              </h3>
+              {/* {order.orderItems && order.orderItems.length > 0 ? (
+                order.orderItems.map((item: any) => ( */}
+                {Array.isArray(order.orderItems) && order.orderItems.length > 0 ? (
+  order.orderItems.map((item: any) => (
 
-              {order.orderItems && order.orderItems.length > 0 ? (
-                order.orderItems.map((item: any) => (
                   <div
                     key={item.id}
                     onClick={() => handleOrderDetails(order.id)}

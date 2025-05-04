@@ -16,12 +16,7 @@ const ProfileForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<ProfileSchemaType> = async (data) => {
     try {
-      const resultAction = await dispatch(updateProfile(data));
-
-      if (updateProfile.fulfilled.match(resultAction)) {
-        console.log("Profile updated successfully");
-        console.log(data);
-      }
+      await dispatch(updateProfile(data));
     } catch (err) {
       console.error("Error updating profile:", err);
     }

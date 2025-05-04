@@ -1,18 +1,35 @@
 import { ShoppingCart, Favorite } from "@mui/icons-material";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 import UserDropdown from "./UserDropdown";
-import { RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
+import { useEffect } from "react";
+import { fetchCart } from "../../store/Slice/cartSlice";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const { productData } = useSelector((state: RootState) => state.cart);
-  // const token =useSelector((state:RootState)=> state.auth.token)
+  const token = useSelector((state: RootState) => state.auth.token);
+
+useEffect(() => {
+  if (token) {
+    dispatch(fetchCart());
+  }
+}, [token]);
   const handleLogo = () => {
     navigate("/");
   };
+  // useEffect(() => {
+  //   dispatch(fetchCart());
+  // }, [productData]);
+  // useEffect(() => {
+  //   if (!productData.length) {
+  //     dispatch(fetchCart());
+  //   }
+  // }, [productData]);
 
   return (
     <header className="bg-seabasket_green text-white sticky top-0 left-0 w-full z-50 shadow-md">

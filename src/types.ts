@@ -103,5 +103,10 @@ export interface OrderItem {
 
 export interface order {
   id: number;
+  price: number;
+  date: string;
+  status: string;
+  image: string;
+  productName: string;
   orderItems: OrderItem[];
 }

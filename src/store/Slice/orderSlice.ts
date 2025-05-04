@@ -44,6 +44,28 @@ export const getUserOrder = createAsyncThunk<order[]>(
     }
   }
 );
+export const orderStatus = createAsyncThunk(
+  "order/getOrderStatus",
+  async (orderId: string, { rejectWithValue, getState }) => {
+    try {
+      const state: any = getState();
+      const token = state.auth.token;
+
+      const response = await API.get(
+        `${orderAPI}/get-order-status/${orderId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return { orderId, status: response.data.status };
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 // Slice State
 interface OrderState {
@@ -101,6 +123,27 @@ const orderSlice = createSlice({
         state.orders = action.payload;
       })
       .addCase(getUserOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(orderStatus.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(orderStatus.fulfilled, (state, action) => {
+        state.loading = false; // ✅ Add this line
+        const { orderId, status } = action.payload;
+
+        const orderToUpdate = state.orders.find(
+          (order) => order.id.toString() === orderId.toString()
+        );
+
+        if (orderToUpdate) {
+          orderToUpdate.status = status; // ✅ Assuming status is a direct property
+        }
+      })
+
+      .addCase(orderStatus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
