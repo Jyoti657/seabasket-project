@@ -18,54 +18,57 @@ const OrderList: React.FC = () => {
   };
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">My Orders</h2>
+    <div className="p-4 sm:p-6 max-w-4xl mx-auto">
+      <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-800">
+        My Orders
+      </h2>
+
       <div className="space-y-4">
         {orders && orders.length > 0 ? (
           orders.map((order) => (
             <div
               key={order.id}
-              className="p-4 border rounded-lg bg-white shadow-sm hover:shadow-md transition space-y-4"
+              className="p-4 sm:p-5 border rounded-xl bg-soft_mint shadow-sm hover:shadow-md transition"
             >
-              {/* {order.orderItems && order.orderItems.length > 0 ? (
-                order.orderItems.map((item: any) => ( */}
-                {Array.isArray(order.orderItems) && order.orderItems.length > 0 ? (
-  order.orderItems.map((item: any) => (
-
+              {Array.isArray(order.orderItems) &&
+              order.orderItems.length > 0 ? (
+                order.orderItems.map((item: any) => (
                   <div
                     key={item.id}
                     onClick={() => handleOrderDetails(order.id)}
-                    className="flex items-center gap-4 cursor-pointer"
+                    className="flex flex-col sm:flex-row sm:items-center gap-4 cursor-pointer border-b last:border-none py-3"
                   >
                     <img
                       src={item.product.imageUrl}
                       alt={item.product.name}
-                      className="w-20 h-20 object-cover rounded-md border"
+                      className="w-full sm:w-24 h-24 object-cover rounded-lg border"
                     />
                     <div className="flex-1">
-                      <p className="text-lg font-medium text-gray-900">
+                      <p className="text-lg font-semibold text-gray-900 truncate">
                         {item.product.name}
                       </p>
                       <p className="text-sm text-gray-600">
-                        {currencyFormatter.format(item.product.price)} &times;{" "}
+                        {currencyFormatter.format(item.product.price)} ×{" "}
                         {item.quantity}
                       </p>
                       <p className="text-sm text-gray-500">
                         Discount: {item.product.discount}%
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-500 line-clamp-2">
                         {item.product.description}
                       </p>
                     </div>
                   </div>
                 ))
               ) : (
-                <p>No products in this order</p>
+                <p className="text-sm text-gray-500 italic">
+                  No products in this order.
+                </p>
               )}
             </div>
           ))
         ) : (
-          <p>No order found</p>
+          <p className="text-center text-gray-500">No orders found.</p>
         )}
       </div>
     </div>
