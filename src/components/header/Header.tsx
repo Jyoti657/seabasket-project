@@ -10,6 +10,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { productData } = useSelector((state: RootState) => state.cart);
 
+  
   const handleLogo = () => {
     navigate("/");
   };

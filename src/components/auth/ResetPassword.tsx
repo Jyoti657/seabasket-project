@@ -21,6 +21,7 @@ const ResetPassword: React.FC = () => {
   });
   const onSubmit = async (data: resetPasswordSchemaType) => {
     try {
+
       await dispatch(
         resetPassword({ token: token || "", password: data.password })
       );

@@ -9,6 +9,8 @@ import Button from "../ui/Button";
 import { useNavigate} from "react-router-dom";
 import { useEffect, useState } from "react";
 
+
+        
 const ForgotPassword: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -22,10 +24,13 @@ const ForgotPassword: React.FC = () => {
   } = useForm<ForgetPasswordSchemaType>({
     resolver: zodResolver(forgetPasswordSchema),
   });
+
+    
   const onSubmit = async (data: ForgetPasswordSchemaType) => {
     try {
+
       await dispatch(forgotPassword(data));
-      setIsSubmitted(true);
+      setIsSubmitted(true)
     } catch (error) {
       console.error("Error during password reset:", error);
     }
@@ -68,7 +73,6 @@ const ForgotPassword: React.FC = () => {
               </p>
             )}
           </div>
-
           <Button
             label="Send Reset Link"
             type="submit"

@@ -31,7 +31,9 @@ const CategoryPage: React.FC = () => {
   const handleProductClick = (id: number) => {
     navigae(`/products/${id}`);
   };
+
   const handleAddToCart = (product: ProductProps) => {
+
     dispatch(fetchCartAdd(product.id));
   };
   return (
