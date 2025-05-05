@@ -62,8 +62,9 @@ const ProductDetails: React.FC = () => {
           </p>
 
           <p className="text-gray-500 text-sm">
-            Category:{" "}
-            <span className="capitalize">{productsDetails.category}</span>
+            <span className="capitalize font-semibold text-black">
+              {productsDetails.category}
+            </span>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-4">

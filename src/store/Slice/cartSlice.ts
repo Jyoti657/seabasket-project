@@ -82,6 +82,7 @@ export const cartSlice = createSlice({
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading = false;
+
         state.productData = action.payload.cart.map((item: any) => ({
           ...item.product,
           quantity: item.quantity,

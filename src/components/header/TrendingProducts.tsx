@@ -9,7 +9,7 @@ import { trendingProducts } from "../../store/Slice/productSlice";
 const TrendingProducts: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { allProducts, loading, error } = useSelector(
+  const { allProducts, loading } = useSelector(
     (state: RootState) => state.product
   );
   useEffect(() => {
@@ -20,10 +20,9 @@ const TrendingProducts: React.FC = () => {
     navigate(`products/${id}`);
   };
   if (loading) return <p> Loading the trending products</p>;
-  if (error) return <p>{error}</p>;
   return (
-    <div className="relative mt-4 w-full max-w-screen-2xl mx-auto bg-deep_teal">
-      <h2 className="text-2xl font-bold text-white mb-4 border-l-4 pl-3 text-center border-teal-700 m-8">
+    <div className="relative mt-2 w-full max-w-screen-2xl mx-auto bg-deep_teal">
+      <h2 className="text-2xl font-bold text-white mb-4 border-l-4 pl-3 text-center border-teal-700  mt-5">
         Trending Products
       </h2>
 

@@ -129,7 +129,7 @@ const orderSlice = createSlice({
         state.error = null;
       })
       .addCase(orderStatus.fulfilled, (state, action) => {
-        state.loading = false; // ✅ Add this line
+        state.loading = false;
         const { orderId, status } = action.payload;
 
         const orderToUpdate = state.orders.find(
@@ -137,7 +137,7 @@ const orderSlice = createSlice({
         );
 
         if (orderToUpdate) {
-          orderToUpdate.status = status; // ✅ Assuming status is a direct property
+          orderToUpdate.status = status;
         }
       })
 

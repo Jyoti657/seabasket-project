@@ -21,11 +21,10 @@ const CategoryList: React.FC = () => {
   };
 
   return (
-    <div className="p-5 bg-soft_mint m-10">
-      <h2 className="font-semibold mb-5 text-3xl text-center bg-charcoal text-soft_mint py-2 rounded-md">
-        Shop By the Category
+    <div className="px-4 py-8 sm:px-6 lg:px-12 bg-soft_mint">
+       <h2 className="text-2xl sm:text-3xl font-bold text-center text-soft_mint bg-charcoal rounded-md py-3 mb-8">
+        Shop by Category
       </h2>
-
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-4">
         {rawCategories.map((cat, index) => (
           <div

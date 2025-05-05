@@ -13,7 +13,7 @@ const HeroSection: React.FC = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
           <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
-            Quality Products for {" "}
+            Quality Products for{" "}
             <span className="text-seabasket_green">Every Need</span>
           </h1>
           <p className="text-lg text-gray-700 max-w-xl">
@@ -31,8 +31,8 @@ const HeroSection: React.FC = () => {
           <img
             src={logo1}
             alt="Premium Products"
-            className="rounded-full shadow-2xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto "
-
+            className="rounded-full shadow-2xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto transform transition duration-500 border-solid  focus:border-teal-500
+             hover:scale-105 hover:rotate-1 hover:shadow-3xl animate-float"
           />
         </div>
       </div>

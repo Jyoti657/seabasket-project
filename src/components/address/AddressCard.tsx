@@ -27,8 +27,10 @@ const AddressCard: React.FC = () => {
     return <p className="text-center mt-10 text-gray-600">Loading...</p>;
 
   return (
-    <div className="bg-seabasket_green rounded-2xl shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-700 mb-6">Saved Addresses</h2>
+    <div className="bg-teal-800 rounded-2xl shadow-lg p-6">
+      <h2 className="text-2xl font-bold text-white text-center mb-6">
+        Saved Addresses
+      </h2>
 
       {editingAddress ? (
         <UpdateAddressForm
@@ -46,7 +48,7 @@ const AddressCard: React.FC = () => {
                   key={address.id ?? index}
                   className={`p-4 border rounded-md mb-2 cursor-pointer relative ${
                     selectedAddress === address.id?.toString()
-                      ? "border-green-500 bg-slate-400"
+                      ? "border-teal-400 bg-slate-400"
                       : ""
                   }`}
                   onClick={() =>
@@ -58,14 +60,14 @@ const AddressCard: React.FC = () => {
                     <Button
                       label="Update"
                       onClick={() => setEditingAddress(address)}
-                      className="bg-teal-600 hover:bg-teal-700 text-white text-xs px-3 py-1 rounded-md"
+                      className="bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs px-3 py-1 rounded-md"
                     />
                     <Button
                       label="Delete"
                       onClick={() =>
                         address.id && dispatch(deleteAddress(address.id))
                       }
-                      className="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-md"
+                      className="bg-red-500 hover:bg-red-600 text-white text-xs font-semibold px-3 py-1 rounded-md"
                     />
                   </div>
 
