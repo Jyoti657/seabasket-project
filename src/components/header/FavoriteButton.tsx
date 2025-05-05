@@ -6,23 +6,27 @@ import { ProductProps } from "../../types";
 
 interface FavoriteButtonProps {
   product: ProductProps;
-  onsuccess:()=>void
+  onsuccess: () => void;
 }
-
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ product,onsuccess }) => {
+const FavoriteButton: React.FC<FavoriteButtonProps> = ({
+  product,
+  onsuccess,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const favoriteProducts = useSelector(
     (state: RootState) => state.favorites.favoriteProducts
   );
-  const isFavorited = favoriteProducts.some((fav) => fav.id === product.id);
+
+  const matchedFavorite = favoriteProducts.find((fav) => fav.id === product.id);
+  const isFavorited = !!matchedFavorite;
+
   const handleToggleFavorite = () => {
     dispatch(wishlistadd(product.id));
-    if(onsuccess){
-      onsuccess()
+    if (onsuccess) {
+      onsuccess();
     }
   };
-
   return (
     <button
       className={`text-2xl cursor-pointer transition ${

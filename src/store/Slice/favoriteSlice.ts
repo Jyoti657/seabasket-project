@@ -101,24 +101,26 @@ const favoritSlice = createSlice({
             ...item.product,
             wishlistItemId: item.id,
           }));
+
         state.favoriteProducts = uniqueItems;
         state.isLoading = false;
         state.error = null;
       })
+
       .addCase(getWhislist.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
+
       .addCase(wishlistadd.fulfilled, (state, action) => {
-        const item = {
+        const newFavorite = {
           ...action.payload.product,
           wishlistItemId: action.payload.id,
         };
-        const exist = state.favoriteProducts.some(
-          (p) => p.wishlistItemId === item.wishlistItemId
-        );
-        if (!exist) state.favoriteProducts.push(item);
+
+        state.favoriteProducts.push(newFavorite);
       })
+
       .addCase(deleteWishlist.pending, (state) => {
         state.isLoading = true;
         state.error = null;

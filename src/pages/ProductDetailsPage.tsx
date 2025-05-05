@@ -74,7 +74,6 @@ const ProductDetails: React.FC = () => {
                 onClick={() => handleProductClick(productsDetails.id)}
               />
             </NavLink>
-
             <Button
               label="Add to Cart"
               className="w-full sm:w-auto bg-seabasket_green text-white px-6 py-2 rounded-md hover:bg-teal-950 transition duration-200 ease-in-out"

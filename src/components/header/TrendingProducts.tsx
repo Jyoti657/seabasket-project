@@ -3,7 +3,6 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { AppDispatch, RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
-import Button from "../ui/Button";
 import { useEffect } from "react";
 import { trendingProducts } from "../../store/Slice/productSlice";
 
