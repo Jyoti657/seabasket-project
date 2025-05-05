@@ -26,7 +26,8 @@ export const wishlistadd = createAsyncThunk(
     }
   }
 );
-export const getWhislist = createAsyncThunk(
+
+export const getWishlist = createAsyncThunk(
   "products/getWishlist",
   async (_, { rejectWithValue, getState }) => {
     try {
@@ -45,6 +46,7 @@ export const getWhislist = createAsyncThunk(
     }
   }
 );
+
 export const deleteWishlist = createAsyncThunk(
   "products/deleteWishlist",
   async (wishlistItemId: string, { rejectWithValue, getState }) => {
@@ -78,7 +80,7 @@ const initialState: FavoriteState = {
   error: null,
 };
 
-const favoritSlice = createSlice({
+const favoriteSlice = createSlice({
   name: "favorite",
   initialState,
   reducers: {
@@ -88,10 +90,10 @@ const favoritSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getWhislist.pending, (state) => {
+      .addCase(getWishlist.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getWhislist.fulfilled, (state, action) => {
+      .addCase(getWishlist.fulfilled, (state, action) => {
         const uniqueItems = action.payload.wishlistItems
           .filter(
             (item: any, index: number, self: any[]) =>
@@ -106,21 +108,17 @@ const favoritSlice = createSlice({
         state.isLoading = false;
         state.error = null;
       })
-
-      .addCase(getWhislist.rejected, (state, action) => {
+      .addCase(getWishlist.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       })
-
       .addCase(wishlistadd.fulfilled, (state, action) => {
         const newFavorite = {
           ...action.payload.product,
           wishlistItemId: action.payload.id,
         };
-
         state.favoriteProducts.push(newFavorite);
       })
-
       .addCase(deleteWishlist.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -128,7 +126,7 @@ const favoritSlice = createSlice({
       .addCase(deleteWishlist.fulfilled, (state, action) => {
         const deletedId = action.payload.productId;
         state.favoriteProducts = state.favoriteProducts.filter(
-          (p) => p.wishlistItemId?.toString !== deletedId
+          (p) => p.wishlistItemId?.toString() !== deletedId
         );
         state.isLoading = false;
       })
@@ -139,5 +137,6 @@ const favoritSlice = createSlice({
   },
 });
 
-export const { resetFavorites } = favoritSlice.actions;
-export default favoritSlice.reducer;
+export const { resetFavorites } = favoriteSlice.actions;
+export default favoriteSlice.reducer;
+

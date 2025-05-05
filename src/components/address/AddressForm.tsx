@@ -21,10 +21,8 @@ const AddressForm: React.FC<AddressFormProps> = ({ onClose }) => {
 
   const onSubmit: SubmitHandler<addressSchemaType> = async (data) => {
     try {
-      const resultAction = await dispatch(addAddress(data));
-      if (addAddress.fulfilled.match(resultAction)) {
-        await dispatch(fetchAddress());
-      }
+      await dispatch(addAddress(data));
+      await dispatch(fetchAddress());
     } catch (error) {
       console.error(" address is not add");
     }
@@ -35,9 +33,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onClose }) => {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-xl mx-auto p-6 bg-soft_mint rounded-lg shadow space-y-4"
     >
-      <h2 className="text-xl font-semibold mb-4 text-center ">
-        Enter Your Address
-      </h2>
+      <h2 className="text-xl font-semibold mb-4">Enter Your Address</h2>
 
       <div>
         <label className="block mb-1 font-medium">Address Line 1</label>

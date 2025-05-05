@@ -4,11 +4,7 @@ import { currencyFormatter } from "../../util/formatting";
 import { useDispatch } from "react-redux";
 import { ProductProps } from "../../types";
 import { AppDispatch } from "../../store/store";
-import {
-  fetchCart,
-  addCart,
-  removeItem,
-} from "../../store/Slice/cartSlice";
+import { fetchCart, addCart, removeItem } from "../../store/Slice/cartSlice";
 
         
 

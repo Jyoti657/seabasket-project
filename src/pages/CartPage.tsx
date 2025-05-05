@@ -16,12 +16,11 @@ const Cart: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if(!productData){
-      return console.log("cart is empty")
+    if (!productData) {
+      return console.log("cart is empty");
     }
     dispatch(fetchCart());
   }, [dispatch]);
-
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 flex flex-col lg:flex-row gap-6 justify-center">
@@ -51,6 +50,8 @@ const Cart: React.FC = () => {
               Cart Summary
             </h3>
             <CartTotal />
+          </div>
+          <div>
             <NavLink to="/checkout">
               <Button
                 label="Checkout"

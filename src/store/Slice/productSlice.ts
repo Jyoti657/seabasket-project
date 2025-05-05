@@ -4,6 +4,7 @@ import { API } from "../../Api/axiosInstance";
 
 const productApi = "/product";
 
+// Fetch all products
 export const fetchProducts = createAsyncThunk(
   "products/fetchproducts",
   async (_, { rejectWithValue }) => {
@@ -16,7 +17,7 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-// for the ProductsDetails
+// Fetch product details
 export const fetchproductsDetails = createAsyncThunk(
   "products/fetchproductsDetails",
   async (id: string, { rejectWithValue }) => {
@@ -29,7 +30,7 @@ export const fetchproductsDetails = createAsyncThunk(
   }
 );
 
-// for search products
+// Search products
 export const productSearch = createAsyncThunk(
   "products/productSearch",
   async (query: string, { rejectWithValue }) => {
@@ -43,7 +44,8 @@ export const productSearch = createAsyncThunk(
     }
   }
 );
-// for filter Products
+
+// Filter products
 export const productFilter = createAsyncThunk(
   "products/productFilter",
   async (
@@ -82,6 +84,7 @@ export const productFilter = createAsyncThunk(
   }
 );
 
+// Get categories
 export const productCategories = createAsyncThunk(
   "products/productsCategories",
   async (_, { rejectWithValue }) => {
@@ -93,7 +96,8 @@ export const productCategories = createAsyncThunk(
     }
   }
 );
-// for the trending products
+
+// Trending products
 export const trendingProducts = createAsyncThunk(
   "products/trendingProducts",
   async (_, { rejectWithValue }) => {
@@ -101,22 +105,21 @@ export const trendingProducts = createAsyncThunk(
       const response = await API.get(`${productApi}/trending-products`);
       const reviews = response.data.trendingProducts;
 
-      // Fetch product details for each productId
       const productPromises = reviews.map((review: any) =>
         API.get(`${productApi}/get-product/${review.productId}`)
       );
 
       const productResponses = await Promise.all(productPromises);
-
       const trendingProducts = productResponses.map((res) => res.data.product);
+
       return trendingProducts;
-      return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
 
+// Initial state
 const initialState: ProductState = {
   allProducts: [],
   productsDetails: null,
@@ -127,6 +130,8 @@ const initialState: ProductState = {
   productCategories: [],
   productCategoriesList: [],
 };
+
+// Slice
 const ProductSlice = createSlice({
   name: "products",
   initialState,
@@ -137,6 +142,7 @@ const ProductSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Fetch products
       .addCase(fetchProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -149,7 +155,8 @@ const ProductSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      //productsDetails
+
+      // Product details
       .addCase(fetchproductsDetails.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -162,7 +169,8 @@ const ProductSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      // for the search products
+
+      // Search
       .addCase(productSearch.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -175,6 +183,8 @@ const ProductSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
+
+      // Filter
       .addCase(productFilter.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -187,7 +197,8 @@ const ProductSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      // for the categories
+
+      // Categories
       .addCase(productCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -200,7 +211,8 @@ const ProductSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      // for the trending products
+
+      // Trending
       .addCase(trendingProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
