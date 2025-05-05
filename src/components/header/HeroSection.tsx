@@ -31,7 +31,7 @@ const HeroSection: React.FC = () => {
           <img
             src={logo1}
             alt="Premium Products"
-            className="rounded-2xl shadow-xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto object-contain"
+            className="rounded-full shadow-2xl w-full max-w-sm md:max-w-md lg:max-w-lg h-auto "
 
           />
         </div>

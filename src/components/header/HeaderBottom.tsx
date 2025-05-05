@@ -11,7 +11,7 @@ const HeadBottom: React.FC = () => {
     { name: "Beauty" },
     { name: "Toys" },
     { name: "Two Wheelers" },
-    { name: "SeaBasket Pay" },
+    { name: "SeaBasket Pay", to: "/payment" },
   ];
   return (
     <div className="bg-deep_teal text-soft_mint w-full px-4 py-2 overflow-x-auto whitespace-nowrap scrollbar-hide">

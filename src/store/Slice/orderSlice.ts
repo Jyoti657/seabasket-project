@@ -17,7 +17,6 @@ export const orderPlace = createAsyncThunk<
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("this ordde palce", response.data);
     return response.data.order;
   } catch (error: any) {
     return rejectWithValue(error.message);

@@ -18,8 +18,8 @@ const OrderList: React.FC = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 max-w-4xl mx-auto">
-      <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-800">
+    <div className="p-4 sm:p-6 max-w-8xl mx-auto">
+      <h2 className="text-xl sm:text-2xl font-bold mb-6 text-soft_mint text-center bg-teal-950">
         My Orders
       </h2>
 
@@ -28,10 +28,9 @@ const OrderList: React.FC = () => {
           orders.map((order) => (
             <div
               key={order.id}
-              className="p-4 sm:p-5 border rounded-xl bg-soft_mint shadow-sm hover:shadow-md transition"
+              className="p-4 sm:p-5 border rounded-xl bg-teal-700 hover:bg-teal-950 shadow-sm hover:shadow-md transition "
             >
-              {Array.isArray(order.orderItems) &&
-              order.orderItems.length > 0 ? (
+              {order.orderItems && order.orderItems.length > 0 ? (
                 order.orderItems.map((item: any) => (
                   <div
                     key={item.id}
@@ -44,17 +43,17 @@ const OrderList: React.FC = () => {
                       className="w-full sm:w-24 h-24 object-cover rounded-lg border"
                     />
                     <div className="flex-1">
-                      <p className="text-lg font-semibold text-gray-900 truncate">
+                      <p className="text-lg font-semibold text-white truncate">
                         {item.product.name}
                       </p>
-                      <p className="text-sm text-gray-600">
-                        {currencyFormatter.format(item.product.price)} ×{" "}
-                        {item.quantity}
+                      <p className="text-sm text-white">
+                        {currencyFormatter.format(item.product.price)}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p>{item.quantity}</p>
+                      <p className="text-sm text-white">
                         Discount: {item.product.discount}%
                       </p>
-                      <p className="text-sm text-gray-500 line-clamp-2">
+                      <p className="text-sm text-white line-clamp-2">
                         {item.product.description}
                       </p>
                     </div>

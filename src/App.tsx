@@ -15,7 +15,8 @@ import SignUpPage from "./pages/SignUpPage";
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage";
-import Opt from "./pages/OTP";
+import Opt from "./pages/Otp";
+import PaymentPage from "./pages/PaymentPage";
 import ForgotPasswordPage from "./pages/ForgetPasswordsPage";
 import PrivateRoute from "./pages/PrivateRoute";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
@@ -41,7 +42,8 @@ const App: React.FC = () => {
           <Route element={<PrivateRoute />}>
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/otp" element={<Opt />} />
-            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/payment" element={<PaymentPage/>}/>
             <Route path="/address" element={<AddressPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/order" element={<Order />} />
