@@ -24,7 +24,7 @@ const TrendingProducts: React.FC = () => {
   if (error) return <p>{error}</p>;
   return (
     <div className="relative mt-4 w-full max-w-screen-2xl mx-auto bg-deep_teal">
-      <h2 className="text-2xl font-bold text-white mb-4 border-l-4 pl-3 text-center border-teal-700">
+      <h2 className="text-2xl font-bold text-white mb-4 border-l-4 pl-3 text-center border-teal-700 m-8">
         Trending Products
       </h2>
 
@@ -73,12 +73,6 @@ const TrendingProducts: React.FC = () => {
           No trending products available.
         </p>
       )}
-
-      <Button
-        label="See All Products"
-        className="absolute bottom-4 right-4 bg-seabasket_green text-white px-4 py-2 rounded-3xl text-center shadow-lg hover:bg-teal-800 transition duration-300 border-2 border-soft_mint hover:border-seabasket_green-dark"
-        onClick={() => navigate("/products")}
-      />
     </div>
   );
 };

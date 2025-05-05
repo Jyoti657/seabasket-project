@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 const CategoryList: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
   const rawCategories = useSelector(
     (state: RootState) => state.product.productCategories
   ) as { name: string; imageUrl: string }[];
-
-  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(productCategories());
@@ -21,26 +21,21 @@ const CategoryList: React.FC = () => {
   };
 
   return (
-    <div className="p-5">
-      <h2 className="font-semibold mb-5 text-3xl text-center bg-charcoal text-soft_mint">
-        Categories
+    <div className="p-5 bg-soft_mint m-10">
+      <h2 className="font-semibold mb-5 text-3xl text-center bg-charcoal text-soft_mint py-2 rounded-md">
+        Shop By the Category
       </h2>
-      <div className="">
-        <ul className="flex flex-wrap justify-center gap-4">
-          {rawCategories.map((category, index) => (
-            <li
-              key={index}
-              onClick={() => handleCategoryClick(category.name)}
-              className="p-3 border hover:bg-seabasket_green hover:text-white cursor-pointer text-center transition rounded-l bg-soft_mint shadow-md"
-            >
-              {typeof category.name === "string" ? (
-                <span>{category.name}</span>
-              ) : (
-                <span>Invalid category name</span>
-              )}
-            </li>
-          ))}
-        </ul>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-4">
+        {rawCategories.map((cat, index) => (
+          <div
+            key={index}
+            onClick={() => handleCategoryClick(cat.name)}
+            className="p-4 rounded-lg shadow-md bg-white hover:bg-seabasket_green hover:text-white transition cursor-pointer text-center"
+          >
+            <p className="mt-3 font-medium text-lg">{cat.name}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

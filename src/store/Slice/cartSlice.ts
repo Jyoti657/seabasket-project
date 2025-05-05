@@ -99,24 +99,14 @@ export const cartSlice = createSlice({
 
       .addCase(fetchCartAdd.fulfilled, (state, action) => {
         state.loading = false;
-        const newProduct = action.payload.cartItem;
 
-        if (newProduct && newProduct.product) {
-          const productApi = {
-            ...newProduct.product,
-            quantity: newProduct.quantity,
-            cartID: newProduct.id,
-          };
-
-          const existingIndex = state.productData.findIndex(
-            (p) => p.id === newProduct.product.id
-          );
-
-          if (existingIndex !== -1) {
-            state.productData[existingIndex].quantity = newProduct.quantity;
-          } else {
-            state.productData.push(productApi);
-          }
+        const existingProduct = state.productData.find(
+          (item) => item.id === action.payload.id
+        );
+        if (existingProduct) {
+          existingProduct.quantity += 1;
+        } else {
+          state.productData.push({ ...action.payload, quantity: 1 });
         }
       })
 
