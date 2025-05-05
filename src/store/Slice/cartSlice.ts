@@ -24,8 +24,8 @@ export const fetchCart = createAsyncThunk(
 
 // add cart
 
-export const fetchCartAdd = createAsyncThunk(
-  "cart/fetchCartAdd",
+export const addCart = createAsyncThunk(
+  "cart/addCart",
   async (id: number, { rejectWithValue, getState }) => {
     try {
       const state: any = getState();
@@ -93,12 +93,12 @@ export const cartSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Failed to fetch cart";
       })
-      .addCase(fetchCartAdd.pending, (state) => {
+      .addCase(addCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
 
-      .addCase(fetchCartAdd.fulfilled, (state, action) => {
+      .addCase(addCart.fulfilled, (state, action) => {
         state.loading = false;
 
         const existingProduct = state.productData.find(
@@ -111,7 +111,7 @@ export const cartSlice = createSlice({
         }
       })
 
-      .addCase(fetchCartAdd.rejected, (state, action) => {
+      .addCase(addCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to add product to cart";
       });

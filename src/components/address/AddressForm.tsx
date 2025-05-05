@@ -35,7 +35,9 @@ const AddressForm: React.FC<AddressFormProps> = ({ onClose }) => {
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-xl mx-auto p-6 bg-soft_mint rounded-lg shadow space-y-4"
     >
-      <h2 className="text-xl font-semibold mb-4 text-center ">Enter Your Address</h2>
+      <h2 className="text-xl font-semibold mb-4 text-center ">
+        Enter Your Address
+      </h2>
 
       <div>
         <label className="block mb-1 font-medium">Address Line 1</label>
@@ -114,7 +116,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onClose }) => {
         onClick={onClose}
       >
         Save Address
-      </button>        
+      </button>
     </form>
   );
 };

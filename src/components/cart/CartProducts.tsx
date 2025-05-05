@@ -6,7 +6,7 @@ import { ProductProps } from "../../types";
 import { AppDispatch } from "../../store/store";
 import {
   fetchCart,
-  fetchCartAdd,
+  addCart,
   removeItem,
 } from "../../store/Slice/cartSlice";
 
@@ -21,7 +21,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
 
   const handleIncrease = () => {
     if (item.id) {
-      dispatch(fetchCartAdd(item.id));
+      dispatch(addCart(item.id));
       dispatch(fetchCart());
     }
   };

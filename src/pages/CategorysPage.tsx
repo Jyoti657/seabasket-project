@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { fetchCartAdd } from "../store/Slice/cartSlice";
+import { addCart } from "../store/Slice/cartSlice";
 import { productFilter } from "../store/Slice/productSlice";
 import { useEffect } from "react";
 import Button from "../components/ui/Button";
@@ -33,8 +33,7 @@ const CategoryPage: React.FC = () => {
   };
 
   const handleAddToCart = (product: ProductProps) => {
-
-    dispatch(fetchCartAdd(product.id));
+    dispatch(addCart(product.id));
   };
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-12 py-6 bg-gray-50">

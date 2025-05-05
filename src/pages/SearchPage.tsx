@@ -4,7 +4,7 @@ import ProductCards from "../components/products/ProductCard";
 import { ProductProps } from "../types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
-import { fetchCartAdd } from "../store/Slice/cartSlice";
+import { addCart } from "../store/Slice/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -20,7 +20,7 @@ const SearchPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleAddToCart = (product: ProductProps) => {
-    dispatch(fetchCartAdd(product.id));
+    dispatch(addCart(product.id));
   };
 
   const handleProductClick = (id: number) => {

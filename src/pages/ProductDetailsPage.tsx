@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { ProductProps } from "../types";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { fetchCartAdd } from "../store/Slice/cartSlice";
+import { addCart } from "../store/Slice/cartSlice";
 import { currencyFormatter } from "../util/formatting";
 import Button from "../components/ui/Button";
 import { useEffect } from "react";
@@ -19,7 +19,7 @@ const ProductDetails: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const handleAddToCart = (product: ProductProps) => {
-    dispatch(fetchCartAdd(product.id));
+    dispatch(addCart(product.id));
   };
   const handleProductClick = (id: number) => {
     navigate("/checkout");
