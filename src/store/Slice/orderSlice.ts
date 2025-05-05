@@ -66,7 +66,6 @@ export const orderStatus = createAsyncThunk(
   }
 );
 
-// Slice State
 interface OrderState {
   orders: order[];
   loading: boolean;
