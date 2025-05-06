@@ -45,7 +45,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({
       );
 
       if (updateAddress.fulfilled.match(resultAction)) {
-        console.log("Address updated successfully");
         await dispatch(fetchAddress());
         onClose();
       }
@@ -136,7 +135,7 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({
       <div className="flex justify-between">
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+          className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md"
         >
           Update Address
         </button>

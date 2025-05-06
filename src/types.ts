@@ -26,6 +26,7 @@ export interface ButtonProps {
   onClick?: () => void;
   className: string;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 export interface ProductState {
@@ -65,7 +66,9 @@ export interface Auth {
   } | null;
   isAuthenticated: boolean;
   otpVerified: boolean;
-  verifiedUser: boolean;
+  verifiedUser:{
+    firstname?:string
+  };
   token: null | string;
   authError: null | string;
   isLoading: boolean;
@@ -83,18 +86,31 @@ export interface addressForm {
   country: string;
 }
 
-export interface order {
-  id: number;
-  date: string;
-  productName: string;
-  image: string;
+export interface OrderItem {
   price: number;
-  status:
-    | "Delivered"
-    | "Shipped"
-    | "Processing"
-    | "Cancelled"
-    | "Returned"
-    | "orderConfirmed"
-    | "out for Delivery";
+  id: string;
+  quantity: number;
+  product: {
+    id: string;
+    name: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    discount: number;
+    userId: number;
+    categoryId: number;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
+export interface order {
+  createdAt: string | number | Date;
+  id: number;
+  price: number;
+  date: string;
+  status: string;
+  image: string;
+  productName: string;
+  orderItems: OrderItem[];
 }

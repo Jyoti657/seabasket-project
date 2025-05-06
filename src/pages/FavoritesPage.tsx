@@ -3,7 +3,9 @@ import { AppDispatch, RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import {
   deleteWishlist,
-  getWhislist,
+  
+  getWishlist,
+  
   resetFavorites,
 } from "../store/Slice/favoriteSlice";
 
@@ -23,7 +25,7 @@ const FavoritesPage: React.FC = () => {
     const result = await dispatch(deleteWishlist(id));
     if (result) {
       setSuccessMesg("Item removed from wshilist");
-      dispatch(getWhislist());
+      dispatch(getWishlist());
       setTimeout(()=>setSuccessMesg(""),1000)
     }
   };
@@ -36,7 +38,7 @@ const FavoritesPage: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getWhislist());
+    dispatch(getWishlist());
   }, [dispatch]);
   return (
     <>

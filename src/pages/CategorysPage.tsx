@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-import { useNavigate, useParams } from "react-router-dom";
-import { fetchCartAdd } from "../store/Slice/cartSlice";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { addCart } from "../store/Slice/cartSlice";
 import { productFilter } from "../store/Slice/productSlice";
 import { useEffect } from "react";
 import Button from "../components/ui/Button";
@@ -31,8 +31,9 @@ const CategoryPage: React.FC = () => {
   const handleProductClick = (id: number) => {
     navigae(`/products/${id}`);
   };
-  const handleAddToCart = (product:ProductProps) => {
-    dispatch(fetchCartAdd(product.id));
+
+  const handleAddToCart = (product: ProductProps) => {
+    dispatch(addCart(product.id));
   };
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-12 py-6 bg-gray-50">
@@ -64,13 +65,15 @@ const CategoryPage: React.FC = () => {
               <Button
                 label="Add to Cart"
                 onClick={() => handleAddToCart(product)}
-                className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full hover:bg-teal-950"
+                className="mt-auto bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full sm:w-auto"
               />
-              <Button
-                label="Buy Now"
-                onClick={() => handleAddToCart(product)}
-                className="mt-2 bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full hover:bg-teal-950"
-              />
+              <NavLink to="/checkout">
+                <Button
+                  label="Buy Now"
+                  onClick={() => handleAddToCart(product)}
+                  className="mt-2 sm:mt-0 bg-seabasket_green hover:bg-seabasket_green-dark text-white py-2 px-4 rounded transition w-full sm:w-auto"
+                />
+              </NavLink>
             </div>
           </div>
         ))}

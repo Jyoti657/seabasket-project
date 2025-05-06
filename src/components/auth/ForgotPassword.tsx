@@ -6,11 +6,17 @@ import { forgotPassword } from "../../store/Slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import Button from "../ui/Button";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+
+
+        
 const ForgotPassword: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const token = useSelector((state: RootState) => state.auth.reset);
   const {
     register,
     handleSubmit,
@@ -18,32 +24,24 @@ const ForgotPassword: React.FC = () => {
   } = useForm<ForgetPasswordSchemaType>({
     resolver: zodResolver(forgetPasswordSchema),
   });
-  // const { reset} = useSelector((state: RootState) => state.auth);
 
-  // useEffect(()=>{
-  //   useEffect(() => {
-  //     const token = reset;
-  //     if (token) {
-  //       navigate(`reset-password/${token}`);
-  //     }
-  //   }, [reset]);
     
-    
-  // },[reset  ])
   const onSubmit = async (data: ForgetPasswordSchemaType) => {
     try {
-      const resultAction = await dispatch(forgotPassword(data));
-      if (forgotPassword.fulfilled.match(resultAction)) {
-        console.log("Password reset link sent successfully");
-      } else {
-        console.error("Failed to send password reset link");
-      }
 
-      console.log("Form submitted:", data);
+      await dispatch(forgotPassword(data));
+      setIsSubmitted(true)
     } catch (error) {
       console.error("Error during password reset:", error);
     }
   };
+
+  useEffect(() => {
+    if (isSubmitted && token) {
+      navigate(`/reset-password/${token}`);
+    }
+  }, [isSubmitted, token, navigate]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white rounded-xl shadow-md p-6 sm:p-10 w-full max-w-md">

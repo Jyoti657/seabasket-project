@@ -1,10 +1,10 @@
 import { LuMinus } from "react-icons/lu";
 import { IoMdClose } from "react-icons/io";
 import { currencyFormatter } from "../../util/formatting";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ProductProps } from "../../types";
-import { AppDispatch, RootState } from "../../store/store";
-import { fetchCart, fetchCartAdd } from "../../store/Slice/cartSlice";
+import { AppDispatch } from "../../store/store";
+import { fetchCart, addCart, removeItem } from "../../store/Slice/cartSlice";
 
 interface CartProductProps {
   item: ProductProps;
@@ -13,16 +13,15 @@ interface CartProductProps {
 const CartProducts: React.FC<CartProductProps> = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const updatedItem = useSelector((state: RootState) =>
-    state.cart.productData.find((product) => product.id === item.id)
-  );
-
-  const handleIncrease = async () => {
+  const handleIncrease = () => {
     if (item.id) {
-      dispatch(fetchCartAdd(item.id));
-      await dispatch(fetchCart());
-      console.log("The increase item", fetchCartAdd(item.id));
+      dispatch(addCart(item.id)).then(() => {
+        dispatch(fetchCart());
+      });
     }
+  };
+  const handleRemove = (id: number) => {
+    dispatch(removeItem(id));
   };
 
   return (
@@ -41,9 +40,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
         </h2>
         <p className="text-xs sm:text-sm text-gray-500">{item.category}</p>
         <p className="text-sm sm:text-lg font-bold text-green-600">
-          {currencyFormatter.format(
-            item.price * (updatedItem?.quantity ?? item.quantity)
-          )}
+          {currencyFormatter.format(item.price * item.quantity)}
         </p>
         <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
           {item.description}
@@ -58,15 +55,10 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
         )}
 
         <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
-          <button
-            disabled={updatedItem?.quantity === 1}
-            className="p-2 border rounded-md hover:bg-soft_mint"
-          >
+          <button className="p-2 border rounded-md hover:bg-soft_mint">
             <LuMinus />
           </button>
-          <span className="text-lg font-medium">
-            {updatedItem?.quantity ?? item.quantity}
-          </span>
+          <span className="text-lg font-medium">{item.quantity}</span>
           <button
             onClick={handleIncrease}
             className="p-2 border rounded-md hover:bg-gray-100"
@@ -75,7 +67,10 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
           </button>
         </div>
 
-        <button className="flex items-center justify-center sm:justify-start gap-1 text-red-500 hover:text-red-700 mt-2">
+        <button
+          onClick={() => handleRemove(item.id)}
+          className="flex items-center justify-center sm:justify-start gap-1 text-red-500 hover:text-red-700 mt-2"
+        >
           <IoMdClose />
           <span>Remove</span>
         </button>

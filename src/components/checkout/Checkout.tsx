@@ -1,10 +1,14 @@
-import { NavLink } from "react-router-dom";
 import CartTotal from "../cart/CartToatl";
 import Button from "../ui/Button";
 import AddressCard from "../address/AddressCard";
 import PaymentForm from "./PaymentForm";
+import { useState } from "react";
+import AddressForm from "../address/AddressForm";
+import CheckoutButton from "./CheckoutButton";
 
 const Checkout: React.FC = () => {
+  const [showAddAddress, setShowAddAddress] = useState(false);
+
   return (
     <div className="w-full max-w-6xl mx-auto my-10 px-4">
       <div className="shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row bg-white">
@@ -20,15 +24,16 @@ const Checkout: React.FC = () => {
             <Button
               label="ADD New Address"
               className="w-full bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl mt-5"
+              onClick={() => setShowAddAddress(true)}
             />
-          </div>
+            {showAddAddress && (
+              <div className="mt-4">
+                <AddressForm onClose={() => setShowAddAddress(false)} />
+              </div>
+            )}
 
-          <NavLink to="/order" className="mt-6">
-            <Button
-              label="Place Order"
-              className="w-full bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
-            />
-          </NavLink>
+            <CheckoutButton />
+          </div>
         </div>
       </div>
     </div>

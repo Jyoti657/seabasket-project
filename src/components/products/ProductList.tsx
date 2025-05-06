@@ -1,6 +1,6 @@
 import { ProductProps } from "../../types";
 import { useDispatch } from "react-redux";
-import { fetchCartAdd } from "../../store/Slice/cartSlice";
+import { addCart } from "../../store/Slice/cartSlice";
 import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import ProductCards from "./ProductCard";
@@ -16,7 +16,7 @@ const ProductList: React.FC<ProductsProps> = ({ productData }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAddToCart = (product: ProductProps) => {
-    dispatch(fetchCartAdd(product.id));
+    dispatch(addCart(product.id));
     setSuccessMsg("Item added to cart!");
     clearMessage();
   };

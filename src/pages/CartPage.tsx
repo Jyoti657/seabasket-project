@@ -10,17 +10,18 @@ import { fetchCart } from "../store/Slice/cartSlice";
 import CartTotal from "../components/cart/CartToatl";
 
 const Cart: React.FC = () => {
-  const { productData, error } = useSelector((state: RootState) => state.cart);
+  const { productData } = useSelector((state: RootState) => state.cart);
 
   const [isModalOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    if (!productData) {
+      return console.log("cart is empty");
+    }
     dispatch(fetchCart());
   }, [dispatch]);
 
-  if (error)
-    return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-6 flex flex-col lg:flex-row gap-6 justify-center">
       {productData && productData.length > 0 ? (
@@ -49,12 +50,14 @@ const Cart: React.FC = () => {
               Cart Summary
             </h3>
             <CartTotal />
-            <NavLink to="/checkout">
-              <Button
-                label="Checkout"
-                className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
-              />
-            </NavLink>
+            <div>
+              <NavLink to="/checkout">
+                <Button
+                  label="Checkout"
+                  className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
+                />
+              </NavLink>
+            </div>
           </div>
         </>
       ) : (

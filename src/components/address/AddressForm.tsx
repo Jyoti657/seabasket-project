@@ -5,7 +5,11 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { addAddress, fetchAddress } from "../../store/Slice/addressSlice";
 
-const AddressForm: React.FC = () => {
+interface AddressFormProps {
+  onClose?: () => void;
+}
+
+const AddressForm: React.FC<AddressFormProps> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
   const {
     register,
@@ -17,10 +21,9 @@ const AddressForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<addressSchemaType> = async (data) => {
     try {
-      const resultAction = await dispatch(addAddress(data));
-      if (addAddress.fulfilled.match(resultAction)) {
-        await dispatch(fetchAddress());
-      }
+      await dispatch(addAddress(data));
+      await dispatch(fetchAddress());
+      onClose && onClose();
     } catch (error) {
       console.error(" address is not add");
     }
@@ -104,7 +107,6 @@ const AddressForm: React.FC = () => {
           <p className="text-red-500 text-sm">{errors.country.message}</p>
         )}
       </div>
-
       <button
         type="submit"
         className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md"

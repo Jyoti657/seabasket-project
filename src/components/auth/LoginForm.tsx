@@ -2,19 +2,19 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import logInSchema, { logInSchemaType } from "../../schema/logInSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
 import { loginUser } from "../../store/Slice/authSlice";
 import { useNavigate } from "react-router-dom";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import login from "../../assets/login .png";
+import { useState } from "react";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
-  const authError = useSelector((state: RootState) => state.auth.authError);
-  const otp = useSelector((state: RootState) => state.auth.otpVerified);
 
   const {
     register,
@@ -24,12 +24,11 @@ const LoginForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<logInSchemaType> = async (data) => {
     try {
-      const resultAction = await dispatch(loginUser(data));
-      if (loginUser.fulfilled.match(resultAction)) {
-        navigate("/otp");
-      }
+      await dispatch(loginUser(data));
+      setIsSubmitted(true);
+      navigate("/otp");
     } catch (err) {
-     console.log(err) 
+      console.log(err);
     }
   };
 
@@ -75,10 +74,6 @@ const LoginForm: React.FC = () => {
               </p>
             )}
           </div>
-          {authError && (
-            <p className="text-red-600 text-sm mt-2">{authError}</p>
-          )}
-          {otp && <p className="text-green-600 text-sm mt-2">{otp}</p>}
 
           <Button
             label="login"
@@ -103,6 +98,11 @@ const LoginForm: React.FC = () => {
                 Forgot Password?
               </span>
             </p>
+            {isSubmitted && (
+              <p className="text-teal-600 text-center text-sm font-medium">
+                Login successful! Redirecting to OTP verification...
+              </p>
+            )}
           </div>
         </form>
       </div>

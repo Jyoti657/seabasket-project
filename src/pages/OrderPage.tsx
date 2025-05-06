@@ -1,12 +1,6 @@
-import OrderList from "../components/order.tsx/OrderList";
+import OrderList from "../components/order/OrderList";
 
 const Order: React.FC = () => {
-  return (
-    <>
-      <h1>
-        <OrderList />
-      </h1>
-    </>
-  );
+  return <OrderList />;
 };
 export default Order;

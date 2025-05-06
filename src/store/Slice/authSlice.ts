@@ -5,7 +5,7 @@ import { signUpSchemaType } from "../../schema/signUpSchema";
 import { logInSchemaType } from "../../schema/logInSchema";
 import { OtpSchemaType } from "../../schema/optSchema";
 import { ForgetPasswordSchemaType } from "../../schema/forgetPasswordSchema";
-import { API, deleteToken } from "../../Api/axiosInstance";
+import { API } from "../../Api/axiosInstance";
 const authApi = `/auth`;
 
 export const registerUser = createAsyncThunk(
@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk(
       const response = await API.post(`${authApi}/sign-up`, user);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -26,7 +26,7 @@ export const loginUser = createAsyncThunk(
       const response = await API.post(`${authApi}/sign-in`, user);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -37,7 +37,7 @@ export const verifyOtp = createAsyncThunk(
       const response = await API.post(`${authApi}/verify-otp`, otpData);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -54,10 +54,9 @@ export const forgotPassword = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
-      return response.data;
+      return response.data.token;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -74,7 +73,7 @@ export const resetPassword = createAsyncThunk(
       );
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -91,10 +90,9 @@ export const updateProfile = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -108,7 +106,7 @@ const initialState: Auth = {
   authError: null,
   isLoading: false,
   registerUser: false,
-  verifiedUser: false,
+  verifiedUser: {},
   reset: null,
 };
 const authSlice = createSlice({
@@ -119,7 +117,6 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      deleteToken();
     },
   },
   extraReducers: (builder) => {
@@ -130,8 +127,8 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
+
         state.user = action.payload.user;
-        state.token = action.payload.token;
         state.registerUser = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -147,7 +144,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.userId = action.payload.user?.id;
         state.user = action.payload.user;
-        state.token = action.payload.token;
         state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -161,8 +157,8 @@ const authSlice = createSlice({
       })
       .addCase(verifyOtp.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userId = action.payload.userID;
-        state.user = action.payload.user;
+        state.user = action.payload.verifiedUser;
+
         state.token = action.payload.token;
         state.otpVerified = true;
       })

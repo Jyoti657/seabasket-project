@@ -4,10 +4,13 @@ import ProductCards from "../components/products/ProductCard";
 import { ProductProps } from "../types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
-import { fetchCartAdd } from "../store/Slice/cartSlice";
+import { addCart } from "../store/Slice/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const SearchPage: React.FC = () => {
+  const [successMsg, setSuccessMsg] = useState("");
+
   const loading = useSelector((state: RootState) => state.product.loading);
   const searchResult =
     useSelector((state: RootState) => state.product.productSearch) || [];
@@ -17,13 +20,22 @@ const SearchPage: React.FC = () => {
   const navigate = useNavigate();
 
   const handleAddToCart = (product: ProductProps) => {
-    dispatch(fetchCartAdd(product.id));
+    dispatch(addCart(product.id));
   };
 
   const handleProductClick = (id: number) => {
     navigate(`/products/${id}`);
   };
 
+  const handleFavoriteSuccess = () => {
+    setSuccessMsg("Item added to favorites!");
+    clearMessage();
+  };
+  const clearMessage = () => {
+    setTimeout(() => {
+      setSuccessMsg("");
+    }, 1000);
+  };
   if (error) return <p>{error}</p>;
   if (loading) return <p className="text-gray-500 text-center">Loading...</p>;
 
@@ -36,12 +48,18 @@ const SearchPage: React.FC = () => {
             product={product}
             handleAddToCart={handleAddToCart}
             handleProductClick={handleProductClick}
+            onFavoriteSuccess={handleFavoriteSuccess}
           />
         ))
       ) : (
         <p className="text-center col-span-full text-gray-400">
           No products found.
         </p>
+      )}
+      {successMsg && (
+        <div className="text-center text-green-600 font-medium mb-4">
+          {successMsg}
+        </div>
       )}
     </div>
   );
