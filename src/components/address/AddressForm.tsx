@@ -23,6 +23,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onClose }) => {
     try {
       await dispatch(addAddress(data));
       await dispatch(fetchAddress());
+      onClose && onClose();
     } catch (error) {
       console.error(" address is not add");
     }
@@ -106,10 +107,9 @@ const AddressForm: React.FC<AddressFormProps> = ({ onClose }) => {
           <p className="text-red-500 text-sm">{errors.country.message}</p>
         )}
       </div>
-        <button
+      <button
         type="submit"
         className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md"
-        onClick={onClose}
       >
         Save Address
       </button>

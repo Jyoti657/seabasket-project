@@ -7,6 +7,7 @@ import otpSchema, { OtpSchemaType } from "../../schema/optSchema";
 import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import password from "../../assets/password (1).png";
+import { fetchCart } from "../../store/Slice/cartSlice";
 
 const OTPVerification: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,12 +27,14 @@ const OTPVerification: React.FC = () => {
       await dispatch(verifyOtp(data));
       reset();
       navigate("/");
+      dispatch(fetchCart())
     } catch (err) {
       console.error("Error during OTP verification:", err);
     }
   };
   const handleResendOtp = () => {
     navigate("/login");
+    
   };
 
   return (

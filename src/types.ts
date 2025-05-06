@@ -66,7 +66,9 @@ export interface Auth {
   } | null;
   isAuthenticated: boolean;
   otpVerified: boolean;
-  verifiedUser: boolean;
+  verifiedUser:{
+    firstname?:string
+  };
   token: null | string;
   authError: null | string;
   isLoading: boolean;
@@ -85,10 +87,11 @@ export interface addressForm {
 }
 
 export interface OrderItem {
-  id: number;
+  price: number;
+  id: string;
   quantity: number;
   product: {
-    id: number;
+    id: string;
     name: string;
     description: string;
     imageUrl: string;
@@ -102,6 +105,7 @@ export interface OrderItem {
 }
 
 export interface order {
+  createdAt: string | number | Date;
   id: number;
   price: number;
   date: string;

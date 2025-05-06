@@ -50,14 +50,14 @@ const Cart: React.FC = () => {
               Cart Summary
             </h3>
             <CartTotal />
-          </div>
-          <div>
-            <NavLink to="/checkout">
-              <Button
-                label="Checkout"
-                className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
-              />
-            </NavLink>
+            <div>
+              <NavLink to="/checkout">
+                <Button
+                  label="Checkout"
+                  className="w-full mt-6 bg-teal-600 hover:bg-teal-900 text-white font-semibold py-2 rounded-xl"
+                />
+              </NavLink>
+            </div>
           </div>
         </>
       ) : (

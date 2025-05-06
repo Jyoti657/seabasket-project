@@ -123,7 +123,9 @@ const favoriteSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
+
       .addCase(deleteWishlist.fulfilled, (state, action) => {
+        debugger;
         const deletedId = action.payload.productId;
         state.favoriteProducts = state.favoriteProducts.filter(
           (p) => p.wishlistItemId?.toString() !== deletedId
@@ -139,4 +141,3 @@ const favoriteSlice = createSlice({
 
 export const { resetFavorites } = favoriteSlice.actions;
 export default favoriteSlice.reducer;
-

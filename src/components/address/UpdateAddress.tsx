@@ -45,7 +45,6 @@ const UpdateAddressForm: React.FC<UpdateAddressFormProps> = ({
       );
 
       if (updateAddress.fulfilled.match(resultAction)) {
-        console.log("Address updated successfully");
         await dispatch(fetchAddress());
         onClose();
       }

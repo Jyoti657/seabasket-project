@@ -4,6 +4,7 @@ import { AccountCircle } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { logOut } from "../../store/Slice/authSlice";
+import { resetCart } from "../../store/Slice/cartSlice";
 
 const UserDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,8 +28,13 @@ const UserDropdown: React.FC = () => {
 
   const handleLogOut = () => {
     dispatch(logOut());
+    dispatch(resetCart());
     navigate("/");
   };
+
+  const displayName = user?.firstName
+    ? `${user.firstName}`
+    : user?.firstName || "User";
 
   return (
     <div
@@ -44,9 +50,9 @@ const UserDropdown: React.FC = () => {
         <AccountCircle className="w-6 h-6 text-seabasket_green " />
         <div className="flex flex-col items-start text-left">
           <span className="text-sm font-medium text-teal-950 capitalize">
-            {user?.firstName ? `Welcome, ${user.firstName}` : "Welcome!"}
+            {user ? `Welcome, ${displayName}` : "Welcome!"}
           </span>
-          <span className="font-semibold  text-sm text-gray-700">Account</span>
+          <span className="font-semibold text-sm text-gray-700">Account</span>
         </div>
       </button>
 
@@ -54,9 +60,7 @@ const UserDropdown: React.FC = () => {
         <div className="absolute right-0 mt-2 w-52 sm:w-56 bg-white text-black shadow-lg rounded-md border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-200 bg-seabasket_green/10">
             <p className="text-sm font-semibold text-seabasket_green capitalize">
-              {user?.firstName
-                ? `Hello, ${user.firstName}`
-                : `${user?.firstName}`}
+              {displayName ? `Hello, ${displayName}` : "Hello, User"}
             </p>
           </div>
 

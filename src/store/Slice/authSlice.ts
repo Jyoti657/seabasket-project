@@ -54,7 +54,6 @@ export const forgotPassword = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
       return response.data.token;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -91,7 +90,6 @@ export const updateProfile = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -108,7 +106,7 @@ const initialState: Auth = {
   authError: null,
   isLoading: false,
   registerUser: false,
-  verifiedUser: false,
+  verifiedUser: {},
   reset: null,
 };
 const authSlice = createSlice({
@@ -129,8 +127,8 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
+
         state.user = action.payload.user;
-        state.token = action.payload.token;
         state.registerUser = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -146,7 +144,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.userId = action.payload.user?.id;
         state.user = action.payload.user;
-        state.token = action.payload.token;
         state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -160,8 +157,8 @@ const authSlice = createSlice({
       })
       .addCase(verifyOtp.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userId = action.payload.userID;
-        state.user = action.payload.user;
+        state.user = action.payload.verifiedUser;
+
         state.token = action.payload.token;
         state.otpVerified = true;
       })
