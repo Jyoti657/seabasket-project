@@ -99,6 +99,7 @@ export const cartSlice = createSlice({
       })
       .addCase(addCart.fulfilled, (state, action) => {
         state.loading = false;
+        debugger
 
         const existingProduct = state.productData.find(
           (item) => item.id === action.payload.id

@@ -10,6 +10,7 @@ const CheckoutButton = () => {
   const selectedAddressId = useSelector(
     (state: RootState) => state.order.selectedAddressId
   );
+  const paymentId=useSelector((state:RootState)=>state.order.selectedPaymentType)
   const addressId = selectedAddressId;
   const paymentType = "Cash on Delivery";
 

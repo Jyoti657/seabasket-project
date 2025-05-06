@@ -6,8 +6,6 @@ import { ProductProps } from "../../types";
 import { AppDispatch } from "../../store/store";
 import { fetchCart, addCart, removeItem } from "../../store/Slice/cartSlice";
 
-        
-
 interface CartProductProps {
   item: ProductProps;
 }
@@ -17,15 +15,14 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
 
   const handleIncrease = () => {
     if (item.id) {
-      dispatch(addCart(item.id));
-      dispatch(fetchCart());
+      dispatch(addCart(item.id)).then(() => {
+        dispatch(fetchCart());
+      });
     }
   };
   const handleRemove = (id: number) => {
     dispatch(removeItem(id));
   };
-
-    
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-4 bg-white shadow-md rounded-lg border border-gray-200 w-full">
@@ -57,7 +54,7 @@ const CartProducts: React.FC<CartProductProps> = ({ item }) => {
           </div>
         )}
 
-       <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
+        <div className="flex items-center justify-center sm:justify-start gap-3 mt-2">
           <button className="p-2 border rounded-md hover:bg-soft_mint">
             <LuMinus />
           </button>
