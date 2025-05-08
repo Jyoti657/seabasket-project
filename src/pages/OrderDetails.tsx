@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { orderStatus } from "../store/Slice/orderSlice";
 import OrderSteeper from "../components/order/OrderSteeper";
 import { currencyFormatter } from "../util/formatting";
+import OrderItemCard from "../components/order/OrderItemCard";
 
 const OrderDetails: React.FC = () => {
   const { id } = useParams();
@@ -55,30 +56,7 @@ const OrderDetails: React.FC = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {order.orderItems?.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col sm:flex-row items-center gap-6 border border-gray-200 bg-gray-50 rounded-xl p-4 shadow-sm"
-              >
-                <img
-                  src={item.product.imageUrl}
-                  alt={item.product.name}
-                  className="w-32 h-32 object-contain rounded-lg border p-2"
-                />
-                <div className="text-center sm:text-left space-y-1">
-                  <h4 className="text-lg font-bold text-gray-800">
-                    {item.product.name}
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    {item.product.description}
-                  </p>
-                  <p className="text-green-600 font-semibold">
-                    {currencyFormatter.format(item.price)}
-                  </p>
-                  <p className="text-sm font-medium text-gray-700">
-                    Quantity: {item.quantity}
-                  </p>
-                </div>
-              </div>
+              <OrderItemCard item={item} />
             ))}
           </div>
         </div>

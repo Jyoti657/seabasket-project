@@ -4,7 +4,7 @@ import { OrderItem } from "../../types";
 
 interface OrderItemCardProps {
   item: OrderItem;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const OrderItemCard: React.FC<OrderItemCardProps> = ({ item, onClick }) => {
