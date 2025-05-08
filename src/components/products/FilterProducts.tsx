@@ -10,6 +10,15 @@ const FilterProducts: React.FC = () => {
   const [rating, setRating] = useState(0);
   const [category, setCategory] = useState("");
   const [discount, setDiscount] = useState(0);
+  const isFilterValid = () => {
+    return (
+      rating > 0 ||
+      discount > 0 ||
+      category.trim() !== "" ||
+      priceRange.min > 0 ||
+      priceRange.max < 10000
+    );
+  };
 
   const handleFilterProduct = () => {
     dispatch(
@@ -19,7 +28,6 @@ const FilterProducts: React.FC = () => {
         maxprice: priceRange.max,
         minDiscount: discount,
         maxDiscount: discount,
-        
       })
     );
   };
@@ -85,7 +93,13 @@ const FilterProducts: React.FC = () => {
 
       <button
         onClick={handleFilterProduct}
-        className="w-full px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+        disabled={!isFilterValid()}
+        className={`w-full px-4 py-2 text-white rounded transition 
+          ${
+            isFilterValid()
+              ? "bg-teal-600 hover:bg-teal-700"
+              : "bg-gray-400 cursor-not-allowed"
+          }`}
       >
         Apply Filters
       </button>
