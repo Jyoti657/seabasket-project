@@ -2,8 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { useEffect, useState } from "react";
 import { deleteAddress, fetchAddress } from "../../store/Slice/addressSlice";
-import { MapPin, Globe, Landmark } from "lucide-react";
-import Button from "../ui/Button";
 import { addressForm } from "../../types";
 import UpdateAddressForm from "./UpdateAddress";
 import { setSelectedAddressId } from "../../store/Slice/orderSlice";

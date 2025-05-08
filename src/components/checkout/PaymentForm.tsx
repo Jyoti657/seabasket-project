@@ -5,6 +5,7 @@ import UPIForm from "../../Payment/UPIForm";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import { setSelectedPaymentType } from "../../store/Slice/orderSlice";
+import PaymentOption from "./PaymentOption";
 
 const PaymentForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,54 +24,35 @@ const PaymentForm: React.FC = () => {
         Select Payment Method
       </h2>
 
+      <div className=" space-y-4">
+        <PaymentOption
+          id="upi"
+          label="UPI"
+          selected={selectedPayment}
+          onChange={handlePaymentChange}
+        >
+          <UPIForm />
+        </PaymentOption>
+      </div>
       <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <input
-            type="radio"
-            id="upi"
-            name="payment"
-            value="upi"
-            checked={selectedPayment === "upi"}
-            onChange={() => handlePaymentChange("upi")}
-            className="accent-seabasket_green"
-          />
-          <label htmlFor="upi" className="text-gray-700 font-medium">
-            UPI
-          </label>
-        </div>
-        {selectedPayment === "upi" && <UPIForm />}
-
-        <div className="flex items-center gap-3">
-          <input
-            type="radio"
-            id="card"
-            name="payment"
-            value="card"
-            checked={selectedPayment === "card"}
-            onChange={() => handlePaymentChange("card")}
-            className="accent-seabasket_green"
-          />
-          <label htmlFor="card" className="text-gray-700 font-medium">
-            Credit/Debit Card
-          </label>
-        </div>
-        {selectedPayment === "card" && <CreditCardForm />}
-
-        <div className="flex items-center gap-3">
-          <input
-            type="radio"
-            id="cash"
-            name="payment"
-            value="cash"
-            checked={selectedPayment === "cash"}
-            onChange={() => handlePaymentChange("cash")}
-            className="accent-seabasket_green"
-          />
-          <label htmlFor="cash" className="text-gray-700 font-medium">
-            Cash
-          </label>
-        </div>
-        {selectedPayment === "cash" && <CashForm />}
+        <PaymentOption
+          id="Cash"
+          label="Cash"
+          selected={selectedPayment}
+          onChange={handlePaymentChange}
+        >
+          <CashForm />
+        </PaymentOption>
+      </div>
+      <div className="space-y-4">
+        <PaymentOption
+          id="card"
+          label="Credit/Debit Card"
+          selected={selectedPayment}
+          onChange={handlePaymentChange}
+        >
+          <CreditCardForm />
+        </PaymentOption>
       </div>
     </div>
   );
