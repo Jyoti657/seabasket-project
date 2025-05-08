@@ -12,7 +12,6 @@ import FavoritesPage from "./pages/FavoritesPage";
 import Login from "./pages/Login";
 import AddressPage from "./pages/AddressPage";
 import SignUpPage from "./pages/SignUpPage";
-
 import OrderDetails from "./pages/OrderDetails";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage";

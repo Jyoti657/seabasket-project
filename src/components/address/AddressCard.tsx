@@ -35,16 +35,20 @@ const AddressCard: React.FC = () => {
       ) : (
         <>
           {shipping.length > 0 ? (
-            shipping.map((address, index) => (
-              <AddressItem
-                key={address.id ?? index}
-                address={address}
-                isSelected={selectedAddress === address.id?.toString()}
-                onSelect={(id) => dispatch(setSelectedAddressId(id))}
-                onEdit={(address) => setEditingAddress(address)}
-                onDelete={(id) => dispatch(deleteAddress(id))}
-              />
-            ))
+            shipping.map((address, index) => {
+              if (!address) return null;
+              const addressId = address.id ?? index;
+              return (
+                <AddressItem
+                  key={addressId}
+                  address={address}
+                  isSelected={selectedAddress === addressId.toString()}
+                  onSelect={(id) => dispatch(setSelectedAddressId(id))}
+                  onEdit={(address) => setEditingAddress(address)}
+                  onDelete={(id) => dispatch(deleteAddress(id))}
+                />
+              );
+            })
           ) : (
             <p className="text-center text-soft_mint">
               No addresses saved yet.
