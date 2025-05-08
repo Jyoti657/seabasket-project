@@ -11,7 +11,9 @@ const AddressPage: React.FC = () => {
         <div className="bg-teal-800 rounded-lg shadow-md p-6">
           <AddressForm />
         </div>
-        <AddressCard />
+        <div className="bg-teal-700 rounded-lg shadow-md p-6 overflow-y-auto max-h-[80vh]">
+          <AddressCard />
+        </div>
       </div>
     </div>
   );
