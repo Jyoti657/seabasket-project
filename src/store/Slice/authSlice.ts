@@ -42,6 +42,7 @@ export const verifyOtp = createAsyncThunk(
   }
 );
 // forgot password
+
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (data: ForgetPasswordSchemaType, { getState, rejectWithValue }) => {
@@ -54,9 +55,10 @@ export const forgotPassword = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data.token;
+      console.log(response);
+      return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
@@ -73,7 +75,7 @@ export const resetPassword = createAsyncThunk(
       );
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
@@ -127,7 +129,6 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-
         state.user = action.payload.user;
         state.registerUser = true;
       })
@@ -158,7 +159,6 @@ const authSlice = createSlice({
       .addCase(verifyOtp.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.verifiedUser;
-
         state.token = action.payload.token;
         state.otpVerified = true;
       })
