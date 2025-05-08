@@ -52,7 +52,6 @@ const BasedAddress: React.FC<AddressesProps> = ({
           )}
         </div>
       ))}
-
       <div className="flex justify-between items-center">
         <Button
           label={submitlabel}
