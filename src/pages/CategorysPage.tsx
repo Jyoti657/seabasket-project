@@ -9,45 +9,48 @@ import ProductCards from "../components/products/ProductCard";
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
-  const navigae = useNavigate();
-  const getcategory = useSelector(
+  const navigate = useNavigate(); // ✅ fixed typo
+  const dispatch = useDispatch<AppDispatch>();
+
+  const filteredProducts = useSelector(
     (state: RootState) => state.product.allProducts
   );
 
-  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     if (categoryName) {
       dispatch(productFilter({ category: categoryName }));
     }
   }, [dispatch, categoryName]);
 
-  if (!getcategory || getcategory.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-gray-700 text-center px-4">
-        <p>No products found in this category.</p>
-      </div>
-    );
-  }
   const handleProductClick = (id: number) => {
-    navigae(`/products/${id}`);
+    navigate(`/products/${id}`);
   };
 
   const handleAddToCart = (product: ProductProps) => {
     dispatch(addCart(product.id));
   };
+
+  if (!filteredProducts || filteredProducts.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-gray-600 px-4">
+        <p className="text-center text-lg">No products found in this category.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen px-4 sm:px-6 lg:px-12 py-6 bg-gray-50">
-      <h2 className="text-2xl md:text-3xl font-bold text-center text-seabasket_green mb-8 capitalize">
+    <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-16 py-10">
+      <h2 className="text-3xl font-extrabold text-center text-seabasket_green capitalize mb-10">
         {categoryName}
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {getcategory.map((product, index) => (
+      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {filteredProducts.map((product) => (
           <ProductCards
-            key={index}
+            key={product.id}
             product={product}
-            handleAddToCart={handleAddToCart}
-            handleProductClick={handleProductClick}
+            onAddToCart={handleAddToCart}
+            onProductClick={handleProductClick}
             onFavoriteSuccess={() => {}}
           />
         ))}

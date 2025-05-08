@@ -6,7 +6,7 @@ import { ProductProps } from "../../types";
 
 interface FavoriteButtonProps {
   product: ProductProps;
-  onsuccess: () => void;
+  onsuccess?: () => void;
 }
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   product,

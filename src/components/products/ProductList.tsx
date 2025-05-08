@@ -50,8 +50,8 @@ const ProductList: React.FC<ProductsProps> = ({ productData }) => {
           <ProductCards
             key={product.id}
             product={product}
-            handleAddToCart={handleAddToCart}
-            handleProductClick={handleProductClick}
+            onAddToCart={handleAddToCart}
+            onProductClick={handleProductClick}
             onFavoriteSuccess={handleFavoriteSuccess}
           />
         ))}
