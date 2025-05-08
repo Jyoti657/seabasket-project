@@ -9,6 +9,7 @@ import Confirm from "../components/ui/ConfrimModal";
 import { FaAddressCard } from "react-icons/fa";
 import { logOut } from "../store/Slice/authSlice";
 import ProfileCard from "../components/profile/ProfileCard";
+import SideBarItem from "../components/profile/SideBarItem";
 
 const Profile: React.FC = () => {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -36,34 +37,33 @@ const Profile: React.FC = () => {
           <div className="flex flex-col items-center text-center">
             <CgProfile className="w-16 h-16 text-gray-500 mb-2" />
             <h2 className="text-xl font-semibold text-gray-800">
-              Hello, { "User"}
+              Hello, {"User"}
             </h2>
           </div>
 
-          <div
-            className="flex flex-col items-center text-center hover:bg-gray-100 p-4 rounded-lg transition duration-200 cursor-pointer"
+          <SideBarItem
             onClick={handleOrderHistory}
-          >
-            <RiFileHistoryFill className="w-8 h-8 text-gray-700 mb-1" />
-            <p className="text-gray-700 font-medium">Order History</p>
-          </div>
-          <div
-            className="flex flex-col items-center text-center hover:bg-gray-100 p-4 rounded-lg transition duration-200 cursor-pointer"
-            onClick={handleAddress}
-          >
-            <FaAddressCard className="w-8 h-8 text-gray-700 mb-1" />
-            <p className="text-gray-700 font-medium">Manage Addresses</p>
-          </div>
+            label="order Histroy"
+            icon={<RiFileHistoryFill />}
+            hoverBg="hover:bg-teal-700"
+          />
 
-          <div
-            className="flex flex-col items-center text-center hover:bg-red-100 p-4 rounded-lg transition duration-200 cursor-pointer"
+          <SideBarItem
+            onClick={handleAddress}
+            label="Manage Addresses"
+            icon={<FaAddressCard />}
+            hoverBg="hover:bg-teal-700"
+
+          />
+          <SideBarItem
+            icon={<RiLogoutCircleRFill size={32} />}
+            label="Logout"
             onClick={() => setShowConfirm(true)}
-          >
-            <RiLogoutCircleRFill className="w-8 h-8 text-red-600 mb-1" />
-            <p className="text-red-600 font-medium">Logout</p>
-          </div>
+            textColor="text-red-600"
+            hoverBg="hover:bg-red-100"
+          />
         </div>
-        
+
         <div className="flex-1 space-y-6">
           <ProfileCard />
 

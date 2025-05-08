@@ -24,30 +24,6 @@ const ProfileCard: React.FC = () => {
                 <span className="font-medium">Mobile Number:</span>{" "}
                 {user.mobile}
               </p>
-              {user.address && (
-                <>
-                  <p>
-                    <span className="font-medium">Address Line 1:</span>{" "}
-                    {user.address.addressLine1}
-                  </p>
-                  <p>
-                    <span className="font-medium">Address Line 2:</span>{" "}
-                    {user.address.addressLine2}
-                  </p>
-                  <p>
-                    <span className="font-medium">City:</span>{" "}
-                    {user.address.city}
-                  </p>
-                  <p>
-                    <span className="font-medium">State:</span>{" "}
-                    {user.address.state}
-                  </p>
-                  <p>
-                    <span className="font-medium">Postal Code:</span>{" "}
-                    {user.address.postalCode}
-                  </p>
-                </>
-              )}
             </div>
           </div>
         )}
