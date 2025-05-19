@@ -6,11 +6,9 @@ import { forgotPassword } from "../../store/Slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import Button from "../ui/Button";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-
-        
 const ForgotPassword: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -25,12 +23,10 @@ const ForgotPassword: React.FC = () => {
     resolver: zodResolver(forgetPasswordSchema),
   });
 
-    
   const onSubmit = async (data: ForgetPasswordSchemaType) => {
     try {
-
-      await dispatch(forgotPassword(data));
-      setIsSubmitted(true)
+      await dispatch(forgotPassword(data)).unwrap();
+      setIsSubmitted(true);
     } catch (error) {
       console.error("Error during password reset:", error);
     }

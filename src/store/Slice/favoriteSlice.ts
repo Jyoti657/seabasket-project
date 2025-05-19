@@ -125,7 +125,6 @@ const favoriteSlice = createSlice({
       })
 
       .addCase(deleteWishlist.fulfilled, (state, action) => {
-        debugger;
         const deletedId = action.payload.productId;
         state.favoriteProducts = state.favoriteProducts.filter(
           (p) => p.wishlistItemId?.toString() !== deletedId

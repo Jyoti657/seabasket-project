@@ -6,47 +6,75 @@ import { currencyFormatter } from "../../util/formatting";
 
 interface ProductCardProps {
   product: ProductProps;
-  handleAddToCart: (product: ProductProps) => void;
-  handleProductClick: (id: number) => void;
-  onFavoriteSuccess:()=>void;
+  onAddToCart?: (product: ProductProps) => void;
+  onProductClick?: (id: number) => void;
+  onFavoriteSuccess?: () => void;
+  onRemove?: (id: number) => void;
+  showFavorite?: boolean;
+  showRemoveButton?: boolean;
+  removeLabel?: string;
+  customActionButtons?: React.ReactNode;
 }
 
-const ProductCards: React.FC<ProductCardProps> = ({
+const ProductCard: React.FC<ProductCardProps> = ({
   product,
-  handleAddToCart,
-  handleProductClick,
+  onAddToCart,
+  onProductClick,
   onFavoriteSuccess,
+  onRemove,
+  showFavorite = true,
+  showRemoveButton = false,
+  removeLabel = "Remove",
+  customActionButtons,
 }) => {
-
   return (
-    <div className="border p-4 rounded shadow hover:shadow-lg transition flex flex-col justify-between h-full bg-soft_mint">
+    <div className="border p-4 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between h-full bg-soft_mint">
       <div className="flex-grow">
         <img
           src={product.imageUrl}
           alt={product.name}
-          className="w-full h-40 object-contain mb-4 cursor-pointer"
-          onClick={() => handleProductClick(product.id)}
+          className="w-full h-40 object-contain mb-4 rounded cursor-pointer hover:scale-105 transition"
+          onClick={() => onProductClick?.(product.id)}
         />
-        <h2 className="text-lg font-semibold">{product.name}</h2>
-        <p className="text-gray-600">
+        <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-1">
+          {product.name}
+        </h2>
+        <p className="text-gray-600 font-medium">
           {currencyFormatter.format(product.price)}
         </p>
       </div>
 
-      <div className="flex items-center justify-between mt-4 pt-4 border-t">
-        <Button
-          className="text-xl cursor-pointer bg-seabasket_green hover:bg-teal-950 text-white"
-          label="Add to Cart"
-          onClick={() => handleAddToCart(product)}
-        />
-        <ShoppingCart
-          className="text-xl cursor-pointer"
-          onClick={() => handleAddToCart(product)}
-        />
-        <FavoriteButton product={product}  onsuccess={onFavoriteSuccess}/>
+      <div className="flex flex-col gap-3 mt-5 pt-4 border-t border-gray-200">
+        {onAddToCart && (
+          <div className="flex items-center justify-between gap-3">
+            <Button
+              className="flex-1 text-sm sm:text-base bg-seabasket_green hover:bg-teal-950 text-white rounded-md"
+              label="Add to Cart"
+              onClick={() => onAddToCart(product)}
+            />
+            <ShoppingCart
+              className="text-seabasket_green hover:text-teal-900 text-[28px] cursor-pointer transition-transform duration-150 hover:scale-110"
+              onClick={() => onAddToCart(product)}
+            />
+          </div>
+        )}
+
+        {showFavorite && (
+          <FavoriteButton product={product} onsuccess={onFavoriteSuccess} />
+        )}
+
+        {showRemoveButton && onRemove && (
+          <Button
+            label={removeLabel}
+            className="bg-red-500 text-white hover:bg-red-700 rounded-md"
+            onClick={() => onRemove(product.id)}
+          />
+        )}
+
+        {customActionButtons}
       </div>
     </div>
   );
 };
 
-export default ProductCards;
+export default ProductCard;

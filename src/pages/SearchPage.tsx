@@ -46,8 +46,8 @@ const SearchPage: React.FC = () => {
           <ProductCards
             key={product.id}
             product={product}
-            handleAddToCart={handleAddToCart}
-            handleProductClick={handleProductClick}
+            onAddToCart={handleAddToCart}
+            onProductClick={handleProductClick}
             onFavoriteSuccess={handleFavoriteSuccess}
           />
         ))

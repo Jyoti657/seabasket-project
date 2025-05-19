@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Button from "../components/ui/Button";
+import InputPayment from "./InputPayment";
 
 const UPIForm: React.FC = () => {
   const [upiId, setUpiId] = useState("");
@@ -10,23 +12,18 @@ const UPIForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <label className="block text-gray-700 font-medium">
-        UPI ID
-        <input
-          type="text"
-          placeholder="example@upi"
-          value={upiId}
-          onChange={(e) => setUpiId(e.target.value)}
-          required
-          className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-seabasket_green"
-        />
-      </label>
-      <button
+      <InputPayment
+        label="UPI ID"
+        value={upiId}
+        onChange={(e) => setUpiId(e.target.value)}
+        placeholder="example@upi"
+        required
+      />
+      <Button
         type="submit"
+        label="Pay Now"
         className="bg-seabasket_green text-white py-2 px-4 rounded hover:bg-green-700 transition"
-      >
-        Pay Now
-      </button>
+      />
     </form>
   );
 };
